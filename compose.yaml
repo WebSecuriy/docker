@@ -1,0 +1,40 @@
+name: webhook-connectivity-lab
+
+x-server: &server
+  init: true
+  user: "10001:10001"
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  healthcheck:
+    test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/health', timeout=2).close()"]
+    interval: 5s
+    timeout: 3s
+    retries: 5
+  logging:
+    driver: json-file
+    options:
+      max-size: "2m"
+      max-file: "2"
+
+services:
+  webhook:
+    <<: *server
+    build: ./webhook
+    image: webhook-connectivity-lab/webhook:local
+    ports:
+      - "${WEBHOOK_BIND_IP:-127.0.0.1}:${WEBHOOK_HOST_PORT:-18080}:8000"
+    networks: [edge, protected]
+
+  internal:
+    <<: *server
+    build: ./internal
+    image: webhook-connectivity-lab/internal:local
+    networks: [protected]
+
+networks:
+  edge:
+    driver: bridge
+  protected:
+    driver: bridge
+    internal: true

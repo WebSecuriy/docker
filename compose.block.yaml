@@ -1,0 +1,4 @@
+# Requires Compose 2.24.4+ for !override.
+services:
+  webhook:
+    networks: !override [edge]
