@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 from socket import gaierror
 from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, ProxyHandler, build_opener
@@ -17,7 +18,7 @@ def main():
     opener = build_opener(ProxyHandler({}), NoRedirect())
 
     try:
-        with opener.open("http://internal:8000/health", timeout=3) as response:
+        with opener.open(os.getenv("INTERNAL_HEALTH_URL", "http://internal:8000/health"), timeout=3) as response:
             data = json.load(response)
             if response.status != 200 or data != {"service": "internal", "ok": True}:
                 raise SystemExit(f"FAIL: unexpected internal response: {data!r}")

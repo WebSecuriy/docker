@@ -5,3 +5,8 @@ __pycache__/
 *.vmdk
 *.ova
 *.vmem
+.venv/
+data/
+artifacts/
+config/*local*
+*.sqlite3*

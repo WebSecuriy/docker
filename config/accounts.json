@@ -1,0 +1,13 @@
+{
+  "accounts": [
+    {"id": "alice", "token": "lab-alice-token"},
+    {"id": "bob", "token": "lab-bob-token"},
+    {"id": "customer", "token": "lab-customer-token"},
+    {"id": "viewer", "token": "lab-viewer-token"},
+    {"id": "operator", "token": "lab-operator-token", "operator": true}
+  ],
+  "workspaces": [
+    {"id": "alpha", "name": "가상 고객사 알파", "members": {"alice": "admin", "viewer": "member"}},
+    {"id": "beta", "name": "가상 고객사 베타", "members": {"bob": "admin"}}
+  ]
+}

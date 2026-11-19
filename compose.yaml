@@ -25,12 +25,35 @@ services:
     ports:
       - "${WEBHOOK_BIND_IP:-127.0.0.1}:${WEBHOOK_HOST_PORT:-18080}:8000"
     networks: [edge, protected]
+    environment:
+      DB_PATH: /data/webhook.sqlite3
+      BOOTSTRAP_FILE: ${BOOTSTRAP_FILE:-/config/accounts.json}
+      URL_EXCEPTIONS_FILE: ${URL_EXCEPTIONS_FILE:-/config/url-exceptions.json}
+      POLICY: ${POLICY:-strict}
+      ENABLED_MODES: ${ENABLED_MODES:-mlflow,plane}
+      RETURN_BODY: ${RETURN_BODY:-mask}
+      STORE_BODY: ${STORE_BODY:-mask}
+      READ_BODY: ${READ_BODY:-mask}
+      BODY_LIMIT: ${BODY_LIMIT:-1024}
+      MAX_RESPONSE_BYTES: ${MAX_RESPONSE_BYTES:-65536}
+      DELIVERY_TIMEOUT: ${DELIVERY_TIMEOUT:-3}
+      MAX_REDIRECTS: ${MAX_REDIRECTS:-5}
+      ALLOW_HTTP: ${ALLOW_HTTP:-true}
+      CA_FILE: ${CA_FILE:-}
+      INTERNAL_HEALTH_URL: ${INTERNAL_HEALTH_URL:-http://internal:8000/health}
+    volumes:
+      - webhook-data:/data
+      - ./config:/config:ro
 
   internal:
     <<: *server
     build: ./internal
     image: webhook-connectivity-lab/internal:local
     networks: [protected]
+    environment:
+      INTERNAL_DB_PATH: /data/internal.sqlite3
+    volumes:
+      - internal-data:/data
 
 networks:
   edge:
@@ -38,3 +61,7 @@ networks:
   protected:
     driver: bridge
     internal: true
+
+volumes:
+  webhook-data:
+  internal-data:

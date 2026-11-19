@@ -1,0 +1,1430 @@
+{
+    "exported_at":  "2026-11-20T02:23:55.3584765+09:00",
+    "environment":  "Windows Docker Desktop, Linux containers, python:3.12-slim",
+    "test_command":  "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-matrix.ps1 -SkipBuild",
+    "matrix_count":  9,
+    "delivery_cases":  36,
+    "normal_successes":  18,
+    "rows":  [
+                 {
+                     "name":  "baseline-open-full",
+                     "policy":  "baseline",
+                     "network":  "open",
+                     "body":  {
+                                  "return":  "full",
+                                  "store":  "full",
+                                  "read":  "full"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "bd913010-3287-4c53-a0eb-4c559d8e918b",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "e4b35de0-8c9a-494c-b5c5-0109249c87c6",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  true,
+                                       "report_content_exposed":  true,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=e4b35de0-8c9a-494c-b5c5-0109249c87c6"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=e4b35de0-8c9a-494c-b5c5-0109249c87c6",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.20.0.2",
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "55dd0e80-9907-429d-bc04-cfc1d4c4520a",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "d1a4af6e-b14f-4c67-be9e-367d13d74166",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  true,
+                                       "report_content_exposed":  true,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=d1a4af6e-b14f-4c67-be9e-367d13d74166"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=d1a4af6e-b14f-4c67-be9e-367d13d74166",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.20.0.2",
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "eff3c266-9d65-4167-b0e9-13d8d46f38bf",
+                                             "result":  {
+                                                            "run_id":  "eff3c266-9d65-4167-b0e9-13d8d46f38bf",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "eff3c266-9d65-4167-b0e9-13d8d46f38bf",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "F453E0CB7AC6DFFD235B8B29D4C6FDAA00C565AEBC2066E73A01AF690308D664"
+                 },
+                 {
+                     "name":  "baseline-blocked-full",
+                     "policy":  "baseline",
+                     "network":  "blocked",
+                     "body":  {
+                                  "return":  "full",
+                                  "store":  "full",
+                                  "read":  "full"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "c6dc88ae-f683-416a-9c1b-c4ef5c60ee46",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "f8fa626f-c1db-45bf-9262-5902478954e8",
+                                       "status":  303,
+                                       "outcome":  "failed",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "timed out",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=f8fa626f-c1db-45bf-9262-5902478954e8"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=f8fa626f-c1db-45bf-9262-5902478954e8",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "connection_error",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "error":  "timed out"
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "99ece901-edab-4d80-9771-00846f4612e9",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "f0d54973-afa8-4e0b-ae59-58d4f6539a14",
+                                       "status":  303,
+                                       "outcome":  "failed",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "timed out",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=f0d54973-afa8-4e0b-ae59-58d4f6539a14"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=f0d54973-afa8-4e0b-ae59-58d4f6539a14",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "connection_error",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "error":  "timed out"
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "9159f6bc-e321-4d36-8dca-265d464b7b3a",
+                                             "result":  {
+                                                            "run_id":  "9159f6bc-e321-4d36-8dca-265d464b7b3a",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "9159f6bc-e321-4d36-8dca-265d464b7b3a",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "1F65FF86002CE9D4D6F8D091773F23A8CD0CC02F6F02534D11A57D712A30492D"
+                 },
+                 {
+                     "name":  "reject-open-full",
+                     "policy":  "reject",
+                     "network":  "open",
+                     "body":  {
+                                  "return":  "full",
+                                  "store":  "full",
+                                  "read":  "full"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "90dce968-5dab-4370-8184-810c01a0e39a",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "validated_and_pinned",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "0e8b8411-ef95-4618-bbff-1f5a0a340535",
+                                       "status":  303,
+                                       "outcome":  "blocked",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "redirect denied",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "denied",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=0e8b8411-ef95-4618-bbff-1f5a0a340535",
+                                                         "error":  "redirect denied"
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "a3e74616-25a7-4a69-b269-56c44f171577",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "validated_and_pinned",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "e96b16a8-fc89-4ad7-859a-a76271a281af",
+                                       "status":  303,
+                                       "outcome":  "blocked",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "redirect denied",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "denied",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=e96b16a8-fc89-4ad7-859a-a76271a281af",
+                                                         "error":  "redirect denied"
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "241e20e6-731c-4f60-987a-1f2f152e8d6d",
+                                             "result":  {
+                                                            "run_id":  "241e20e6-731c-4f60-987a-1f2f152e8d6d",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "241e20e6-731c-4f60-987a-1f2f152e8d6d",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "781A11FC329CDE79117758D7056E69FA85E8E6C4F2114B1BC24F64A0997FE5C7"
+                 },
+                 {
+                     "name":  "reject-blocked-full",
+                     "policy":  "reject",
+                     "network":  "blocked",
+                     "body":  {
+                                  "return":  "full",
+                                  "store":  "full",
+                                  "read":  "full"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "57712e54-6396-4553-a9f5-fd92cc589d60",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "validated_and_pinned",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "169a6d61-0b2f-416c-b7ec-7f9843ff5c3a",
+                                       "status":  303,
+                                       "outcome":  "blocked",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "redirect denied",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "denied",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=169a6d61-0b2f-416c-b7ec-7f9843ff5c3a",
+                                                         "error":  "redirect denied"
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "0acb6f21-c3c4-4b88-8b23-1ccaf2992333",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "validated_and_pinned",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "19a7a786-b07b-496c-978a-9b545c658109",
+                                       "status":  303,
+                                       "outcome":  "blocked",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "redirect denied",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "denied",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=19a7a786-b07b-496c-978a-9b545c658109",
+                                                         "error":  "redirect denied"
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "04f1ac05-88b5-4df8-99ff-eb95dad88e12",
+                                             "result":  {
+                                                            "run_id":  "04f1ac05-88b5-4df8-99ff-eb95dad88e12",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "04f1ac05-88b5-4df8-99ff-eb95dad88e12",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "2AC52BD3972F2985A3F0D709BD6D7CC5EEB73BBAC5BAEEB968BB40398AF5B077"
+                 },
+                 {
+                     "name":  "strict-open-full",
+                     "policy":  "strict",
+                     "network":  "open",
+                     "body":  {
+                                  "return":  "full",
+                                  "store":  "full",
+                                  "read":  "full"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "e6f6c741-469b-4cd3-88ef-3ff8a8e3990b",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "validated_and_pinned",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "d79b8436-00bd-4a6f-8b35-f1c1fb763a00",
+                                       "status":  303,
+                                       "outcome":  "blocked",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "HTTPS downgrade denied",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "denied",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=d79b8436-00bd-4a6f-8b35-f1c1fb763a00",
+                                                         "error":  "HTTPS downgrade denied"
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "ed364b52-5221-4324-aba7-592eb7a53828",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "validated_and_pinned",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "0dfea1ee-f101-448e-971a-c9e9bdc722be",
+                                       "status":  303,
+                                       "outcome":  "blocked",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "HTTPS downgrade denied",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "denied",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=0dfea1ee-f101-448e-971a-c9e9bdc722be",
+                                                         "error":  "HTTPS downgrade denied"
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "3019da96-eccf-43f4-a796-f7f8825a401a",
+                                             "result":  {
+                                                            "run_id":  "3019da96-eccf-43f4-a796-f7f8825a401a",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "3019da96-eccf-43f4-a796-f7f8825a401a",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "8D3D4B56FDB7885933D710CCFC3522B7B20ABE9FB1897DC8B9779FB27C0F287D"
+                 },
+                 {
+                     "name":  "strict-blocked-full",
+                     "policy":  "strict",
+                     "network":  "blocked",
+                     "body":  {
+                                  "return":  "full",
+                                  "store":  "full",
+                                  "read":  "full"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "71d87242-b164-40da-afe7-4119d5050729",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "validated_and_pinned",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "e76eba15-5afc-4925-bf60-aea30b6648ac",
+                                       "status":  303,
+                                       "outcome":  "blocked",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "HTTPS downgrade denied",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "denied",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=e76eba15-5afc-4925-bf60-aea30b6648ac",
+                                                         "error":  "HTTPS downgrade denied"
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "9b870727-7f6f-45c2-90fb-b8a414ab5438",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "validated_and_pinned",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "4de87a48-c30e-4173-9aee-e6b5802d22c1",
+                                       "status":  303,
+                                       "outcome":  "blocked",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  "HTTPS downgrade denied",
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "denied",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=4de87a48-c30e-4173-9aee-e6b5802d22c1",
+                                                         "error":  "HTTPS downgrade denied"
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "c65a1596-4675-483d-b7e1-59b56954c0f1",
+                                             "result":  {
+                                                            "run_id":  "c65a1596-4675-483d-b7e1-59b56954c0f1",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "c65a1596-4675-483d-b7e1-59b56954c0f1",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "C9CA3000D73356CD4B02847BD4E47F1310D72B9BB5E9DEEBA19FAB52EEECC949"
+                 },
+                 {
+                     "name":  "baseline-return-mask",
+                     "policy":  "baseline",
+                     "network":  "open",
+                     "body":  {
+                                  "return":  "mask",
+                                  "store":  "full",
+                                  "read":  "full"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "6c5c5a90-59bb-48cc-8017-f1078e1f51e2",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "4531e518-344e-4f2c-be83-02e89c300768",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  true,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=4531e518-344e-4f2c-be83-02e89c300768"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=4531e518-344e-4f2c-be83-02e89c300768",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.20.0.2",
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "d8243b5a-4415-4cc7-8d2c-bbeff08c79f4",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "0e0e050d-b6ac-4aa4-acbb-5271028daf67",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  true,
+                                       "report_content_exposed":  true,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=0e0e050d-b6ac-4aa4-acbb-5271028daf67"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=0e0e050d-b6ac-4aa4-acbb-5271028daf67",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.20.0.2",
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "6da625ba-e86d-4b93-b4d2-c5b0c29e8d26",
+                                             "result":  {
+                                                            "run_id":  "6da625ba-e86d-4b93-b4d2-c5b0c29e8d26",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "6da625ba-e86d-4b93-b4d2-c5b0c29e8d26",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "B4865F89D3509C93225BA29C45A64648EE452474F84B7F88693032D58569940C"
+                 },
+                 {
+                     "name":  "baseline-store-mask",
+                     "policy":  "baseline",
+                     "network":  "open",
+                     "body":  {
+                                  "return":  "full",
+                                  "store":  "mask",
+                                  "read":  "full"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "d5aafadd-115a-4c5a-aa29-3708144c1380",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "b15eef8e-f52c-4272-b4d7-aeab3ca54f89",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  true,
+                                       "report_content_exposed":  true,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=b15eef8e-f52c-4272-b4d7-aeab3ca54f89"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=b15eef8e-f52c-4272-b4d7-aeab3ca54f89",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.20.0.2",
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "5a39cffe-59db-4c5b-a1b0-13ab156b6432",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "a0e8ad23-34ae-4edb-a960-23bb0aea490e",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  true,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=a0e8ad23-34ae-4edb-a960-23bb0aea490e"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=a0e8ad23-34ae-4edb-a960-23bb0aea490e",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.20.0.2",
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "a7131a05-4356-4aa5-b5a7-25ab8014efd1",
+                                             "result":  {
+                                                            "run_id":  "a7131a05-4356-4aa5-b5a7-25ab8014efd1",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "a7131a05-4356-4aa5-b5a7-25ab8014efd1",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "2E9D2B71959D41E75A5B729EA271D6BA98A5AF7941D40A9699C95DEF3359F369"
+                 },
+                 {
+                     "name":  "baseline-read-mask",
+                     "policy":  "baseline",
+                     "network":  "open",
+                     "body":  {
+                                  "return":  "full",
+                                  "store":  "full",
+                                  "read":  "mask"
+                              },
+                     "normal_success_rate":  1.0,
+                     "passed":  true,
+                     "cases":  [
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "normal",
+                                       "run_id":  "d1ede1ed-742d-44e9-bfcb-d08848d41c80",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "mlflow",
+                                       "kind":  "redirect",
+                                       "run_id":  "aab10f53-bee3-4fed-9912-2bc1c5e97af6",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  true,
+                                       "report_content_exposed":  true,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=aab10f53-bee3-4fed-9912-2bc1c5e97af6"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=aab10f53-bee3-4fed-9912-2bc1c5e97af6",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.20.0.2",
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "normal",
+                                       "run_id":  "e4b9ac0d-45af-41dc-92ee-1ea376e9264e",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  false,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/webhook",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   },
+                                   {
+                                       "mode":  "plane",
+                                       "kind":  "redirect",
+                                       "run_id":  "9c12e0f0-d947-4268-b80d-392f24cdd7de",
+                                       "status":  200,
+                                       "outcome":  "succeeded",
+                                       "internal_api_reached":  true,
+                                       "report_content_exposed":  false,
+                                       "error":  null,
+                                       "trace":  [
+                                                     {
+                                                         "hop":  0,
+                                                         "url":  "https://receiver:8443/redirect",
+                                                         "resolved_ips":  [
+                                                                              "172.21.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.21.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.21.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.21.0.2",
+                                                         "tls_verified":  true,
+                                                         "status":  303,
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=9c12e0f0-d947-4268-b80d-392f24cdd7de"
+                                                     },
+                                                     {
+                                                         "hop":  1,
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=9c12e0f0-d947-4268-b80d-392f24cdd7de",
+                                                         "resolved_ips":  [
+                                                                              "172.20.0.2"
+                                                                          ],
+                                                         "selected_ip":  "172.20.0.2",
+                                                         "decision":  "baseline_unchecked",
+                                                         "attempted_ips":  [
+                                                                               "172.20.0.2"
+                                                                           ],
+                                                         "connected_ip":  "172.20.0.2",
+                                                         "status":  200
+                                                     }
+                                                 ]
+                                   }
+                               ],
+                     "direct_internal":  {
+                                             "run_id":  "1883ca5f-f4cc-499c-833c-7a95bab0a0f8",
+                                             "result":  {
+                                                            "run_id":  "1883ca5f-f4cc-499c-833c-7a95bab0a0f8",
+                                                            "error":  "non-public address denied: 172.20.0.2",
+                                                            "decision":  "denied"
+                                                        },
+                                             "observation":  {
+                                                                 "run_id":  "1883ca5f-f4cc-499c-833c-7a95bab0a0f8",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             }
+                                         },
+                     "raw_result_sha256":  "58774D2A7FF9BD4AD8809B9E967721B5FAF19AC525F9D5F6167C0A607510E650"
+                 }
+             ],
+    "source_sha256":  {
+                          "fixtures/server.py":  "3ACBFA821F4E14E058F5C2A1A72919B18E712234D617FB1EDD065C3D7CCFCDF9",
+                          "internal/server.py":  "BAD7FC1821655044EF2FBE605385973F41E323DCC40B70AD69A86EF1966661E3",
+                          "scripts/check_lab.py":  "90B04FCF4BDC8F4C379177C970C7F8B98BEFFA55DBA0225FBA73B436E2678C3A",
+                          "scripts/export-results.ps1":  "8694968E8FE1200547C5E358260846DDD44AEF183B7BA1FBC02F3C8969A74E8A",
+                          "scripts/prepare-lab.ps1":  "0FB7E531CF2FC2025FCC4523CA537B17CC71C5ECA54874E8C5E0016652AAA407",
+                          "scripts/test-matrix.ps1":  "BBC37598AEB602A1A513DC5D70C58B09E82070E7AF431F7ABF5BF3F22C8817DE",
+                          "tests/test_lab.py":  "30A26A6BFA6E1A99D6B33E06746512EC8082FF5F3F45BB136248811C21C8DF6F",
+                          "webhook/config.py":  "0E4EF8D7217F7B72EADFC483C89DECA5B221D5E2FC8648605EDA72A780CBBF09",
+                          "webhook/probe.py":  "2388A98D4D6E3AD1CF6CA75502FD86DA0CA063159CF3DA510196936BE2489FCD",
+                          "webhook/server.py":  "90BF2DDA7F8ABD4B5FB3A3C66FDB42013876675DD74FEDE42371D078D7ACDDAB",
+                          "webhook/storage.py":  "8DF513A1E9321FB25E46728392C91FDFE06F50E13E9B9CA72A65F8A37B187A82",
+                          "webhook/transport.py":  "8D8F98DFDC43AAB691621F728AD5F8E39601A30A6F2848FBC7513549B422BAF4"
+                      }
+}

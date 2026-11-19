@@ -1,0 +1,41 @@
+# Optional self-contained fixtures; normal deployment keeps the original two services.
+services:
+  webhook:
+    environment:
+      URL_EXCEPTIONS_FILE: /config/url-exceptions.lab.local.json
+      CA_FILE: /certs/ca.pem
+    volumes:
+      - ./tests/certs:/certs:ro
+  receiver:
+    init: true
+    build: ./fixtures
+    image: webhook-connectivity-lab/fixture:local
+    user: "10001:10001"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      REPORT_API_URL: ${REPORT_API_URL:-http://internal:8000/reports/alpha}
+      FIXTURE_DB_PATH: /data/fixture.sqlite3
+      TLS_CERT: /certs/server.pem
+      TLS_KEY: /certs/server-key.pem
+    volumes:
+      - receiver-data:/data
+      - ./tests/certs:/certs:ro
+    networks: [edge]
+  verifier:
+    profiles: [test]
+    build:
+      context: .
+      dockerfile: tests/Dockerfile
+    image: webhook-connectivity-lab/verifier:local
+    environment:
+      CA_FILE: /certs/ca.pem
+      RECEIVER_URL: ${RECEIVER_URL:-https://receiver:8443}
+      REPORT_API_URL: ${REPORT_API_URL:-http://internal:8000/reports/alpha}
+    volumes:
+      - ./tests/certs:/certs:ro
+      - ./artifacts:/artifacts
+    networks: [edge, protected]
+volumes:
+  receiver-data:
