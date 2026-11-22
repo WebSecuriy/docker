@@ -21,6 +21,11 @@ class Settings:
     ca_file: str | None = None
     allow_http: bool = True
     exceptions: list = field(default_factory=list)
+    # Disabled by default.  These profiles are deliberately constrained to the
+    # local synthetic CVE lab; they are not production compatibility switches.
+    cve_demo_mode: str = "none"
+    cve_demo_ack: str = ""
+    cve_plane_target: str | None = None
 
     def __post_init__(self):
         if self.policy not in ("baseline", "reject", "strict"):
@@ -41,6 +46,20 @@ class Settings:
                 raise ValueError("exception requires origin and nonempty cidrs")
             for cidr in rule["cidrs"]:
                 ipaddress.ip_network(cidr)
+        if self.cve_demo_mode not in ("none", "mlflow-2026-64849", "plane-2026-30242", "all"):
+            raise ValueError("CVE_DEMO_MODE must be none, mlflow-2026-64849, plane-2026-30242 or all")
+        if self.cve_demo_mode != "none" and self.cve_demo_ack != "local-lab-only":
+            raise ValueError("CVE demo requires CVE_DEMO_ACK=local-lab-only")
+        if self.plane_cve_demo and not self.cve_plane_target:
+            raise ValueError("Plane CVE demo requires CVE_DEMO_PLANE_TARGET")
+
+    @property
+    def mlflow_cve_demo(self):
+        return self.cve_demo_mode in ("mlflow-2026-64849", "all")
+
+    @property
+    def plane_cve_demo(self):
+        return self.cve_demo_mode in ("plane-2026-30242", "all")
 
     @classmethod
     def from_env(cls):
@@ -62,6 +81,9 @@ class Settings:
             ca_file=os.getenv("CA_FILE") or None,
             allow_http=os.getenv("ALLOW_HTTP", "true").lower() == "true",
             exceptions=exceptions,
+            cve_demo_mode=os.getenv("CVE_DEMO_MODE", "none"),
+            cve_demo_ack=os.getenv("CVE_DEMO_ACK", ""),
+            cve_plane_target=os.getenv("CVE_DEMO_PLANE_TARGET") or None,
         )
 
 

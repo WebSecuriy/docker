@@ -13,6 +13,8 @@ from storage import Store
 from transport import Transport
 
 EVENTS = {"model.registered", "issue.updated"}
+MLFLOW_CVE_WORKSPACE = "__cve_mlflow_2026_64849"
+MLFLOW_CVE_EVENT = {"entity": "REGISTERED_MODEL", "action": "CREATED"}
 
 
 class ApiError(Exception):
@@ -25,6 +27,9 @@ class Application:
         self.settings = settings
         self.transport = Transport(settings)
         self.store = Store(settings.db_path, settings.bootstrap_file)
+        if settings.mlflow_cve_demo:
+            self.store.execute("INSERT OR IGNORE INTO workspaces VALUES(?,?)",
+                               (MLFLOW_CVE_WORKSPACE, "Synthetic MLflow CVE demo"))
         self.stop = threading.Event()
         self.wake = threading.Event()
         self.worker = threading.Thread(target=self.work, name="single-delivery-worker", daemon=True)
@@ -78,6 +83,95 @@ class Application:
         hook["events"] = json.loads(hook["events"])
         return hook
 
+    def mlflow_cve_event(self, event):
+        if not isinstance(event, dict) or event.get("entity") != MLFLOW_CVE_EVENT["entity"] or event.get("action") != MLFLOW_CVE_EVENT["action"]:
+            raise ApiError(400, "CVE demo accepts only REGISTERED_MODEL/CREATED")
+        return "model.registered"
+
+    def mlflow_cve_create(self, body):
+        """Minimal, route-shaped model of the vulnerable MLflow create call."""
+        run_id = self.run(MLFLOW_CVE_WORKSPACE, body.get("run_id"))
+        name, url, events = body.get("name"), body.get("url"), body.get("events")
+        if not isinstance(name, str) or not 1 <= len(name) <= 100 or not isinstance(events, list) or not events:
+            raise ApiError(400, "name, url and events are required")
+        try:
+            if self.transport.parse(url)[0].scheme != "https":
+                raise ValueError("MLflow CVE demo requires an HTTPS first hop")
+            normalized_events = [self.mlflow_cve_event(event) for event in events]
+            ips = self.transport.validate_registration(url)
+        except (ValueError, OSError) as error:
+            self.store.audit(MLFLOW_CVE_WORKSPACE, run_id, "mlflow_cve_registration", url=url,
+                             decision="denied", error=str(error))
+            return 400, {"run_id": run_id, "error": str(error), "decision": "denied",
+                         "mock_profile": "mlflow-cve-2026-64849"}
+        hook_id = str(uuid.uuid4())
+        self.store.execute("INSERT INTO hooks VALUES(?,?,?,?,?)", (hook_id, MLFLOW_CVE_WORKSPACE, name, url,
+                                                                     json.dumps(normalized_events)))
+        self.store.audit(MLFLOW_CVE_WORKSPACE, run_id, "mlflow_cve_registration", hook_id=hook_id, url=url,
+                         resolved_ips=ips, decision="allowed", validator="initial_url_only")
+        return 200, {"run_id": run_id, "mock_profile": "mlflow-cve-2026-64849",
+                     "webhook": {"webhook_id": hook_id, "name": name, "url": url,
+                                 "events": events, "status": "ACTIVE"}}
+
+    def mlflow_cve_test(self, hook_id, body):
+        """Minimal, route-shaped model of the vulnerable unauthenticated /test call."""
+        hook = self.hook(MLFLOW_CVE_WORKSPACE, hook_id)
+        if "webhook_id" in body and body["webhook_id"] != hook_id:
+            raise ApiError(400, "webhook_id does not match path")
+        event = self.mlflow_cve_event(body.get("event"))
+        if event not in hook["events"]:
+            raise ApiError(400, "event is not subscribed")
+        run_id = self.run(MLFLOW_CVE_WORKSPACE, body.get("run_id"))
+        # The affected MLflow delivery path checked the *original* URL again
+        # before delivery, then made a separate (unpinned) connection.  Keeping
+        # these as two operations makes the redirect/DNS TOCTOU visible here.
+        try:
+            original_ips = self.transport.validate_registration(hook["url"])
+        except (ValueError, OSError) as error:
+            self.store.audit(MLFLOW_CVE_WORKSPACE, run_id, "mlflow_cve_test_validation", hook_id=hook_id,
+                             url=hook["url"], decision="denied", error=str(error))
+            return 400, {"run_id": run_id, "mock_profile": "mlflow-cve-2026-64849",
+                         "result": {"success": False, "response_status": None, "response_body": "",
+                                    "outcome": "blocked", "error": str(error)}}
+        self.store.audit(MLFLOW_CVE_WORKSPACE, run_id, "mlflow_cve_test_validation", hook_id=hook_id,
+                         url=hook["url"], resolved_ips=original_ips, decision="allowed")
+        delivery = self.enqueue(MLFLOW_CVE_WORKSPACE, run_id, hook, "mlflow-cve-2026-64849", event)
+        result = self.send(delivery)
+        response_body = body_view(result["body"], self.settings.return_body, self.settings.body_limit)
+        self.expose(MLFLOW_CVE_WORKSPACE, run_id, response_body, "mlflow_cve_test")
+        return 200, {"run_id": run_id, "delivery_id": delivery["id"], "mock_profile": "mlflow-cve-2026-64849",
+                     "result": {"success": result["outcome"] == "succeeded", "response_status": result["status"],
+                                "response_body": response_body, "outcome": result["outcome"], "error": result["error"]}}
+
+    def plane_cve_create(self, workspace, body):
+        """Constrained model of Plane <=1.2.1's direct-private-URL registration flaw."""
+        run_id = self.run(workspace, body.get("run_id"))
+        name, url, events = body.get("name"), body.get("url"), body.get("events")
+        if not isinstance(name, str) or not 1 <= len(name) <= 100 or not isinstance(events, list) or not events or any(
+                not isinstance(event, str) or event not in EVENTS for event in events):
+            raise ApiError(400, "name and subscriptions (model.registered, issue.updated) required")
+        try:
+            if self.settings.policy == "baseline":
+                ips = self.transport.validate_plane_v121_registration(url)
+                if not self.transport.same_url(url, self.settings.cve_plane_target):
+                    raise ValueError("CVE demo target is not the configured synthetic internal report URL")
+                validator = "plane_v1_2_1_loopback_only"
+            else:
+                ips = self.transport.validate_registration(url)
+                validator = "standard_public_destination"
+        except (ValueError, OSError) as error:
+            self.store.audit(workspace, run_id, "plane_cve_registration", url=url, decision="denied",
+                             validator="plane_v1_2_1_loopback_only" if self.settings.policy == "baseline" else "standard_public_destination",
+                             error=str(error))
+            return 400, {"run_id": run_id, "error": str(error), "decision": "denied",
+                         "mock_profile": "plane-cve-2026-30242"}
+        hook_id = str(uuid.uuid4())
+        self.store.execute("INSERT INTO hooks VALUES(?,?,?,?,?)", (hook_id, workspace, name, url, json.dumps(events)))
+        self.store.audit(workspace, run_id, "plane_cve_registration", hook_id=hook_id, url=url, resolved_ips=ips,
+                         decision="allowed", validator=validator, lab_target_only=True)
+        return 201, dict(self.hook(workspace, hook_id), run_id=run_id, mock_profile="plane-cve-2026-30242",
+                         validator=validator)
+
     def enqueue(self, workspace, run_id, hook, mode, event):
         delivery_id = str(uuid.uuid4())
         payload = json.dumps(dict(run_id=run_id, event=event, workspace_id=workspace,
@@ -85,7 +179,7 @@ class Application:
                                   "model": "demand-demo-v1", "issue": "DEMO-1", "status": "updated"}), ensure_ascii=False)
         self.store.execute("INSERT INTO deliveries(id,workspace,run_id,hook_id,mode,url,payload,policy,state) VALUES(?,?,?,?,?,?,?,?,?)",
                            (delivery_id, workspace, run_id, hook["id"], mode, hook["url"], payload,
-                            json.dumps(dataclasses.asdict(self.settings)), "sending" if mode == "mlflow" else "queued"))
+                             json.dumps(dataclasses.asdict(self.settings)), "sending" if mode.startswith("mlflow") else "queued"))
         self.store.audit(workspace, run_id, "delivery_created", delivery_id=delivery_id,
                          mode=mode, initial_url=hook["url"], policy=self.settings.policy,
                          body_policies={"return": self.settings.return_body, "store": self.settings.store_body, "read": self.settings.read_body})
@@ -191,6 +285,17 @@ class WebhookHandler(BaseHTTPRequestHandler):
             return 202, {"service": "webhook", "accepted": True}
         if not parts or parts[0] != "api":
             raise ApiError(404, "not found")
+        # This route is deliberately unauthenticated only under the explicit,
+        # acknowledgement-gated local MLflow CVE profile.  It remains absent in
+        # the normal mock service.
+        if parts[:4] == ["api", "2.0", "mlflow", "webhooks"]:
+            if not self.app.settings.mlflow_cve_demo:
+                raise ApiError(404, "not found")
+            if self.command == "POST" and len(parts) == 4:
+                return self.app.mlflow_cve_create(self.read_json())
+            if self.command == "POST" and len(parts) == 6 and parts[5] == "test":
+                return self.app.mlflow_cve_test(parts[4], self.read_json())
+            raise ApiError(404, "not found")
         account = self.authenticate()
         if parts == ["api", "me"] and self.command == "GET":
             return 200, dict(account, memberships=self.app.store.rows("SELECT workspace,role FROM members WHERE account=?", (account["id"],)))
@@ -208,6 +313,18 @@ class WebhookHandler(BaseHTTPRequestHandler):
                     db.execute("INSERT INTO workspaces VALUES(?,?)", (workspace, name))
                     db.execute("INSERT INTO members VALUES(?,?,?)", (workspace, account["id"], "admin"))
                 return 201, {"id": workspace, "name": name, "role": "admin"}
+        # The Plane CVE route is authenticated and ADMIN-scoped, unlike the
+        # MLflow profile above.  It is intentionally separate from the safe
+        # generic registration route so the normal API never accepts private
+        # destinations merely because a demo profile is enabled.
+        if parts[:4] == ["api", "cve", "plane", "workspaces"]:
+            if not self.app.settings.plane_cve_demo:
+                raise ApiError(404, "not found")
+            if self.command != "POST" or len(parts) != 6 or parts[5] != "webhooks":
+                raise ApiError(404, "not found")
+            workspace = parts[4]
+            self.app.require(account, workspace, admin=True)
+            return self.app.plane_cve_create(workspace, self.read_json())
         if len(parts) < 4 or parts[:2] != ["api", "workspaces"]:
             raise ApiError(404, "not found")
         workspace, resource = parts[2:4]
