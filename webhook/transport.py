@@ -67,6 +67,28 @@ class Transport:
     def validate_registration(self, url):
         return self.resolve(url, True)[3]
 
+    def validate_plane_v121_registration(self, url):
+        """Reproduce only Plane v1.2.1's registration check for the lab.
+
+        The vulnerable serializer rejected loopback addresses but accepted other
+        non-public ranges.  The caller must additionally enforce the lab's
+        fixed synthetic target; this method must never be used by the regular
+        webhook-management API.
+        """
+        _parsed, _host, _port, addresses = self.resolve(url, False)
+        for address in addresses:
+            if ipaddress.ip_address(address).is_loopback:
+                raise PolicyError(f"loopback address denied by Plane v1.2.1 model: {address}")
+        return addresses
+
+    def same_url(self, left, right):
+        """Compare canonical scheme, host, port, path and query for lab allowlists."""
+        left_parsed, left_host, left_port = self.parse(left)
+        right_parsed, right_host, right_port = self.parse(right)
+        return (left_parsed.scheme, left_host, left_port, left_parsed.path or "/", left_parsed.query) == (
+            right_parsed.scheme, right_host, right_port, right_parsed.path or "/", right_parsed.query
+        )
+
     def request(self, url, method, payload, headers, trace):
         # Baseline deliberately performs fresh, unchecked DNS after registration.
         checked = self.settings.policy in ("strict", "reject")

@@ -273,6 +273,92 @@ class LabTests(unittest.TestCase):
             hook = self.register(base)
             self.call(base, f'/api/workspaces/alpha/hooks/{hook["id"]}/test', "POST", {}, status=409)
 
+    def test_cve_profiles_are_disabled_and_acknowledgement_gated_by_default(self):
+        with self.assertRaises(ValueError):
+            Settings(cve_demo_mode="mlflow-2026-64849")
+        with self.assertRaises(ValueError):
+            Settings(cve_demo_mode="plane-2026-30242", cve_demo_ack="local-lab-only")
+        with self.api() as (base, _):
+            self.call(base, "/api/2.0/mlflow/webhooks", "POST", {
+                "name": "disabled", "url": "https://example.com/",
+                "events": [{"entity": "REGISTERED_MODEL", "action": "CREATED"}]}, actor=None, status=404)
+            self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
+                "name": "disabled", "url": self.report_url, "events": ["issue.updated"]}, status=404)
+
+    def test_mlflow_cve_profile_models_unauthenticated_redirect_readback(self):
+        config = dict(cve_demo_mode="mlflow-2026-64849", cve_demo_ack="local-lab-only")
+        with self.api(policy="baseline", **config) as (base, _):
+            direct = self.call(base, "/api/2.0/mlflow/webhooks", "POST", {
+                "name": "negative", "url": self.report_url,
+                "events": [{"entity": "REGISTERED_MODEL", "action": "CREATED"}],
+                "run_id": str(uuid.uuid4())}, actor=None, status=400)
+            self.assertEqual(direct["decision"], "denied")
+            created = self.call(base, "/api/2.0/mlflow/webhooks", "POST", {
+                "name": "redirect", "url": self.tls_url + "/redirect?status=302",
+                "events": [{"entity": "REGISTERED_MODEL", "action": "CREATED"}],
+                "run_id": str(uuid.uuid4())}, actor=None)
+            hook_id = created["webhook"]["webhook_id"]
+            run_id = str(uuid.uuid4())
+            tested = self.call(base, f"/api/2.0/mlflow/webhooks/{hook_id}/test", "POST", {
+                "webhook_id": hook_id,
+                "event": {"entity": "REGISTERED_MODEL", "action": "CREATED"},
+                "run_id": run_id}, actor=None)
+            self.assertTrue(tested["result"]["success"])
+            self.assertEqual(tested["result"]["response_status"], 200)
+            self.assertIn("REPORT-" + run_id, tested["result"]["response_body"])
+            self.assertTrue(self.reached(run_id))
+        with self.api(policy="strict", **config) as (base, _):
+            created = self.call(base, "/api/2.0/mlflow/webhooks", "POST", {
+                "name": "redirect", "url": self.tls_url + "/redirect?status=302",
+                "events": [{"entity": "REGISTERED_MODEL", "action": "CREATED"}],
+                "run_id": str(uuid.uuid4())}, actor=None)
+            run_id = str(uuid.uuid4())
+            tested = self.call(base, f"/api/2.0/mlflow/webhooks/{created['webhook']['webhook_id']}/test", "POST", {
+                "event": {"entity": "REGISTERED_MODEL", "action": "CREATED"}, "run_id": run_id}, actor=None)
+            self.assertFalse(tested["result"]["success"])
+            self.assertNotIn("REPORT-" + run_id, tested["result"]["response_body"] or "")
+            self.assertFalse(self.reached(run_id))
+
+    def test_plane_cve_profile_models_direct_private_registration_and_log_readback(self):
+        legacy = Transport(self.settings(), resolver=lambda *_args, **_kwargs: [
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("172.20.0.10", 80))])
+        self.assertEqual(legacy.validate_plane_v121_registration("http://internal.example/report"), ["172.20.0.10"])
+        loopback = Transport(self.settings(), resolver=lambda *_args, **_kwargs: [
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("127.0.0.1", 80))])
+        with self.assertRaises(PolicyError):
+            loopback.validate_plane_v121_registration("http://internal.example/report")
+
+        config = dict(cve_demo_mode="plane-2026-30242", cve_demo_ack="local-lab-only",
+                      cve_plane_target=self.report_url)
+        with self.api(policy="baseline", **config) as (base, app):
+            # Unit fixtures listen on loopback, while Docker's internal service
+            # resolves to a private bridge address.  Keep the delivery real and
+            # substitute only the registration-time synthetic DNS observation.
+            app.transport.validate_plane_v121_registration = lambda _url: ["172.20.0.10"]
+            registered = self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
+                "name": "direct-private", "url": self.report_url, "events": ["issue.updated"],
+                "run_id": str(uuid.uuid4())}, status=201)
+            self.assertEqual(registered["validator"], "plane_v1_2_1_loopback_only")
+            run_id = str(uuid.uuid4())
+            queued = self.call(base, "/api/workspaces/alpha/events", "POST", {
+                "event": "issue.updated", "run_id": run_id}, status=202)
+            self.assertEqual(len(queued["delivery_ids"]), 1)
+            for _ in range(100):
+                rows = self.call(base, "/api/workspaces/alpha/deliveries?run_id=" + run_id)["deliveries"]
+                matching = next((row for row in rows if row["hook_id"] == registered["id"]), None)
+                if matching and matching["state"] not in ("queued", "sending"):
+                    break
+                time.sleep(0.02)
+            self.assertEqual(matching["state"], "succeeded")
+            self.assertIn("REPORT-" + run_id, matching["result"]["body"])
+            self.assertTrue(self.reached(run_id))
+            self.call(base, "/api/workspaces/alpha/deliveries?run_id=" + run_id, actor="bob", status=403)
+        with self.api(policy="strict", **config) as (base, _):
+            denied = self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
+                "name": "direct-private", "url": self.report_url, "events": ["issue.updated"],
+                "run_id": str(uuid.uuid4())}, status=400)
+            self.assertEqual(denied["decision"], "denied")
+
 
 if __name__ == "__main__":
     unittest.main()
