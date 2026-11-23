@@ -43,7 +43,11 @@ services:
       INTERNAL_HEALTH_URL: ${INTERNAL_HEALTH_URL:-http://internal:8000/health}
       CVE_DEMO_MODE: ${CVE_DEMO_MODE:-none}
       CVE_DEMO_ACK: ${CVE_DEMO_ACK:-}
-      CVE_DEMO_PLANE_TARGET: ${CVE_DEMO_PLANE_TARGET:-}
+      MLFLOW_VERSION_PROFILE: ${MLFLOW_VERSION_PROFILE:-v3.13.0-vulnerable}
+      MLFLOW_CVE_AUTH_REQUIRED: ${MLFLOW_CVE_AUTH_REQUIRED:-false}
+      PLANE_VERSION_PROFILE: ${PLANE_VERSION_PROFILE:-v1.3.1-vulnerable}
+      CVE_DEMO_PLANE_ORIGIN: ${CVE_DEMO_PLANE_ORIGIN:-}
+      PLANE_LOG_FILTER: ${PLANE_LOG_FILTER:-none}
     volumes:
       - webhook-data:/data
       - ./config:/config:ro

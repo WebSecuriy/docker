@@ -8,13 +8,15 @@ import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlsplit
 
-from config import Settings, body_view
+from config import Settings, body_view, filter_plane_log
 from storage import Store
 from transport import Transport
 
 EVENTS = {"model.registered", "issue.updated"}
 MLFLOW_CVE_WORKSPACE = "__cve_mlflow_2026_64849"
 MLFLOW_CVE_EVENT = {"entity": "REGISTERED_MODEL", "action": "CREATED"}
+MLFLOW_CVE_MODE = "mlflow-cve-2026-64849"
+PLANE_CVE_MODE = "plane-cve-2026-105636"
 
 
 class ApiError(Exception):
@@ -30,6 +32,10 @@ class Application:
         if settings.mlflow_cve_demo:
             self.store.execute("INSERT OR IGNORE INTO workspaces VALUES(?,?)",
                                (MLFLOW_CVE_WORKSPACE, "Synthetic MLflow CVE demo"))
+            # The fixed-profile comparison must demonstrate authorization, not
+            # merely the presence of a syntactically valid Bearer token.
+            self.store.execute("INSERT OR IGNORE INTO members VALUES(?,?,?)",
+                               (MLFLOW_CVE_WORKSPACE, "alice", "admin"))
         self.stop = threading.Event()
         self.wake = threading.Event()
         self.worker = threading.Thread(target=self.work, name="single-delivery-worker", daemon=True)
@@ -103,13 +109,15 @@ class Application:
             self.store.audit(MLFLOW_CVE_WORKSPACE, run_id, "mlflow_cve_registration", url=url,
                              decision="denied", error=str(error))
             return 400, {"run_id": run_id, "error": str(error), "decision": "denied",
-                         "mock_profile": "mlflow-cve-2026-64849"}
+                         "mock_profile": MLFLOW_CVE_MODE,
+                         "version_profile": self.settings.mlflow_version_profile}
         hook_id = str(uuid.uuid4())
         self.store.execute("INSERT INTO hooks VALUES(?,?,?,?,?)", (hook_id, MLFLOW_CVE_WORKSPACE, name, url,
                                                                      json.dumps(normalized_events)))
         self.store.audit(MLFLOW_CVE_WORKSPACE, run_id, "mlflow_cve_registration", hook_id=hook_id, url=url,
                          resolved_ips=ips, decision="allowed", validator="initial_url_only")
-        return 200, {"run_id": run_id, "mock_profile": "mlflow-cve-2026-64849",
+        return 200, {"run_id": run_id, "mock_profile": MLFLOW_CVE_MODE,
+                     "version_profile": self.settings.mlflow_version_profile,
                      "webhook": {"webhook_id": hook_id, "name": name, "url": url,
                                  "events": events, "status": "ACTIVE"}}
 
@@ -130,47 +138,53 @@ class Application:
         except (ValueError, OSError) as error:
             self.store.audit(MLFLOW_CVE_WORKSPACE, run_id, "mlflow_cve_test_validation", hook_id=hook_id,
                              url=hook["url"], decision="denied", error=str(error))
-            return 400, {"run_id": run_id, "mock_profile": "mlflow-cve-2026-64849",
+            return 400, {"run_id": run_id, "mock_profile": MLFLOW_CVE_MODE,
+                         "version_profile": self.settings.mlflow_version_profile,
                          "result": {"success": False, "response_status": None, "response_body": "",
                                     "outcome": "blocked", "error": str(error)}}
         self.store.audit(MLFLOW_CVE_WORKSPACE, run_id, "mlflow_cve_test_validation", hook_id=hook_id,
                          url=hook["url"], resolved_ips=original_ips, decision="allowed")
-        delivery = self.enqueue(MLFLOW_CVE_WORKSPACE, run_id, hook, "mlflow-cve-2026-64849", event)
+        delivery = self.enqueue(MLFLOW_CVE_WORKSPACE, run_id, hook, MLFLOW_CVE_MODE, event)
+        effective_policy = self.delivery_settings(delivery).policy
         result = self.send(delivery)
         response_body = body_view(result["body"], self.settings.return_body, self.settings.body_limit)
         self.expose(MLFLOW_CVE_WORKSPACE, run_id, response_body, "mlflow_cve_test")
-        return 200, {"run_id": run_id, "delivery_id": delivery["id"], "mock_profile": "mlflow-cve-2026-64849",
+        return 200, {"run_id": run_id, "delivery_id": delivery["id"], "mock_profile": MLFLOW_CVE_MODE,
+                     "version_profile": self.settings.mlflow_version_profile,
                      "result": {"success": result["outcome"] == "succeeded", "response_status": result["status"],
-                                "response_body": response_body, "outcome": result["outcome"], "error": result["error"]}}
+                                "response_body": response_body, "outcome": result["outcome"], "error": result["error"],
+                                "effective_policy": effective_policy,
+                                "network_event_count": result.get("network_event_count", 0),
+                                "trace": result.get("trace", [])}}
 
     def plane_cve_create(self, workspace, body):
-        """Constrained model of Plane <=1.2.1's direct-private-URL registration flaw."""
+        """Constrained model of Plane <=1.3.1 redirect-following delivery."""
         run_id = self.run(workspace, body.get("run_id"))
         name, url, events = body.get("name"), body.get("url"), body.get("events")
         if not isinstance(name, str) or not 1 <= len(name) <= 100 or not isinstance(events, list) or not events or any(
                 not isinstance(event, str) or event not in EVENTS for event in events):
             raise ApiError(400, "name and subscriptions (model.registered, issue.updated) required")
         try:
-            if self.settings.policy == "baseline":
-                ips = self.transport.validate_plane_v121_registration(url)
-                if not self.transport.same_url(url, self.settings.cve_plane_target):
-                    raise ValueError("CVE demo target is not the configured synthetic internal report URL")
-                validator = "plane_v1_2_1_loopback_only"
-            else:
-                ips = self.transport.validate_registration(url)
-                validator = "standard_public_destination"
+            parsed, _host, _port = self.transport.parse(url)
+            if parsed.scheme != "https":
+                raise ValueError("Plane CVE demo requires an HTTPS first hop")
+            if not self.transport.same_url(url, self.settings.cve_plane_origin):
+                raise ValueError("CVE demo origin is not the configured synthetic HTTPS redirect URL")
+            ips = self.transport.validate_registration(url)
+            validator = "initial_url_only"
         except (ValueError, OSError) as error:
             self.store.audit(workspace, run_id, "plane_cve_registration", url=url, decision="denied",
-                             validator="plane_v1_2_1_loopback_only" if self.settings.policy == "baseline" else "standard_public_destination",
+                             validator="initial_url_only",
                              error=str(error))
             return 400, {"run_id": run_id, "error": str(error), "decision": "denied",
-                         "mock_profile": "plane-cve-2026-30242"}
+                         "mock_profile": PLANE_CVE_MODE}
         hook_id = str(uuid.uuid4())
         self.store.execute("INSERT INTO hooks VALUES(?,?,?,?,?)", (hook_id, workspace, name, url, json.dumps(events)))
         self.store.audit(workspace, run_id, "plane_cve_registration", hook_id=hook_id, url=url, resolved_ips=ips,
-                         decision="allowed", validator=validator, lab_target_only=True)
-        return 201, dict(self.hook(workspace, hook_id), run_id=run_id, mock_profile="plane-cve-2026-30242",
-                         validator=validator)
+                         decision="allowed", validator=validator, lab_origin_only=True,
+                         version_profile=self.settings.plane_version_profile)
+        return 201, dict(self.hook(workspace, hook_id), run_id=run_id, mock_profile=PLANE_CVE_MODE,
+                         version_profile=self.settings.plane_version_profile, validator=validator)
 
     def enqueue(self, workspace, run_id, hook, mode, event):
         delivery_id = str(uuid.uuid4())
@@ -185,17 +199,51 @@ class Application:
                          body_policies={"return": self.settings.return_body, "store": self.settings.store_body, "read": self.settings.read_body})
         return self.store.rows("SELECT * FROM deliveries WHERE id=?", (delivery_id,))[0]
 
+    @staticmethod
+    def settings_from_snapshot(snapshot):
+        """Read persisted delivery policy snapshots across the CVE-profile rename."""
+        snapshot = dict(snapshot)
+        # Named Docker volumes can contain a delivery written by the earlier
+        # lab profile.  It is harmless but should not make the worker fail on
+        # restart merely because the setting was renamed.
+        snapshot.pop("cve_plane_target", None)
+        if snapshot.get("cve_demo_mode") == "plane-2026-30242":
+            snapshot["cve_demo_mode"] = "none"
+        return Settings(**snapshot)
+
+    def delivery_settings(self, delivery):
+        settings = self.settings_from_snapshot(json.loads(delivery["policy"]))
+        # These are deliberately labelled emulation profiles.  The fixed
+        # MLflow profile models connection-time redirect/DNS protection; the
+        # fixed Plane profile models the vendor's redirect refusal.
+        if delivery["mode"] == MLFLOW_CVE_MODE and settings.mlflow_version_profile == "v3.15.0-fixed":
+            return dataclasses.replace(settings, policy="strict")
+        if (delivery["mode"] == "plane" and settings.plane_cve_demo
+                and settings.plane_version_profile == "v1.4.0-fixed"):
+            return dataclasses.replace(settings, policy="reject")
+        return settings
+
     def send(self, delivery):
-        settings = Settings(**json.loads(delivery["policy"]))
+        settings = self.delivery_settings(delivery)
         try:
             result = Transport(settings).deliver(delivery["url"], delivery["payload"].encode(), delivery["run_id"])
         except (OSError, ValueError) as error:
-            result = dict(status=None, body="", error=str(error), outcome="failed", response_truncated=False, trace=[], latency_ms=0)
-        saved = dict(result, body=body_view(result["body"], settings.store_body, settings.body_limit), body_storage=settings.store_body)
+            result = dict(status=None, body="", error=str(error), outcome="failed", response_truncated=False,
+                          trace=[], network_event_count=0, latency_ms=0)
+        stored_body = result["body"]
+        if delivery["mode"].startswith("plane"):
+            stored_body = filter_plane_log(stored_body, settings.plane_log_filter)
+        saved = dict(result, body=body_view(stored_body, settings.store_body, settings.body_limit),
+                     body_storage=settings.store_body, effective_policy=settings.policy)
+        if delivery["mode"].startswith("plane"):
+            saved["plane_log_filter"] = settings.plane_log_filter
         self.store.execute("UPDATE deliveries SET state=?,result=? WHERE id=?", (result["outcome"], json.dumps(saved), delivery["id"]))
         self.store.audit(delivery["workspace"], delivery["run_id"], "delivery_finished",
                          delivery_id=delivery["id"], status=result["status"], outcome=result["outcome"],
-                         latency_ms=result["latency_ms"], trace=result["trace"], error=result["error"])
+                         latency_ms=result["latency_ms"], trace=result["trace"], error=result["error"],
+                         effective_policy=settings.policy,
+                         network_event_count=result.get("network_event_count", 0),
+                         plane_log_filter=settings.plane_log_filter if delivery["mode"].startswith("plane") else None)
         return result
 
     def expose(self, workspace, run_id, body, channel):
@@ -203,11 +251,14 @@ class Application:
                          report_content_exposed=("REPORT-" + run_id) in (body or ""),
                          internal_api_reached="unknown; check internal observations")
 
-    def history(self, workspace, run_id=None, offset=0):
+    def history(self, workspace, run_id=None, offset=0, hook_id=None):
         query, args = "SELECT * FROM deliveries WHERE workspace=?", [workspace]
         if run_id:
             query += " AND run_id=?"
             args.append(run_id)
+        if hook_id:
+            query += " AND hook_id=?"
+            args.append(hook_id)
         rows = self.store.rows(query + " ORDER BY rowid LIMIT 100 OFFSET ?", (*args, offset))
         for row in rows:
             row.pop("payload")
@@ -291,6 +342,10 @@ class WebhookHandler(BaseHTTPRequestHandler):
         if parts[:4] == ["api", "2.0", "mlflow", "webhooks"]:
             if not self.app.settings.mlflow_cve_demo:
                 raise ApiError(404, "not found")
+            if self.app.settings.mlflow_cve_auth_required:
+                account = self.authenticate()
+                self.app.require(account, MLFLOW_CVE_WORKSPACE, admin=True)
+                self.app.store.audit(MLFLOW_CVE_WORKSPACE, None, "mlflow_cve_authorized", actor=account["id"])
             if self.command == "POST" and len(parts) == 4:
                 return self.app.mlflow_cve_create(self.read_json())
             if self.command == "POST" and len(parts) == 6 and parts[5] == "test":
@@ -320,11 +375,26 @@ class WebhookHandler(BaseHTTPRequestHandler):
         if parts[:4] == ["api", "cve", "plane", "workspaces"]:
             if not self.app.settings.plane_cve_demo:
                 raise ApiError(404, "not found")
-            if self.command != "POST" or len(parts) != 6 or parts[5] != "webhooks":
+            if len(parts) < 5:
                 raise ApiError(404, "not found")
             workspace = parts[4]
-            self.app.require(account, workspace, admin=True)
-            return self.app.plane_cve_create(workspace, self.read_json())
+            query = parse_qs(parsed.query)
+            requested_run = query.get("run_id", [None])[0]
+            if requested_run:
+                try:
+                    requested_run = str(uuid.UUID(requested_run))
+                except ValueError as error:
+                    raise ApiError(400, "run_id must be a UUID") from error
+            self.app.require(account, workspace, admin=True, run_id=requested_run)
+            if self.command == "POST" and len(parts) == 6 and parts[5] == "webhooks":
+                return self.app.plane_cve_create(workspace, self.read_json())
+            if self.command == "GET" and len(parts) == 7 and parts[5] == "webhook-logs":
+                hook = self.app.hook(workspace, parts[6])
+                self.app.store.audit(workspace, requested_run, "plane_webhook_logs_queried", actor=account["id"],
+                                     hook_id=hook["id"])
+                return 200, {"webhook_id": hook["id"], "logs": self.app.history(
+                    workspace, requested_run, hook_id=hook["id"]), "limit": 100}
+            raise ApiError(404, "not found")
         if len(parts) < 4 or parts[:2] != ["api", "workspaces"]:
             raise ApiError(404, "not found")
         workspace, resource = parts[2:4]
