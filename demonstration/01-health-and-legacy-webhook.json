@@ -1,0 +1,43 @@
+{
+    "_comment":  "JSON does not support comments; _comment and key_observations are human-readable annotations. Every report is synthetic lab data.",
+    "step":  1,
+    "title":  "Health checks and legacy /webhook compatibility",
+    "captured_at":  "2026-11-24T02:01:13.9129595+09:00",
+    "capture_mode":  "artifact-only",
+    "docker_command":  [
+                           "docker compose -f compose.yaml -f compose.lab.yaml up -d --no-build --wait internal receiver webhook",
+                           "docker compose -f compose.yaml -f compose.lab.yaml exec -T webhook python -c health-and-webhook-capture"
+                       ],
+    "source_artifacts":  [
+                             {
+                                 "path":  "Docker verifier output",
+                                 "test":  "test_legacy_contract_and_auth",
+                                 "result":  "passed"
+                             }
+                         ],
+    "expected":  "Webhook and Internal health return 200 JSON; the legacy POST /webhook endpoint returns 202 accepted JSON.",
+    "observed":  {
+                     "export_id":  "86ac6253-4df5-475d-8f5d-39f571d50ed9",
+                     "legacy_run_id":  null,
+                     "webhook":  {
+                                     "evidence":  "Docker verifier test_legacy_contract_and_auth passed during the preceding capture.",
+                                     "webhook_health":  {
+                                                            "expected_status":  200,
+                                                            "expected_ok":  true
+                                                        },
+                                     "legacy_webhook_post":  {
+                                                                 "expected_status":  202,
+                                                                 "expected_accepted":  true
+                                                             }
+                                 },
+                     "internal_health":  {
+                                             "expected_status":  200,
+                                             "expected_service":  "internal"
+                                         }
+                 },
+    "key_observations":  [
+                             "Artifact-only export: no new Docker request was made by this exporter. The preceding Docker verifier and matrix both exercised /health and POST /webhook successfully.",
+                             "The expected_* fields below describe the contract asserted by the preceding Docker verifier; they are not fresh HTTP responses.",
+                             "Health and legacy endpoint compatibility do not prove an Internal API reach or external webhook delivery."
+                         ]
+}

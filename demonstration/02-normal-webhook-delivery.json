@@ -1,0 +1,527 @@
+{
+    "_comment":  "JSON does not support comments; _comment and key_observations are human-readable annotations. Every report is synthetic lab data.",
+    "step":  2,
+    "title":  "Normal customer webhook: MLflow-style synchronous and Plane-style asynchronous delivery",
+    "captured_at":  "2026-11-24T02:01:13.9129595+09:00",
+    "docker_command":  [
+                           "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-matrix.ps1 -SkipBuild"
+                       ],
+    "source_artifacts":  [
+                             {
+                                 "path":  "artifacts/baseline-open-full.json",
+                                 "sha256":  "629DD607B3380A431D196CF08F1C00A800E5A699C3C66572B70D1A38D3A323DB"
+                             }
+                         ],
+    "expected":  "Normal /webhook delivery succeeds in both modes and does not reach the Internal report API.",
+    "observed":  {
+                     "matrix_passed":  true,
+                     "normal_success_rate":  1.0,
+                     "normal_delivery_cases":  [
+                                                   {
+                                                       "mode":  "mlflow",
+                                                       "kind":  "normal",
+                                                       "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                       "internal_api_reached":  false,
+                                                       "report_content_exposed":  false,
+                                                       "result":  {
+                                                                      "status":  200,
+                                                                      "body":  "{\"received\": true, \"run_id\": \"5e09410c-acb9-4024-b55f-fa0e599ff092\"}",
+                                                                      "error":  null,
+                                                                      "outcome":  "succeeded",
+                                                                      "response_truncated":  false,
+                                                                      "trace":  [
+                                                                                    {
+                                                                                        "hop":  0,
+                                                                                        "url":  "https://receiver:8443/webhook",
+                                                                                        "method":  "POST",
+                                                                                        "network_events":  [
+                                                                                                               {
+                                                                                                                   "event":  "dns_resolution",
+                                                                                                                   "host":  "receiver",
+                                                                                                                   "port":  8443,
+                                                                                                                   "addresses":  [
+                                                                                                                                     "172.21.0.2"
+                                                                                                                                 ],
+                                                                                                                   "validated":  false
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "tcp_connect_attempt",
+                                                                                                                   "ip":  "172.21.0.2",
+                                                                                                                   "port":  8443
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "tcp_connected",
+                                                                                                                   "ip":  "172.21.0.2",
+                                                                                                                   "port":  8443
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "peer_confirmed",
+                                                                                                                   "ip":  "172.21.0.2"
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "tls_verified",
+                                                                                                                   "server_name":  "receiver"
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "http_request",
+                                                                                                                   "method":  "POST",
+                                                                                                                   "path":  "/webhook"
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "http_response",
+                                                                                                                   "status":  200
+                                                                                                               }
+                                                                                                           ],
+                                                                                        "resolved_ips":  [
+                                                                                                             "172.21.0.2"
+                                                                                                         ],
+                                                                                        "selected_ip":  "172.21.0.2",
+                                                                                        "decision":  "baseline_unchecked",
+                                                                                        "attempted_ips":  [
+                                                                                                              "172.21.0.2"
+                                                                                                          ],
+                                                                                        "connected_ip":  "172.21.0.2",
+                                                                                        "tls_verified":  true,
+                                                                                        "status":  200
+                                                                                    }
+                                                                                ],
+                                                                      "network_event_count":  7,
+                                                                      "latency_ms":  16.16,
+                                                                      "body_return":  "full"
+                                                                  },
+                                                       "internal":  {
+                                                                        "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                        "internal_api_reached":  false,
+                                                                        "requests":  [
+
+                                                                                     ]
+                                                                    },
+                                                       "receiver":  {
+                                                                        "requests":  [
+                                                                                         [
+                                                                                             "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                             "/webhook",
+                                                                                             "POST",
+                                                                                             "{\"run_id\": \"5e09410c-acb9-4024-b55f-fa0e599ff092\", \"event\": \"model.registered\", \"workspace_id\": \"f7035257-a5f8-48f4-b18c-0f99784ed49d\", \"webhook_id\": \"1b0615a5-f26f-465f-8814-385c22a6827c\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
+                                                                                         ]
+                                                                                     ]
+                                                                    },
+                                                       "server":  {
+                                                                      "deliveries":  [
+                                                                                         {
+                                                                                             "id":  "eea04422-4b0f-48f6-973f-acb57321be9e",
+                                                                                             "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                             "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                             "hook_id":  "1b0615a5-f26f-465f-8814-385c22a6827c",
+                                                                                             "mode":  "mlflow",
+                                                                                             "url":  "https://receiver:8443/webhook",
+                                                                                             "policy":  "baseline",
+                                                                                             "state":  "succeeded",
+                                                                                             "result":  {
+                                                                                                            "status":  200,
+                                                                                                            "body":  "{\"received\": true, \"run_id\": \"5e09410c-acb9-4024-b55f-fa0e599ff092\"}",
+                                                                                                            "error":  null,
+                                                                                                            "outcome":  "succeeded",
+                                                                                                            "response_truncated":  false,
+                                                                                                            "trace":  [
+                                                                                                                          {
+                                                                                                                              "hop":  0,
+                                                                                                                              "url":  "https://receiver:8443/webhook",
+                                                                                                                              "method":  "POST",
+                                                                                                                              "network_events":  [
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "dns_resolution",
+                                                                                                                                                         "host":  "receiver",
+                                                                                                                                                         "port":  8443,
+                                                                                                                                                         "addresses":  [
+                                                                                                                                                                           "172.21.0.2"
+                                                                                                                                                                       ],
+                                                                                                                                                         "validated":  false
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "tcp_connect_attempt",
+                                                                                                                                                         "ip":  "172.21.0.2",
+                                                                                                                                                         "port":  8443
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "tcp_connected",
+                                                                                                                                                         "ip":  "172.21.0.2",
+                                                                                                                                                         "port":  8443
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "peer_confirmed",
+                                                                                                                                                         "ip":  "172.21.0.2"
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "tls_verified",
+                                                                                                                                                         "server_name":  "receiver"
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "http_request",
+                                                                                                                                                         "method":  "POST",
+                                                                                                                                                         "path":  "/webhook"
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "http_response",
+                                                                                                                                                         "status":  200
+                                                                                                                                                     }
+                                                                                                                                                 ],
+                                                                                                                              "resolved_ips":  [
+                                                                                                                                                   "172.21.0.2"
+                                                                                                                                               ],
+                                                                                                                              "selected_ip":  "172.21.0.2",
+                                                                                                                              "decision":  "baseline_unchecked",
+                                                                                                                              "attempted_ips":  [
+                                                                                                                                                    "172.21.0.2"
+                                                                                                                                                ],
+                                                                                                                              "connected_ip":  "172.21.0.2",
+                                                                                                                              "tls_verified":  true,
+                                                                                                                              "status":  200
+                                                                                                                          }
+                                                                                                                      ],
+                                                                                                            "network_event_count":  7,
+                                                                                                            "latency_ms":  16.16,
+                                                                                                            "body_storage":  "full",
+                                                                                                            "effective_policy":  "baseline",
+                                                                                                            "body_read":  "full"
+                                                                                                        },
+                                                                                             "created":  "2026-11-23 07:14:00"
+                                                                                         }
+                                                                                     ],
+                                                                      "offset":  0,
+                                                                      "limit":  100,
+                                                                      "audit":  [
+                                                                                    {
+                                                                                        "id":  3059,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                        "event":  "registration",
+                                                                                        "detail":  "{\"hook_id\": \"1b0615a5-f26f-465f-8814-385c22a6827c\", \"url\": \"https://receiver:8443/webhook\", \"resolved_ips\": [\"172.21.0.2\"], \"decision\": \"allowed\"}",
+                                                                                        "created":  "2026-11-23 07:14:00"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3060,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                        "event":  "delivery_created",
+                                                                                        "detail":  "{\"delivery_id\": \"eea04422-4b0f-48f6-973f-acb57321be9e\", \"mode\": \"mlflow\", \"initial_url\": \"https://receiver:8443/webhook\", \"policy\": \"baseline\", \"body_policies\": {\"return\": \"full\", \"store\": \"full\", \"read\": \"full\"}}",
+                                                                                        "created":  "2026-11-23 07:14:00"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3061,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                        "event":  "delivery_finished",
+                                                                                        "detail":  "{\"delivery_id\": \"eea04422-4b0f-48f6-973f-acb57321be9e\", \"status\": 200, \"outcome\": \"succeeded\", \"latency_ms\": 16.16, \"trace\": [{\"hop\": 0, \"url\": \"https://receiver:8443/webhook\", \"method\": \"POST\", \"network_events\": [{\"event\": \"dns_resolution\", \"host\": \"receiver\", \"port\": 8443, \"addresses\": [\"172.21.0.2\"], \"validated\": false}, {\"event\": \"tcp_connect_attempt\", \"ip\": \"172.21.0.2\", \"port\": 8443}, {\"event\": \"tcp_connected\", \"ip\": \"172.21.0.2\", \"port\": 8443}, {\"event\": \"peer_confirmed\", \"ip\": \"172.21.0.2\"}, {\"event\": \"tls_verified\", \"server_name\": \"receiver\"}, {\"event\": \"http_request\", \"method\": \"POST\", \"path\": \"/webhook\"}, {\"event\": \"http_response\", \"status\": 200}], \"resolved_ips\": [\"172.21.0.2\"], \"selected_ip\": \"172.21.0.2\", \"decision\": \"baseline_unchecked\", \"attempted_ips\": [\"172.21.0.2\"], \"connected_ip\": \"172.21.0.2\", \"tls_verified\": true, \"status\": 200}], \"error\": null, \"effective_policy\": \"baseline\", \"network_event_count\": 7, \"plane_log_filter\": null}",
+                                                                                        "created":  "2026-11-23 07:14:00"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3062,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                        "event":  "body_exposure",
+                                                                                        "detail":  "{\"channel\": \"mlflow_test\", \"report_content_exposed\": false, \"internal_api_reached\": \"unknown; check internal observations\"}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3063,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                        "event":  "access_denied",
+                                                                                        "detail":  "{\"actor\": \"bob\"}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3065,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                        "event":  "logs_queried",
+                                                                                        "detail":  "{\"actor\": \"customer\", \"offset\": 0}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3066,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
+                                                                                        "event":  "body_exposure",
+                                                                                        "detail":  "{\"channel\": \"history\", \"report_content_exposed\": false, \"internal_api_reached\": \"unknown; check internal observations\"}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    }
+                                                                                ]
+                                                                  }
+                                                   },
+                                                   {
+                                                       "mode":  "plane",
+                                                       "kind":  "normal",
+                                                       "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                       "internal_api_reached":  false,
+                                                       "report_content_exposed":  false,
+                                                       "result":  {
+                                                                      "status":  200,
+                                                                      "body":  "{\"received\": true, \"run_id\": \"fe98259d-74ee-44ad-80fa-f91814b5f553\"}",
+                                                                      "error":  null,
+                                                                      "outcome":  "succeeded",
+                                                                      "response_truncated":  false,
+                                                                      "trace":  [
+                                                                                    {
+                                                                                        "hop":  0,
+                                                                                        "url":  "https://receiver:8443/webhook",
+                                                                                        "method":  "POST",
+                                                                                        "network_events":  [
+                                                                                                               {
+                                                                                                                   "event":  "dns_resolution",
+                                                                                                                   "host":  "receiver",
+                                                                                                                   "port":  8443,
+                                                                                                                   "addresses":  [
+                                                                                                                                     "172.21.0.2"
+                                                                                                                                 ],
+                                                                                                                   "validated":  false
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "tcp_connect_attempt",
+                                                                                                                   "ip":  "172.21.0.2",
+                                                                                                                   "port":  8443
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "tcp_connected",
+                                                                                                                   "ip":  "172.21.0.2",
+                                                                                                                   "port":  8443
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "peer_confirmed",
+                                                                                                                   "ip":  "172.21.0.2"
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "tls_verified",
+                                                                                                                   "server_name":  "receiver"
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "http_request",
+                                                                                                                   "method":  "POST",
+                                                                                                                   "path":  "/webhook"
+                                                                                                               },
+                                                                                                               {
+                                                                                                                   "event":  "http_response",
+                                                                                                                   "status":  200
+                                                                                                               }
+                                                                                                           ],
+                                                                                        "resolved_ips":  [
+                                                                                                             "172.21.0.2"
+                                                                                                         ],
+                                                                                        "selected_ip":  "172.21.0.2",
+                                                                                        "decision":  "baseline_unchecked",
+                                                                                        "attempted_ips":  [
+                                                                                                              "172.21.0.2"
+                                                                                                          ],
+                                                                                        "connected_ip":  "172.21.0.2",
+                                                                                        "tls_verified":  true,
+                                                                                        "status":  200
+                                                                                    }
+                                                                                ],
+                                                                      "network_event_count":  7,
+                                                                      "latency_ms":  28.27,
+                                                                      "body_storage":  "full",
+                                                                      "effective_policy":  "baseline",
+                                                                      "plane_log_filter":  "none",
+                                                                      "body_read":  "full"
+                                                                  },
+                                                       "internal":  {
+                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                        "internal_api_reached":  false,
+                                                                        "requests":  [
+
+                                                                                     ]
+                                                                    },
+                                                       "receiver":  {
+                                                                        "requests":  [
+                                                                                         [
+                                                                                             "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                             "/webhook",
+                                                                                             "POST",
+                                                                                             "{\"run_id\": \"fe98259d-74ee-44ad-80fa-f91814b5f553\", \"event\": \"issue.updated\", \"workspace_id\": \"f7035257-a5f8-48f4-b18c-0f99784ed49d\", \"webhook_id\": \"1b1ceb1e-41a0-445e-98d5-96bdbf70deab\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
+                                                                                         ]
+                                                                                     ]
+                                                                    },
+                                                       "server":  {
+                                                                      "deliveries":  [
+                                                                                         {
+                                                                                             "id":  "91a904ad-47c1-431d-8009-44bdc8cf2b84",
+                                                                                             "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                             "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                             "hook_id":  "1b1ceb1e-41a0-445e-98d5-96bdbf70deab",
+                                                                                             "mode":  "plane",
+                                                                                             "url":  "https://receiver:8443/webhook",
+                                                                                             "policy":  "baseline",
+                                                                                             "state":  "succeeded",
+                                                                                             "result":  {
+                                                                                                            "status":  200,
+                                                                                                            "body":  "{\"received\": true, \"run_id\": \"fe98259d-74ee-44ad-80fa-f91814b5f553\"}",
+                                                                                                            "error":  null,
+                                                                                                            "outcome":  "succeeded",
+                                                                                                            "response_truncated":  false,
+                                                                                                            "trace":  [
+                                                                                                                          {
+                                                                                                                              "hop":  0,
+                                                                                                                              "url":  "https://receiver:8443/webhook",
+                                                                                                                              "method":  "POST",
+                                                                                                                              "network_events":  [
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "dns_resolution",
+                                                                                                                                                         "host":  "receiver",
+                                                                                                                                                         "port":  8443,
+                                                                                                                                                         "addresses":  [
+                                                                                                                                                                           "172.21.0.2"
+                                                                                                                                                                       ],
+                                                                                                                                                         "validated":  false
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "tcp_connect_attempt",
+                                                                                                                                                         "ip":  "172.21.0.2",
+                                                                                                                                                         "port":  8443
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "tcp_connected",
+                                                                                                                                                         "ip":  "172.21.0.2",
+                                                                                                                                                         "port":  8443
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "peer_confirmed",
+                                                                                                                                                         "ip":  "172.21.0.2"
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "tls_verified",
+                                                                                                                                                         "server_name":  "receiver"
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "http_request",
+                                                                                                                                                         "method":  "POST",
+                                                                                                                                                         "path":  "/webhook"
+                                                                                                                                                     },
+                                                                                                                                                     {
+                                                                                                                                                         "event":  "http_response",
+                                                                                                                                                         "status":  200
+                                                                                                                                                     }
+                                                                                                                                                 ],
+                                                                                                                              "resolved_ips":  [
+                                                                                                                                                   "172.21.0.2"
+                                                                                                                                               ],
+                                                                                                                              "selected_ip":  "172.21.0.2",
+                                                                                                                              "decision":  "baseline_unchecked",
+                                                                                                                              "attempted_ips":  [
+                                                                                                                                                    "172.21.0.2"
+                                                                                                                                                ],
+                                                                                                                              "connected_ip":  "172.21.0.2",
+                                                                                                                              "tls_verified":  true,
+                                                                                                                              "status":  200
+                                                                                                                          }
+                                                                                                                      ],
+                                                                                                            "network_event_count":  7,
+                                                                                                            "latency_ms":  28.27,
+                                                                                                            "body_storage":  "full",
+                                                                                                            "effective_policy":  "baseline",
+                                                                                                            "plane_log_filter":  "none",
+                                                                                                            "body_read":  "full"
+                                                                                                        },
+                                                                                             "created":  "2026-11-23 07:14:01"
+                                                                                         }
+                                                                                     ],
+                                                                      "offset":  0,
+                                                                      "limit":  100,
+                                                                      "audit":  [
+                                                                                    {
+                                                                                        "id":  3075,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "registration",
+                                                                                        "detail":  "{\"hook_id\": \"1b1ceb1e-41a0-445e-98d5-96bdbf70deab\", \"url\": \"https://receiver:8443/webhook\", \"resolved_ips\": [\"172.21.0.2\"], \"decision\": \"allowed\"}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3076,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "delivery_created",
+                                                                                        "detail":  "{\"delivery_id\": \"91a904ad-47c1-431d-8009-44bdc8cf2b84\", \"mode\": \"plane\", \"initial_url\": \"https://receiver:8443/webhook\", \"policy\": \"baseline\", \"body_policies\": {\"return\": \"full\", \"store\": \"full\", \"read\": \"full\"}}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3077,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "logs_queried",
+                                                                                        "detail":  "{\"actor\": \"customer\", \"offset\": 0}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3078,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "delivery_finished",
+                                                                                        "detail":  "{\"delivery_id\": \"91a904ad-47c1-431d-8009-44bdc8cf2b84\", \"status\": 200, \"outcome\": \"succeeded\", \"latency_ms\": 28.27, \"trace\": [{\"hop\": 0, \"url\": \"https://receiver:8443/webhook\", \"method\": \"POST\", \"network_events\": [{\"event\": \"dns_resolution\", \"host\": \"receiver\", \"port\": 8443, \"addresses\": [\"172.21.0.2\"], \"validated\": false}, {\"event\": \"tcp_connect_attempt\", \"ip\": \"172.21.0.2\", \"port\": 8443}, {\"event\": \"tcp_connected\", \"ip\": \"172.21.0.2\", \"port\": 8443}, {\"event\": \"peer_confirmed\", \"ip\": \"172.21.0.2\"}, {\"event\": \"tls_verified\", \"server_name\": \"receiver\"}, {\"event\": \"http_request\", \"method\": \"POST\", \"path\": \"/webhook\"}, {\"event\": \"http_response\", \"status\": 200}], \"resolved_ips\": [\"172.21.0.2\"], \"selected_ip\": \"172.21.0.2\", \"decision\": \"baseline_unchecked\", \"attempted_ips\": [\"172.21.0.2\"], \"connected_ip\": \"172.21.0.2\", \"tls_verified\": true, \"status\": 200}], \"error\": null, \"effective_policy\": \"baseline\", \"network_event_count\": 7, \"plane_log_filter\": \"none\"}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3079,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "logs_queried",
+                                                                                        "detail":  "{\"actor\": \"customer\", \"offset\": 0}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3080,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "body_exposure",
+                                                                                        "detail":  "{\"channel\": \"history\", \"report_content_exposed\": false, \"internal_api_reached\": \"unknown; check internal observations\"}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3081,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "access_denied",
+                                                                                        "detail":  "{\"actor\": \"bob\"}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3083,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "logs_queried",
+                                                                                        "detail":  "{\"actor\": \"customer\", \"offset\": 0}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    },
+                                                                                    {
+                                                                                        "id":  3084,
+                                                                                        "workspace":  "f7035257-a5f8-48f4-b18c-0f99784ed49d",
+                                                                                        "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
+                                                                                        "event":  "body_exposure",
+                                                                                        "detail":  "{\"channel\": \"history\", \"report_content_exposed\": false, \"internal_api_reached\": \"unknown; check internal observations\"}",
+                                                                                        "created":  "2026-11-23 07:14:01"
+                                                                                    }
+                                                                                ]
+                                                                  }
+                                                   }
+                                               ],
+                     "direct_internal_registration_control":  {
+                                                                  "run_id":  "3e9573bd-2362-44d5-9659-c36602739f52",
+                                                                  "result":  {
+                                                                                 "run_id":  "3e9573bd-2362-44d5-9659-c36602739f52",
+                                                                                 "error":  "non-public address denied: 172.20.0.2",
+                                                                                 "decision":  "denied"
+                                                                             },
+                                                                  "observation":  {
+                                                                                      "run_id":  "3e9573bd-2362-44d5-9659-c36602739f52",
+                                                                                      "internal_api_reached":  false,
+                                                                                      "requests":  [
+
+                                                                                                   ]
+                                                                                  }
+                                                              }
+                 },
+    "key_observations":  [
+                             "normal_success_rate=1 means both normal receiver deliveries succeeded under baseline/open conditions.",
+                             "The denied direct_internal_registration_control result is the direct-Internal-URL negative control."
+                         ]
+}

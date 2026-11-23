@@ -1,0 +1,498 @@
+{
+    "_comment":  "JSON does not support comments; _comment and key_observations are human-readable annotations. Every report is synthetic lab data.",
+    "step":  6,
+    "title":  "Fixed profiles: MLflow authorization/body defense and Plane Redirect refusal",
+    "captured_at":  "2026-11-24T02:01:13.9129595+09:00",
+    "docker_command":  [
+                           "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/demo-cves.ps1"
+                       ],
+    "source_artifacts":  [
+                             {
+                                 "path":  "artifacts/final-fixed-url-auth-mask.json",
+                                 "sha256":  "25EBBB590257BD4DCADBBBAAF8F04ED2A935F090DC5D971E17E7548F02AF420F"
+                             }
+                         ],
+    "expected":  "MLflow returns 401 for unauthenticated use, 403 for viewer/bob, and blocks the Alice-admin delivery under strict; Plane refuses Redirect.",
+    "observed":  {
+                     "scenario":  "fixed-url-auth-mask",
+                     "policy":  "baseline",
+                     "network":  "open",
+                     "passed":  true,
+                     "mlflow":  {
+                                    "run_id":  "0122ac5b-325d-494c-a5b0-298a959798e8",
+                                    "internal_api_reached":  false,
+                                    "report_content_exposed":  false,
+                                    "internal_observation":  {
+                                                                 "run_id":  "0122ac5b-325d-494c-a5b0-298a959798e8",
+                                                                 "internal_api_reached":  false,
+                                                                 "requests":  [
+
+                                                                              ]
+                                                             },
+                                    "receiver_observation":  {
+                                                                 "requests":  [
+                                                                                  [
+                                                                                      "0122ac5b-325d-494c-a5b0-298a959798e8",
+                                                                                      "/redirect",
+                                                                                      "POST",
+                                                                                      "{\"run_id\": \"0122ac5b-325d-494c-a5b0-298a959798e8\", \"event\": \"model.registered\", \"workspace_id\": \"__cve_mlflow_2026_64849\", \"webhook_id\": \"f711e2e8-f6f5-49d2-84b8-4a4fd2093e6d\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
+                                                                                  ]
+                                                                              ]
+                                                             },
+                                    "response":  {
+                                                     "success":  false,
+                                                     "response_status":  302,
+                                                     "response_body":  "",
+                                                     "outcome":  "blocked",
+                                                     "error":  "HTTPS downgrade denied",
+                                                     "effective_policy":  "strict",
+                                                     "network_event_count":  9,
+                                                     "trace":  [
+                                                                   {
+                                                                       "hop":  0,
+                                                                       "url":  "https://receiver:8443/redirect?status=302",
+                                                                       "method":  "POST",
+                                                                       "network_events":  [
+                                                                                              {
+                                                                                                  "event":  "dns_resolution",
+                                                                                                  "host":  "receiver",
+                                                                                                  "port":  8443,
+                                                                                                  "addresses":  [
+                                                                                                                    "172.21.0.2"
+                                                                                                                ],
+                                                                                                  "validated":  true
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "tcp_connect_attempt",
+                                                                                                  "ip":  "172.21.0.2",
+                                                                                                  "port":  8443
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "tcp_connected",
+                                                                                                  "ip":  "172.21.0.2",
+                                                                                                  "port":  8443
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "peer_confirmed",
+                                                                                                  "ip":  "172.21.0.2"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "tls_verified",
+                                                                                                  "server_name":  "receiver"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "http_request",
+                                                                                                  "method":  "POST",
+                                                                                                  "path":  "/redirect?status=302"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "http_response",
+                                                                                                  "status":  302
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "http_redirect",
+                                                                                                  "status":  302,
+                                                                                                  "location":  "http://172.20.0.2:8000/reports/alpha?run_id=0122ac5b-325d-494c-a5b0-298a959798e8"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "policy_blocked",
+                                                                                                  "reason":  "HTTPS downgrade denied"
+                                                                                              }
+                                                                                          ],
+                                                                       "resolved_ips":  [
+                                                                                            "172.21.0.2"
+                                                                                        ],
+                                                                       "selected_ip":  "172.21.0.2",
+                                                                       "decision":  "denied",
+                                                                       "attempted_ips":  [
+                                                                                             "172.21.0.2"
+                                                                                         ],
+                                                                       "connected_ip":  "172.21.0.2",
+                                                                       "tls_verified":  true,
+                                                                       "status":  302,
+                                                                       "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=0122ac5b-325d-494c-a5b0-298a959798e8",
+                                                                       "error":  "HTTPS downgrade denied"
+                                                                   }
+                                                               ]
+                                                 },
+                                    "authorization":  {
+                                                          "unauthenticated":  {
+                                                                                  "expected_status_code":  401,
+                                                                                  "observed_status_code":  null,
+                                                                                  "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                                  "response":  {
+                                                                                                   "error":  "Bearer token required"
+                                                                                               }
+                                                                              },
+                                                          "alpha_member":  {
+                                                                               "expected_status_code":  403,
+                                                                               "observed_status_code":  null,
+                                                                               "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                               "response":  {
+                                                                                                "error":  "workspace permission denied"
+                                                                                            }
+                                                                           },
+                                                          "other_workspace_admin":  {
+                                                                                        "expected_status_code":  403,
+                                                                                        "observed_status_code":  null,
+                                                                                        "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                                        "response":  {
+                                                                                                         "error":  "workspace permission denied"
+                                                                                                     }
+                                                                                    }
+                                                      },
+                                    "connection_trace":  [
+                                                             {
+                                                                 "hop":  0,
+                                                                 "url":  "https://receiver:8443/redirect?status=302",
+                                                                 "method":  "POST",
+                                                                 "network_events":  [
+                                                                                        {
+                                                                                            "event":  "dns_resolution",
+                                                                                            "host":  "receiver",
+                                                                                            "port":  8443,
+                                                                                            "addresses":  [
+                                                                                                              "172.21.0.2"
+                                                                                                          ],
+                                                                                            "validated":  true
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "tcp_connect_attempt",
+                                                                                            "ip":  "172.21.0.2",
+                                                                                            "port":  8443
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "tcp_connected",
+                                                                                            "ip":  "172.21.0.2",
+                                                                                            "port":  8443
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "peer_confirmed",
+                                                                                            "ip":  "172.21.0.2"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "tls_verified",
+                                                                                            "server_name":  "receiver"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "http_request",
+                                                                                            "method":  "POST",
+                                                                                            "path":  "/redirect?status=302"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "http_response",
+                                                                                            "status":  302
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "http_redirect",
+                                                                                            "status":  302,
+                                                                                            "location":  "http://172.20.0.2:8000/reports/alpha?run_id=0122ac5b-325d-494c-a5b0-298a959798e8"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "policy_blocked",
+                                                                                            "reason":  "HTTPS downgrade denied"
+                                                                                        }
+                                                                                    ],
+                                                                 "resolved_ips":  [
+                                                                                      "172.21.0.2"
+                                                                                  ],
+                                                                 "selected_ip":  "172.21.0.2",
+                                                                 "decision":  "denied",
+                                                                 "attempted_ips":  [
+                                                                                       "172.21.0.2"
+                                                                                   ],
+                                                                 "connected_ip":  "172.21.0.2",
+                                                                 "tls_verified":  true,
+                                                                 "status":  302,
+                                                                 "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=0122ac5b-325d-494c-a5b0-298a959798e8",
+                                                                 "error":  "HTTPS downgrade denied"
+                                                             }
+                                                         ]
+                                },
+                     "plane":  {
+                                   "run_id":  "2c20f1f4-962f-4612-9bf8-e20158e928b2",
+                                   "internal_api_reached":  false,
+                                   "report_content_exposed":  false,
+                                   "internal_observation":  {
+                                                                "run_id":  "2c20f1f4-962f-4612-9bf8-e20158e928b2",
+                                                                "internal_api_reached":  false,
+                                                                "requests":  [
+
+                                                                             ]
+                                                            },
+                                   "receiver_observation":  {
+                                                                "requests":  [
+                                                                                 [
+                                                                                     "2c20f1f4-962f-4612-9bf8-e20158e928b2",
+                                                                                     "/redirect",
+                                                                                     "POST",
+                                                                                     "{\"run_id\": \"2c20f1f4-962f-4612-9bf8-e20158e928b2\", \"event\": \"issue.updated\", \"workspace_id\": \"alpha\", \"webhook_id\": \"0e6b4305-8854-45e1-8da8-cb5da9291d05\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
+                                                                                 ]
+                                                                             ]
+                                                            },
+                                   "delivery_result":  {
+                                                           "status":  302,
+                                                           "body":  "",
+                                                           "error":  "redirect denied",
+                                                           "outcome":  "blocked",
+                                                           "response_truncated":  false,
+                                                           "trace":  [
+                                                                         {
+                                                                             "hop":  0,
+                                                                             "url":  "https://receiver:8443/redirect?status=302",
+                                                                             "method":  "POST",
+                                                                             "network_events":  [
+                                                                                                    {
+                                                                                                        "event":  "dns_resolution",
+                                                                                                        "host":  "receiver",
+                                                                                                        "port":  8443,
+                                                                                                        "addresses":  [
+                                                                                                                          "172.21.0.2"
+                                                                                                                      ],
+                                                                                                        "validated":  true
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "tcp_connect_attempt",
+                                                                                                        "ip":  "172.21.0.2",
+                                                                                                        "port":  8443
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "tcp_connected",
+                                                                                                        "ip":  "172.21.0.2",
+                                                                                                        "port":  8443
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "peer_confirmed",
+                                                                                                        "ip":  "172.21.0.2"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "tls_verified",
+                                                                                                        "server_name":  "receiver"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "http_request",
+                                                                                                        "method":  "POST",
+                                                                                                        "path":  "/redirect?status=302"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "http_response",
+                                                                                                        "status":  302
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "http_redirect",
+                                                                                                        "status":  302,
+                                                                                                        "location":  "http://172.20.0.2:8000/reports/alpha?run_id=2c20f1f4-962f-4612-9bf8-e20158e928b2"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "policy_blocked",
+                                                                                                        "reason":  "redirect denied"
+                                                                                                    }
+                                                                                                ],
+                                                                             "resolved_ips":  [
+                                                                                                  "172.21.0.2"
+                                                                                              ],
+                                                                             "selected_ip":  "172.21.0.2",
+                                                                             "decision":  "denied",
+                                                                             "attempted_ips":  [
+                                                                                                   "172.21.0.2"
+                                                                                               ],
+                                                                             "connected_ip":  "172.21.0.2",
+                                                                             "tls_verified":  true,
+                                                                             "status":  302,
+                                                                             "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=2c20f1f4-962f-4612-9bf8-e20158e928b2",
+                                                                             "error":  "redirect denied"
+                                                                         }
+                                                                     ],
+                                                           "network_event_count":  9,
+                                                           "latency_ms":  13.74,
+                                                           "body_storage":  "mask",
+                                                           "effective_policy":  "reject",
+                                                           "plane_log_filter":  "metadata-only",
+                                                           "body_read":  "mask"
+                                                       },
+                                   "webhook_logs":  [
+                                                        {
+                                                            "id":  "71c603fb-50b9-48a8-83cf-1a8e586a7ab5",
+                                                            "workspace":  "alpha",
+                                                            "run_id":  "2c20f1f4-962f-4612-9bf8-e20158e928b2",
+                                                            "hook_id":  "0e6b4305-8854-45e1-8da8-cb5da9291d05",
+                                                            "mode":  "plane",
+                                                            "url":  "https://receiver:8443/redirect?status=302",
+                                                            "policy":  "baseline",
+                                                            "state":  "blocked",
+                                                            "result":  {
+                                                                           "status":  302,
+                                                                           "body":  "",
+                                                                           "error":  "redirect denied",
+                                                                           "outcome":  "blocked",
+                                                                           "response_truncated":  false,
+                                                                           "trace":  [
+                                                                                         {
+                                                                                             "hop":  0,
+                                                                                             "url":  "https://receiver:8443/redirect?status=302",
+                                                                                             "method":  "POST",
+                                                                                             "network_events":  [
+                                                                                                                    {
+                                                                                                                        "event":  "dns_resolution",
+                                                                                                                        "host":  "receiver",
+                                                                                                                        "port":  8443,
+                                                                                                                        "addresses":  [
+                                                                                                                                          "172.21.0.2"
+                                                                                                                                      ],
+                                                                                                                        "validated":  true
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "tcp_connect_attempt",
+                                                                                                                        "ip":  "172.21.0.2",
+                                                                                                                        "port":  8443
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "tcp_connected",
+                                                                                                                        "ip":  "172.21.0.2",
+                                                                                                                        "port":  8443
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "peer_confirmed",
+                                                                                                                        "ip":  "172.21.0.2"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "tls_verified",
+                                                                                                                        "server_name":  "receiver"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "http_request",
+                                                                                                                        "method":  "POST",
+                                                                                                                        "path":  "/redirect?status=302"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "http_response",
+                                                                                                                        "status":  302
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "http_redirect",
+                                                                                                                        "status":  302,
+                                                                                                                        "location":  "http://172.20.0.2:8000/reports/alpha?run_id=2c20f1f4-962f-4612-9bf8-e20158e928b2"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "policy_blocked",
+                                                                                                                        "reason":  "redirect denied"
+                                                                                                                    }
+                                                                                                                ],
+                                                                                             "resolved_ips":  [
+                                                                                                                  "172.21.0.2"
+                                                                                                              ],
+                                                                                             "selected_ip":  "172.21.0.2",
+                                                                                             "decision":  "denied",
+                                                                                             "attempted_ips":  [
+                                                                                                                   "172.21.0.2"
+                                                                                                               ],
+                                                                                             "connected_ip":  "172.21.0.2",
+                                                                                             "tls_verified":  true,
+                                                                                             "status":  302,
+                                                                                             "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=2c20f1f4-962f-4612-9bf8-e20158e928b2",
+                                                                                             "error":  "redirect denied"
+                                                                                         }
+                                                                                     ],
+                                                                           "network_event_count":  9,
+                                                                           "latency_ms":  13.74,
+                                                                           "body_storage":  "mask",
+                                                                           "effective_policy":  "reject",
+                                                                           "plane_log_filter":  "metadata-only",
+                                                                           "body_read":  "mask"
+                                                                       },
+                                                            "created":  "2026-11-23 07:13:24"
+                                                        }
+                                                    ],
+                                   "authorization":  {
+                                                         "alpha_member":  {
+                                                                              "expected_status_code":  403,
+                                                                              "observed_status_code":  null,
+                                                                              "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                              "response":  {
+                                                                                               "error":  "workspace permission denied"
+                                                                                           }
+                                                                          },
+                                                         "other_workspace_admin":  {
+                                                                                       "expected_status_code":  403,
+                                                                                       "observed_status_code":  null,
+                                                                                       "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                                       "response":  {
+                                                                                                        "error":  "workspace permission denied"
+                                                                                                    }
+                                                                                   }
+                                                     },
+                                   "connection_trace":  [
+                                                            {
+                                                                "hop":  0,
+                                                                "url":  "https://receiver:8443/redirect?status=302",
+                                                                "method":  "POST",
+                                                                "network_events":  [
+                                                                                       {
+                                                                                           "event":  "dns_resolution",
+                                                                                           "host":  "receiver",
+                                                                                           "port":  8443,
+                                                                                           "addresses":  [
+                                                                                                             "172.21.0.2"
+                                                                                                         ],
+                                                                                           "validated":  true
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "tcp_connect_attempt",
+                                                                                           "ip":  "172.21.0.2",
+                                                                                           "port":  8443
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "tcp_connected",
+                                                                                           "ip":  "172.21.0.2",
+                                                                                           "port":  8443
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "peer_confirmed",
+                                                                                           "ip":  "172.21.0.2"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "tls_verified",
+                                                                                           "server_name":  "receiver"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "http_request",
+                                                                                           "method":  "POST",
+                                                                                           "path":  "/redirect?status=302"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "http_response",
+                                                                                           "status":  302
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "http_redirect",
+                                                                                           "status":  302,
+                                                                                           "location":  "http://172.20.0.2:8000/reports/alpha?run_id=2c20f1f4-962f-4612-9bf8-e20158e928b2"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "policy_blocked",
+                                                                                           "reason":  "redirect denied"
+                                                                                       }
+                                                                                   ],
+                                                                "resolved_ips":  [
+                                                                                     "172.21.0.2"
+                                                                                 ],
+                                                                "selected_ip":  "172.21.0.2",
+                                                                "decision":  "denied",
+                                                                "attempted_ips":  [
+                                                                                      "172.21.0.2"
+                                                                                  ],
+                                                                "connected_ip":  "172.21.0.2",
+                                                                "tls_verified":  true,
+                                                                "status":  302,
+                                                                "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=2c20f1f4-962f-4612-9bf8-e20158e928b2",
+                                                                "error":  "redirect denied"
+                                                            }
+                                                        ]
+                               }
+                 },
+    "key_observations":  [
+                             "The MLflow 401/403 values prove role-based access control, not just Bearer-token syntax validation.",
+                             "MLflow response.effective_policy=strict and Plane delivery_result.effective_policy=reject prove the effective fixed-profile policies.",
+                             "Internal reach and response-body masking are reported as independent facts."
+                         ]
+}

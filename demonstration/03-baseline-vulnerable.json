@@ -1,0 +1,709 @@
+{
+    "_comment":  "JSON does not support comments; _comment and key_observations are human-readable annotations. Every report is synthetic lab data.",
+    "step":  3,
+    "title":  "Vulnerable baseline: Redirect reaches Internal and exposes response/log content",
+    "captured_at":  "2026-11-24T02:01:13.9129595+09:00",
+    "docker_command":  [
+                           "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/demo-cves.ps1"
+                       ],
+    "source_artifacts":  [
+                             {
+                                 "path":  "artifacts/final-baseline-vulnerable.json",
+                                 "sha256":  "E9C31D14396C5AD114E4F3C8D329354779A11EB0B1EAF645484F5F7CFE589692"
+                             }
+                         ],
+    "expected":  "Under baseline, MLflow and Plane both reach Internal after receiver Redirect and expose the REPORT-\u003crun_id\u003e marker.",
+    "observed":  {
+                     "scenario":  "baseline-vulnerable",
+                     "policy":  "baseline",
+                     "network":  "open",
+                     "passed":  true,
+                     "mlflow":  {
+                                    "run_id":  "b427202c-7463-4ec2-a7ce-5d4e558b4fdb",
+                                    "internal_api_reached":  true,
+                                    "report_content_exposed":  true,
+                                    "internal_observation":  {
+                                                                 "run_id":  "b427202c-7463-4ec2-a7ce-5d4e558b4fdb",
+                                                                 "internal_api_reached":  true,
+                                                                 "requests":  [
+                                                                                  [
+                                                                                      "b427202c-7463-4ec2-a7ce-5d4e558b4fdb",
+                                                                                      "GET",
+                                                                                      "/reports/alpha",
+                                                                                      "2026-11-23 07:12:38",
+                                                                                      "172.20.0.3"
+                                                                                  ]
+                                                                              ]
+                                                             },
+                                    "receiver_observation":  {
+                                                                 "requests":  [
+                                                                                  [
+                                                                                      "b427202c-7463-4ec2-a7ce-5d4e558b4fdb",
+                                                                                      "/redirect",
+                                                                                      "POST",
+                                                                                      "{\"run_id\": \"b427202c-7463-4ec2-a7ce-5d4e558b4fdb\", \"event\": \"model.registered\", \"workspace_id\": \"__cve_mlflow_2026_64849\", \"webhook_id\": \"9d88186e-61eb-44e9-906d-df69c1031f1b\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
+                                                                                  ]
+                                                                              ]
+                                                             },
+                                    "response":  {
+                                                     "success":  true,
+                                                     "response_status":  200,
+                                                     "response_body":  "{\"report_marker\": \"REPORT-b427202c-7463-4ec2-a7ce-5d4e558b4fdb\", \"run_id\": \"b427202c-7463-4ec2-a7ce-5d4e558b4fdb\", \"fictional\": true, \"customer\": \"alpha\", \"model_operations\": {\"active_models\": 3, \"last_model\": \"demand-demo-v1\"}, \"contract_summary\": {\"plan\": \"demo-enterprise\", \"annual_credits\": 12000}}",
+                                                     "outcome":  "succeeded",
+                                                     "error":  null,
+                                                     "effective_policy":  "baseline",
+                                                     "network_event_count":  14,
+                                                     "trace":  [
+                                                                   {
+                                                                       "hop":  0,
+                                                                       "url":  "https://receiver:8443/redirect?status=302",
+                                                                       "method":  "POST",
+                                                                       "network_events":  [
+                                                                                              {
+                                                                                                  "event":  "dns_resolution",
+                                                                                                  "host":  "receiver",
+                                                                                                  "port":  8443,
+                                                                                                  "addresses":  [
+                                                                                                                    "172.21.0.2"
+                                                                                                                ],
+                                                                                                  "validated":  false
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "tcp_connect_attempt",
+                                                                                                  "ip":  "172.21.0.2",
+                                                                                                  "port":  8443
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "tcp_connected",
+                                                                                                  "ip":  "172.21.0.2",
+                                                                                                  "port":  8443
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "peer_confirmed",
+                                                                                                  "ip":  "172.21.0.2"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "tls_verified",
+                                                                                                  "server_name":  "receiver"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "http_request",
+                                                                                                  "method":  "POST",
+                                                                                                  "path":  "/redirect?status=302"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "http_response",
+                                                                                                  "status":  302
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "http_redirect",
+                                                                                                  "status":  302,
+                                                                                                  "location":  "http://172.20.0.2:8000/reports/alpha?run_id=b427202c-7463-4ec2-a7ce-5d4e558b4fdb"
+                                                                                              }
+                                                                                          ],
+                                                                       "resolved_ips":  [
+                                                                                            "172.21.0.2"
+                                                                                        ],
+                                                                       "selected_ip":  "172.21.0.2",
+                                                                       "decision":  "baseline_unchecked",
+                                                                       "attempted_ips":  [
+                                                                                             "172.21.0.2"
+                                                                                         ],
+                                                                       "connected_ip":  "172.21.0.2",
+                                                                       "tls_verified":  true,
+                                                                       "status":  302,
+                                                                       "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=b427202c-7463-4ec2-a7ce-5d4e558b4fdb"
+                                                                   },
+                                                                   {
+                                                                       "hop":  1,
+                                                                       "url":  "http://172.20.0.2:8000/reports/alpha?run_id=b427202c-7463-4ec2-a7ce-5d4e558b4fdb",
+                                                                       "method":  "GET",
+                                                                       "network_events":  [
+                                                                                              {
+                                                                                                  "event":  "dns_resolution",
+                                                                                                  "host":  "172.20.0.2",
+                                                                                                  "port":  8000,
+                                                                                                  "addresses":  [
+                                                                                                                    "172.20.0.2"
+                                                                                                                ],
+                                                                                                  "validated":  false
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "tcp_connect_attempt",
+                                                                                                  "ip":  "172.20.0.2",
+                                                                                                  "port":  8000
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "tcp_connected",
+                                                                                                  "ip":  "172.20.0.2",
+                                                                                                  "port":  8000
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "peer_confirmed",
+                                                                                                  "ip":  "172.20.0.2"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "http_request",
+                                                                                                  "method":  "GET",
+                                                                                                  "path":  "/reports/alpha?run_id=b427202c-7463-4ec2-a7ce-5d4e558b4fdb"
+                                                                                              },
+                                                                                              {
+                                                                                                  "event":  "http_response",
+                                                                                                  "status":  200
+                                                                                              }
+                                                                                          ],
+                                                                       "resolved_ips":  [
+                                                                                            "172.20.0.2"
+                                                                                        ],
+                                                                       "selected_ip":  "172.20.0.2",
+                                                                       "decision":  "baseline_unchecked",
+                                                                       "attempted_ips":  [
+                                                                                             "172.20.0.2"
+                                                                                         ],
+                                                                       "connected_ip":  "172.20.0.2",
+                                                                       "status":  200
+                                                                   }
+                                                               ]
+                                                 },
+                                    "authorization":  {
+                                                          "unauthenticated":  null,
+                                                          "alpha_member":  null,
+                                                          "other_workspace_admin":  null
+                                                      },
+                                    "connection_trace":  [
+                                                             {
+                                                                 "hop":  0,
+                                                                 "url":  "https://receiver:8443/redirect?status=302",
+                                                                 "method":  "POST",
+                                                                 "network_events":  [
+                                                                                        {
+                                                                                            "event":  "dns_resolution",
+                                                                                            "host":  "receiver",
+                                                                                            "port":  8443,
+                                                                                            "addresses":  [
+                                                                                                              "172.21.0.2"
+                                                                                                          ],
+                                                                                            "validated":  false
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "tcp_connect_attempt",
+                                                                                            "ip":  "172.21.0.2",
+                                                                                            "port":  8443
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "tcp_connected",
+                                                                                            "ip":  "172.21.0.2",
+                                                                                            "port":  8443
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "peer_confirmed",
+                                                                                            "ip":  "172.21.0.2"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "tls_verified",
+                                                                                            "server_name":  "receiver"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "http_request",
+                                                                                            "method":  "POST",
+                                                                                            "path":  "/redirect?status=302"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "http_response",
+                                                                                            "status":  302
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "http_redirect",
+                                                                                            "status":  302,
+                                                                                            "location":  "http://172.20.0.2:8000/reports/alpha?run_id=b427202c-7463-4ec2-a7ce-5d4e558b4fdb"
+                                                                                        }
+                                                                                    ],
+                                                                 "resolved_ips":  [
+                                                                                      "172.21.0.2"
+                                                                                  ],
+                                                                 "selected_ip":  "172.21.0.2",
+                                                                 "decision":  "baseline_unchecked",
+                                                                 "attempted_ips":  [
+                                                                                       "172.21.0.2"
+                                                                                   ],
+                                                                 "connected_ip":  "172.21.0.2",
+                                                                 "tls_verified":  true,
+                                                                 "status":  302,
+                                                                 "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=b427202c-7463-4ec2-a7ce-5d4e558b4fdb"
+                                                             },
+                                                             {
+                                                                 "hop":  1,
+                                                                 "url":  "http://172.20.0.2:8000/reports/alpha?run_id=b427202c-7463-4ec2-a7ce-5d4e558b4fdb",
+                                                                 "method":  "GET",
+                                                                 "network_events":  [
+                                                                                        {
+                                                                                            "event":  "dns_resolution",
+                                                                                            "host":  "172.20.0.2",
+                                                                                            "port":  8000,
+                                                                                            "addresses":  [
+                                                                                                              "172.20.0.2"
+                                                                                                          ],
+                                                                                            "validated":  false
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "tcp_connect_attempt",
+                                                                                            "ip":  "172.20.0.2",
+                                                                                            "port":  8000
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "tcp_connected",
+                                                                                            "ip":  "172.20.0.2",
+                                                                                            "port":  8000
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "peer_confirmed",
+                                                                                            "ip":  "172.20.0.2"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "http_request",
+                                                                                            "method":  "GET",
+                                                                                            "path":  "/reports/alpha?run_id=b427202c-7463-4ec2-a7ce-5d4e558b4fdb"
+                                                                                        },
+                                                                                        {
+                                                                                            "event":  "http_response",
+                                                                                            "status":  200
+                                                                                        }
+                                                                                    ],
+                                                                 "resolved_ips":  [
+                                                                                      "172.20.0.2"
+                                                                                  ],
+                                                                 "selected_ip":  "172.20.0.2",
+                                                                 "decision":  "baseline_unchecked",
+                                                                 "attempted_ips":  [
+                                                                                       "172.20.0.2"
+                                                                                   ],
+                                                                 "connected_ip":  "172.20.0.2",
+                                                                 "status":  200
+                                                             }
+                                                         ]
+                                },
+                     "plane":  {
+                                   "run_id":  "e315809a-ce44-4155-8a2f-02b886c37335",
+                                   "internal_api_reached":  true,
+                                   "report_content_exposed":  true,
+                                   "internal_observation":  {
+                                                                "run_id":  "e315809a-ce44-4155-8a2f-02b886c37335",
+                                                                "internal_api_reached":  true,
+                                                                "requests":  [
+                                                                                 [
+                                                                                     "e315809a-ce44-4155-8a2f-02b886c37335",
+                                                                                     "GET",
+                                                                                     "/reports/alpha",
+                                                                                     "2026-11-23 07:12:38",
+                                                                                     "172.20.0.3"
+                                                                                 ]
+                                                                             ]
+                                                            },
+                                   "receiver_observation":  {
+                                                                "requests":  [
+                                                                                 [
+                                                                                     "e315809a-ce44-4155-8a2f-02b886c37335",
+                                                                                     "/redirect",
+                                                                                     "POST",
+                                                                                     "{\"run_id\": \"e315809a-ce44-4155-8a2f-02b886c37335\", \"event\": \"issue.updated\", \"workspace_id\": \"alpha\", \"webhook_id\": \"fc373b95-c658-49a5-ac6d-de2bb2d8b912\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
+                                                                                 ]
+                                                                             ]
+                                                            },
+                                   "delivery_result":  {
+                                                           "status":  200,
+                                                           "body":  "{\"report_marker\": \"REPORT-e315809a-ce44-4155-8a2f-02b886c37335\", \"run_id\": \"e315809a-ce44-4155-8a2f-02b886c37335\", \"fictional\": true, \"customer\": \"alpha\", \"model_operations\": {\"active_models\": 3, \"last_model\": \"demand-demo-v1\"}, \"contract_summary\": {\"plan\": \"demo-enterprise\", \"annual_credits\": 12000}}",
+                                                           "error":  null,
+                                                           "outcome":  "succeeded",
+                                                           "response_truncated":  false,
+                                                           "trace":  [
+                                                                         {
+                                                                             "hop":  0,
+                                                                             "url":  "https://receiver:8443/redirect?status=302",
+                                                                             "method":  "POST",
+                                                                             "network_events":  [
+                                                                                                    {
+                                                                                                        "event":  "dns_resolution",
+                                                                                                        "host":  "receiver",
+                                                                                                        "port":  8443,
+                                                                                                        "addresses":  [
+                                                                                                                          "172.21.0.2"
+                                                                                                                      ],
+                                                                                                        "validated":  false
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "tcp_connect_attempt",
+                                                                                                        "ip":  "172.21.0.2",
+                                                                                                        "port":  8443
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "tcp_connected",
+                                                                                                        "ip":  "172.21.0.2",
+                                                                                                        "port":  8443
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "peer_confirmed",
+                                                                                                        "ip":  "172.21.0.2"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "tls_verified",
+                                                                                                        "server_name":  "receiver"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "http_request",
+                                                                                                        "method":  "POST",
+                                                                                                        "path":  "/redirect?status=302"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "http_response",
+                                                                                                        "status":  302
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "http_redirect",
+                                                                                                        "status":  302,
+                                                                                                        "location":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                                                                    }
+                                                                                                ],
+                                                                             "resolved_ips":  [
+                                                                                                  "172.21.0.2"
+                                                                                              ],
+                                                                             "selected_ip":  "172.21.0.2",
+                                                                             "decision":  "baseline_unchecked",
+                                                                             "attempted_ips":  [
+                                                                                                   "172.21.0.2"
+                                                                                               ],
+                                                                             "connected_ip":  "172.21.0.2",
+                                                                             "tls_verified":  true,
+                                                                             "status":  302,
+                                                                             "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                                         },
+                                                                         {
+                                                                             "hop":  1,
+                                                                             "url":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335",
+                                                                             "method":  "GET",
+                                                                             "network_events":  [
+                                                                                                    {
+                                                                                                        "event":  "dns_resolution",
+                                                                                                        "host":  "172.20.0.2",
+                                                                                                        "port":  8000,
+                                                                                                        "addresses":  [
+                                                                                                                          "172.20.0.2"
+                                                                                                                      ],
+                                                                                                        "validated":  false
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "tcp_connect_attempt",
+                                                                                                        "ip":  "172.20.0.2",
+                                                                                                        "port":  8000
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "tcp_connected",
+                                                                                                        "ip":  "172.20.0.2",
+                                                                                                        "port":  8000
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "peer_confirmed",
+                                                                                                        "ip":  "172.20.0.2"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "http_request",
+                                                                                                        "method":  "GET",
+                                                                                                        "path":  "/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "event":  "http_response",
+                                                                                                        "status":  200
+                                                                                                    }
+                                                                                                ],
+                                                                             "resolved_ips":  [
+                                                                                                  "172.20.0.2"
+                                                                                              ],
+                                                                             "selected_ip":  "172.20.0.2",
+                                                                             "decision":  "baseline_unchecked",
+                                                                             "attempted_ips":  [
+                                                                                                   "172.20.0.2"
+                                                                                               ],
+                                                                             "connected_ip":  "172.20.0.2",
+                                                                             "status":  200
+                                                                         }
+                                                                     ],
+                                                           "network_event_count":  14,
+                                                           "latency_ms":  22.51,
+                                                           "body_storage":  "full",
+                                                           "effective_policy":  "baseline",
+                                                           "plane_log_filter":  "none",
+                                                           "body_read":  "full"
+                                                       },
+                                   "webhook_logs":  [
+                                                        {
+                                                            "id":  "9f908576-c05c-4473-8f31-e95a07da725c",
+                                                            "workspace":  "alpha",
+                                                            "run_id":  "e315809a-ce44-4155-8a2f-02b886c37335",
+                                                            "hook_id":  "fc373b95-c658-49a5-ac6d-de2bb2d8b912",
+                                                            "mode":  "plane",
+                                                            "url":  "https://receiver:8443/redirect?status=302",
+                                                            "policy":  "baseline",
+                                                            "state":  "succeeded",
+                                                            "result":  {
+                                                                           "status":  200,
+                                                                           "body":  "{\"report_marker\": \"REPORT-e315809a-ce44-4155-8a2f-02b886c37335\", \"run_id\": \"e315809a-ce44-4155-8a2f-02b886c37335\", \"fictional\": true, \"customer\": \"alpha\", \"model_operations\": {\"active_models\": 3, \"last_model\": \"demand-demo-v1\"}, \"contract_summary\": {\"plan\": \"demo-enterprise\", \"annual_credits\": 12000}}",
+                                                                           "error":  null,
+                                                                           "outcome":  "succeeded",
+                                                                           "response_truncated":  false,
+                                                                           "trace":  [
+                                                                                         {
+                                                                                             "hop":  0,
+                                                                                             "url":  "https://receiver:8443/redirect?status=302",
+                                                                                             "method":  "POST",
+                                                                                             "network_events":  [
+                                                                                                                    {
+                                                                                                                        "event":  "dns_resolution",
+                                                                                                                        "host":  "receiver",
+                                                                                                                        "port":  8443,
+                                                                                                                        "addresses":  [
+                                                                                                                                          "172.21.0.2"
+                                                                                                                                      ],
+                                                                                                                        "validated":  false
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "tcp_connect_attempt",
+                                                                                                                        "ip":  "172.21.0.2",
+                                                                                                                        "port":  8443
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "tcp_connected",
+                                                                                                                        "ip":  "172.21.0.2",
+                                                                                                                        "port":  8443
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "peer_confirmed",
+                                                                                                                        "ip":  "172.21.0.2"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "tls_verified",
+                                                                                                                        "server_name":  "receiver"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "http_request",
+                                                                                                                        "method":  "POST",
+                                                                                                                        "path":  "/redirect?status=302"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "http_response",
+                                                                                                                        "status":  302
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "http_redirect",
+                                                                                                                        "status":  302,
+                                                                                                                        "location":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                                                                                    }
+                                                                                                                ],
+                                                                                             "resolved_ips":  [
+                                                                                                                  "172.21.0.2"
+                                                                                                              ],
+                                                                                             "selected_ip":  "172.21.0.2",
+                                                                                             "decision":  "baseline_unchecked",
+                                                                                             "attempted_ips":  [
+                                                                                                                   "172.21.0.2"
+                                                                                                               ],
+                                                                                             "connected_ip":  "172.21.0.2",
+                                                                                             "tls_verified":  true,
+                                                                                             "status":  302,
+                                                                                             "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                                                         },
+                                                                                         {
+                                                                                             "hop":  1,
+                                                                                             "url":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335",
+                                                                                             "method":  "GET",
+                                                                                             "network_events":  [
+                                                                                                                    {
+                                                                                                                        "event":  "dns_resolution",
+                                                                                                                        "host":  "172.20.0.2",
+                                                                                                                        "port":  8000,
+                                                                                                                        "addresses":  [
+                                                                                                                                          "172.20.0.2"
+                                                                                                                                      ],
+                                                                                                                        "validated":  false
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "tcp_connect_attempt",
+                                                                                                                        "ip":  "172.20.0.2",
+                                                                                                                        "port":  8000
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "tcp_connected",
+                                                                                                                        "ip":  "172.20.0.2",
+                                                                                                                        "port":  8000
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "peer_confirmed",
+                                                                                                                        "ip":  "172.20.0.2"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "http_request",
+                                                                                                                        "method":  "GET",
+                                                                                                                        "path":  "/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "event":  "http_response",
+                                                                                                                        "status":  200
+                                                                                                                    }
+                                                                                                                ],
+                                                                                             "resolved_ips":  [
+                                                                                                                  "172.20.0.2"
+                                                                                                              ],
+                                                                                             "selected_ip":  "172.20.0.2",
+                                                                                             "decision":  "baseline_unchecked",
+                                                                                             "attempted_ips":  [
+                                                                                                                   "172.20.0.2"
+                                                                                                               ],
+                                                                                             "connected_ip":  "172.20.0.2",
+                                                                                             "status":  200
+                                                                                         }
+                                                                                     ],
+                                                                           "network_event_count":  14,
+                                                                           "latency_ms":  22.51,
+                                                                           "body_storage":  "full",
+                                                                           "effective_policy":  "baseline",
+                                                                           "plane_log_filter":  "none",
+                                                                           "body_read":  "full"
+                                                                       },
+                                                            "created":  "2026-11-23 07:12:38"
+                                                        }
+                                                    ],
+                                   "authorization":  {
+                                                         "alpha_member":  {
+                                                                              "expected_status_code":  403,
+                                                                              "observed_status_code":  null,
+                                                                              "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                              "response":  {
+                                                                                               "error":  "workspace permission denied"
+                                                                                           }
+                                                                          },
+                                                         "other_workspace_admin":  {
+                                                                                       "expected_status_code":  403,
+                                                                                       "observed_status_code":  null,
+                                                                                       "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                                       "response":  {
+                                                                                                        "error":  "workspace permission denied"
+                                                                                                    }
+                                                                                   }
+                                                     },
+                                   "connection_trace":  [
+                                                            {
+                                                                "hop":  0,
+                                                                "url":  "https://receiver:8443/redirect?status=302",
+                                                                "method":  "POST",
+                                                                "network_events":  [
+                                                                                       {
+                                                                                           "event":  "dns_resolution",
+                                                                                           "host":  "receiver",
+                                                                                           "port":  8443,
+                                                                                           "addresses":  [
+                                                                                                             "172.21.0.2"
+                                                                                                         ],
+                                                                                           "validated":  false
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "tcp_connect_attempt",
+                                                                                           "ip":  "172.21.0.2",
+                                                                                           "port":  8443
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "tcp_connected",
+                                                                                           "ip":  "172.21.0.2",
+                                                                                           "port":  8443
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "peer_confirmed",
+                                                                                           "ip":  "172.21.0.2"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "tls_verified",
+                                                                                           "server_name":  "receiver"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "http_request",
+                                                                                           "method":  "POST",
+                                                                                           "path":  "/redirect?status=302"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "http_response",
+                                                                                           "status":  302
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "http_redirect",
+                                                                                           "status":  302,
+                                                                                           "location":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                                                       }
+                                                                                   ],
+                                                                "resolved_ips":  [
+                                                                                     "172.21.0.2"
+                                                                                 ],
+                                                                "selected_ip":  "172.21.0.2",
+                                                                "decision":  "baseline_unchecked",
+                                                                "attempted_ips":  [
+                                                                                      "172.21.0.2"
+                                                                                  ],
+                                                                "connected_ip":  "172.21.0.2",
+                                                                "tls_verified":  true,
+                                                                "status":  302,
+                                                                "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                            },
+                                                            {
+                                                                "hop":  1,
+                                                                "url":  "http://172.20.0.2:8000/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335",
+                                                                "method":  "GET",
+                                                                "network_events":  [
+                                                                                       {
+                                                                                           "event":  "dns_resolution",
+                                                                                           "host":  "172.20.0.2",
+                                                                                           "port":  8000,
+                                                                                           "addresses":  [
+                                                                                                             "172.20.0.2"
+                                                                                                         ],
+                                                                                           "validated":  false
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "tcp_connect_attempt",
+                                                                                           "ip":  "172.20.0.2",
+                                                                                           "port":  8000
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "tcp_connected",
+                                                                                           "ip":  "172.20.0.2",
+                                                                                           "port":  8000
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "peer_confirmed",
+                                                                                           "ip":  "172.20.0.2"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "http_request",
+                                                                                           "method":  "GET",
+                                                                                           "path":  "/reports/alpha?run_id=e315809a-ce44-4155-8a2f-02b886c37335"
+                                                                                       },
+                                                                                       {
+                                                                                           "event":  "http_response",
+                                                                                           "status":  200
+                                                                                       }
+                                                                                   ],
+                                                                "resolved_ips":  [
+                                                                                     "172.20.0.2"
+                                                                                 ],
+                                                                "selected_ip":  "172.20.0.2",
+                                                                "decision":  "baseline_unchecked",
+                                                                "attempted_ips":  [
+                                                                                      "172.20.0.2"
+                                                                                  ],
+                                                                "connected_ip":  "172.20.0.2",
+                                                                "status":  200
+                                                            }
+                                                        ]
+                               }
+                 },
+    "key_observations":  [
+                             "internal_observation.internal_api_reached=true means the synthetic Internal server recorded this run_id.",
+                             "The marker in the MLflow response represents synchronous exposure; the marker in Plane webhook_logs represents asynchronous log exposure.",
+                             "receiver_observation independently shows that the Kali-role receiver saw the Redirect request with the same run_id."
+                         ]
+}

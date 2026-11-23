@@ -46,8 +46,20 @@ def main():
     bob = os.getenv("OTHER_WORKSPACE_TOKEN", "lab-bob-token")
     results = {"policy": args.policy, "network": args.network, "body": {
         "return": args.return_body, "store": args.store_body, "read": args.read_body}, "cases": []}
-    call(args.base + "/health")
-    call(args.base + "/webhook", "POST", {"event": "connectivity-check"}, expected=202)
+    legacy_run_id = str(uuid.uuid4())
+    webhook_health = call(args.base + "/health")
+    internal_health = call(args.observer + "/health")
+    legacy_webhook_post = call(args.base + "/webhook", "POST", {
+        "event": "connectivity-check", "run_id": legacy_run_id}, expected=202)
+    # Keep the old API contract as explicit evidence in every matrix artifact.
+    # This lets demonstration step 1 use actual recorded Docker responses on
+    # every future capture rather than infer compatibility from a passed test.
+    results["legacy_connectivity"] = {
+        "run_id": legacy_run_id,
+        "webhook_health": webhook_health,
+        "internal_health": internal_health,
+        "legacy_webhook_post": legacy_webhook_post,
+    }
     workspace = call(args.base + "/api/workspaces", "POST", {"name": "matrix-" + str(uuid.uuid4())}, customer, 201)["id"]
     api = args.base + "/api/workspaces/" + workspace
     try:

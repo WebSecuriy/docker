@@ -1,5 +1,5 @@
 {
-    "exported_at":  "2026-11-23T15:17:26.9703355+09:00",
+    "exported_at":  "2026-11-23T16:15:41.0535353+09:00",
     "environment":  "Windows Docker Desktop, Linux containers, python:3.12-slim",
     "test_command":  "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-matrix.ps1 -SkipBuild",
     "matrix_count":  9,
@@ -21,7 +21,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "345e2ed4-ca26-4f79-804c-12a7c8fd83a6",
+                                       "run_id":  "5e09410c-acb9-4024-b55f-fa0e599ff092",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -87,7 +87,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "0237b06a-c7d9-4004-9267-9b193f0cea24",
+                                       "run_id":  "c6382d8a-fea4-4ec1-8511-1f54f3747de6",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  true,
@@ -138,7 +138,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=0237b06a-c7d9-4004-9267-9b193f0cea24"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=c6382d8a-fea4-4ec1-8511-1f54f3747de6"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -152,11 +152,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=0237b06a-c7d9-4004-9267-9b193f0cea24"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=c6382d8a-fea4-4ec1-8511-1f54f3747de6"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=0237b06a-c7d9-4004-9267-9b193f0cea24",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=c6382d8a-fea4-4ec1-8511-1f54f3747de6",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -185,7 +185,7 @@
                                                                                 {
                                                                                     "event":  "http_request",
                                                                                     "method":  "GET",
-                                                                                    "path":  "/reports/alpha?run_id=0237b06a-c7d9-4004-9267-9b193f0cea24"
+                                                                                    "path":  "/reports/alpha?run_id=c6382d8a-fea4-4ec1-8511-1f54f3747de6"
                                                                                 },
                                                                                 {
                                                                                     "event":  "http_response",
@@ -208,7 +208,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "392d004b-677a-4ff3-b0dc-cbb74729a003",
+                                       "run_id":  "fe98259d-74ee-44ad-80fa-f91814b5f553",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -274,7 +274,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "144720ea-04f4-4569-a085-b97deab357aa",
+                                       "run_id":  "1299ab58-4346-4a9f-9c10-0c58be2215e6",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  true,
@@ -325,7 +325,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=144720ea-04f4-4569-a085-b97deab357aa"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=1299ab58-4346-4a9f-9c10-0c58be2215e6"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -339,11 +339,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=144720ea-04f4-4569-a085-b97deab357aa"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=1299ab58-4346-4a9f-9c10-0c58be2215e6"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=144720ea-04f4-4569-a085-b97deab357aa",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=1299ab58-4346-4a9f-9c10-0c58be2215e6",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -372,7 +372,7 @@
                                                                                 {
                                                                                     "event":  "http_request",
                                                                                     "method":  "GET",
-                                                                                    "path":  "/reports/alpha?run_id=144720ea-04f4-4569-a085-b97deab357aa"
+                                                                                    "path":  "/reports/alpha?run_id=1299ab58-4346-4a9f-9c10-0c58be2215e6"
                                                                                 },
                                                                                 {
                                                                                     "event":  "http_response",
@@ -394,21 +394,21 @@
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "8cbab199-ca48-4081-a90d-bc4e3bc0a838",
+                                             "run_id":  "3e9573bd-2362-44d5-9659-c36602739f52",
                                              "result":  {
-                                                            "run_id":  "8cbab199-ca48-4081-a90d-bc4e3bc0a838",
+                                                            "run_id":  "3e9573bd-2362-44d5-9659-c36602739f52",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "8cbab199-ca48-4081-a90d-bc4e3bc0a838",
+                                                                 "run_id":  "3e9573bd-2362-44d5-9659-c36602739f52",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "270782F7A3117C6C68CAB81A8601622FAC92EA860E06C127E007E896F3CFC172"
+                     "raw_result_sha256":  "629DD607B3380A431D196CF08F1C00A800E5A699C3C66572B70D1A38D3A323DB"
                  },
                  {
                      "name":  "baseline-blocked-full",
@@ -425,7 +425,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "3c332afd-e910-4840-ae24-3cd8a9d25cca",
+                                       "run_id":  "5cbc9050-a612-41fa-897c-e82289d3daa2",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -491,7 +491,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "3d511161-e76a-46b3-8b9a-32b55733f9bb",
+                                       "run_id":  "4f2baa5e-f42a-41b9-9fe8-a47d1537c5ac",
                                        "status":  303,
                                        "outcome":  "failed",
                                        "internal_api_reached":  false,
@@ -542,7 +542,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=3d511161-e76a-46b3-8b9a-32b55733f9bb"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=4f2baa5e-f42a-41b9-9fe8-a47d1537c5ac"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -556,11 +556,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=3d511161-e76a-46b3-8b9a-32b55733f9bb"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=4f2baa5e-f42a-41b9-9fe8-a47d1537c5ac"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=3d511161-e76a-46b3-8b9a-32b55733f9bb",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=4f2baa5e-f42a-41b9-9fe8-a47d1537c5ac",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -597,7 +597,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "5a2b237a-60be-44c9-adfd-ae70f9b5186d",
+                                       "run_id":  "5e576bdd-c66e-49bf-a985-56e6636d22f7",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -663,7 +663,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "b2bf07ae-23c8-48d8-83bb-c4dd993b1bb1",
+                                       "run_id":  "e9fd4dc2-f541-43d3-a737-ddd949f91fec",
                                        "status":  303,
                                        "outcome":  "failed",
                                        "internal_api_reached":  false,
@@ -714,7 +714,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=b2bf07ae-23c8-48d8-83bb-c4dd993b1bb1"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=e9fd4dc2-f541-43d3-a737-ddd949f91fec"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -728,11 +728,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=b2bf07ae-23c8-48d8-83bb-c4dd993b1bb1"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=e9fd4dc2-f541-43d3-a737-ddd949f91fec"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=b2bf07ae-23c8-48d8-83bb-c4dd993b1bb1",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=e9fd4dc2-f541-43d3-a737-ddd949f91fec",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -768,21 +768,21 @@
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "cab9306a-5948-474a-92fb-1b35cf9db0bc",
+                                             "run_id":  "118ec254-9328-448d-9a84-b430cda2dcca",
                                              "result":  {
-                                                            "run_id":  "cab9306a-5948-474a-92fb-1b35cf9db0bc",
+                                                            "run_id":  "118ec254-9328-448d-9a84-b430cda2dcca",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "cab9306a-5948-474a-92fb-1b35cf9db0bc",
+                                                                 "run_id":  "118ec254-9328-448d-9a84-b430cda2dcca",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "A866EAAC2201266F76F34AE29E1A0770D36234F3AB20B37FD644BD8D2C9EC8CA"
+                     "raw_result_sha256":  "663595FC4ED00CF9DC71407F5C5A1908E4C0BA12878224164AEA002E05436258"
                  },
                  {
                      "name":  "reject-open-full",
@@ -799,7 +799,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "25d5f8f6-298a-4afc-a648-7185281f9f85",
+                                       "run_id":  "26a4e5d6-a4f8-4736-b0c3-193deee08a8c",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -865,7 +865,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "92d59a9b-87e1-431f-b66a-80b43f6972c8",
+                                       "run_id":  "1dd29afb-e944-44b1-ae18-bb3d748c8b39",
                                        "status":  303,
                                        "outcome":  "blocked",
                                        "internal_api_reached":  false,
@@ -916,7 +916,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=92d59a9b-87e1-431f-b66a-80b43f6972c8"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=1dd29afb-e944-44b1-ae18-bb3d748c8b39"
                                                                                 },
                                                                                 {
                                                                                     "event":  "policy_blocked",
@@ -934,7 +934,7 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=92d59a9b-87e1-431f-b66a-80b43f6972c8",
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=1dd29afb-e944-44b1-ae18-bb3d748c8b39",
                                                          "error":  "redirect denied"
                                                      }
                                                  ]
@@ -942,7 +942,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "7d210f55-b962-408b-af36-5a5a49975dc2",
+                                       "run_id":  "fe01426b-5205-4dc1-af4c-64aa07556c15",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -1008,7 +1008,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "37c0c830-1202-4816-aebb-bebfa3bf7604",
+                                       "run_id":  "7d38f3e8-ddff-49d7-8844-8fa741d27ff8",
                                        "status":  303,
                                        "outcome":  "blocked",
                                        "internal_api_reached":  false,
@@ -1059,7 +1059,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=37c0c830-1202-4816-aebb-bebfa3bf7604"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=7d38f3e8-ddff-49d7-8844-8fa741d27ff8"
                                                                                 },
                                                                                 {
                                                                                     "event":  "policy_blocked",
@@ -1077,28 +1077,28 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=37c0c830-1202-4816-aebb-bebfa3bf7604",
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=7d38f3e8-ddff-49d7-8844-8fa741d27ff8",
                                                          "error":  "redirect denied"
                                                      }
                                                  ]
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "c82a2a9a-2299-479c-b340-f83e07e8c55c",
+                                             "run_id":  "6b1c645a-ad72-4a89-a2a3-37c789de08fb",
                                              "result":  {
-                                                            "run_id":  "c82a2a9a-2299-479c-b340-f83e07e8c55c",
+                                                            "run_id":  "6b1c645a-ad72-4a89-a2a3-37c789de08fb",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "c82a2a9a-2299-479c-b340-f83e07e8c55c",
+                                                                 "run_id":  "6b1c645a-ad72-4a89-a2a3-37c789de08fb",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "17B8CA7AD0B0E72E54D955F9B848B7611A0F435C35EDF96813278A267761BAD5"
+                     "raw_result_sha256":  "A1009D126E2847AAAFA488E2588A12964190DB5A532D59C3DECD7577D192A7EC"
                  },
                  {
                      "name":  "reject-blocked-full",
@@ -1115,7 +1115,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "5ac95c22-f542-4169-a125-8df42f1b8dd0",
+                                       "run_id":  "23abdcf1-0131-46e2-9381-7809acabb0e6",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -1181,7 +1181,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "b8bec79e-c414-4710-9def-e9ee8935201f",
+                                       "run_id":  "00d8fb57-cbfd-4e04-97f6-b72a045e84df",
                                        "status":  303,
                                        "outcome":  "blocked",
                                        "internal_api_reached":  false,
@@ -1232,7 +1232,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=b8bec79e-c414-4710-9def-e9ee8935201f"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=00d8fb57-cbfd-4e04-97f6-b72a045e84df"
                                                                                 },
                                                                                 {
                                                                                     "event":  "policy_blocked",
@@ -1250,7 +1250,7 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=b8bec79e-c414-4710-9def-e9ee8935201f",
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=00d8fb57-cbfd-4e04-97f6-b72a045e84df",
                                                          "error":  "redirect denied"
                                                      }
                                                  ]
@@ -1258,7 +1258,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "60ec3bd3-a8c9-4611-8209-3869275855cf",
+                                       "run_id":  "7cb368c8-e6e4-4299-b49e-100272c5652a",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -1324,7 +1324,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "f303c552-b564-4ed5-85d6-caff6ca6c4a4",
+                                       "run_id":  "3cbb29fb-40b8-42fe-9566-c9e5c12943f8",
                                        "status":  303,
                                        "outcome":  "blocked",
                                        "internal_api_reached":  false,
@@ -1375,7 +1375,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=f303c552-b564-4ed5-85d6-caff6ca6c4a4"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=3cbb29fb-40b8-42fe-9566-c9e5c12943f8"
                                                                                 },
                                                                                 {
                                                                                     "event":  "policy_blocked",
@@ -1393,28 +1393,28 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=f303c552-b564-4ed5-85d6-caff6ca6c4a4",
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=3cbb29fb-40b8-42fe-9566-c9e5c12943f8",
                                                          "error":  "redirect denied"
                                                      }
                                                  ]
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "14f711ea-80f6-488d-aa1e-1e9566147506",
+                                             "run_id":  "e5da4362-4dd1-482b-b805-0bdff72aa262",
                                              "result":  {
-                                                            "run_id":  "14f711ea-80f6-488d-aa1e-1e9566147506",
+                                                            "run_id":  "e5da4362-4dd1-482b-b805-0bdff72aa262",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "14f711ea-80f6-488d-aa1e-1e9566147506",
+                                                                 "run_id":  "e5da4362-4dd1-482b-b805-0bdff72aa262",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "902EDDCF2450D60569F002E514A7E0C9761C94A31C0ABBEDC16B706F9452D7A2"
+                     "raw_result_sha256":  "87743EECB692BB7EBD41FBCAA7555BE6FC56E2E8D9969A13070E1DDBDF383ABE"
                  },
                  {
                      "name":  "strict-open-full",
@@ -1431,7 +1431,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "6a297270-3108-446d-906c-07b3288ac4d4",
+                                       "run_id":  "951e9c07-e1bb-4aa9-a462-7e5c2e15a307",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -1497,7 +1497,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "4e55aea5-d298-4b6a-82b1-7d31c643740f",
+                                       "run_id":  "927dc492-46dd-49cb-8a70-5277b105f59b",
                                        "status":  303,
                                        "outcome":  "blocked",
                                        "internal_api_reached":  false,
@@ -1548,7 +1548,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=4e55aea5-d298-4b6a-82b1-7d31c643740f"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=927dc492-46dd-49cb-8a70-5277b105f59b"
                                                                                 },
                                                                                 {
                                                                                     "event":  "policy_blocked",
@@ -1566,7 +1566,7 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=4e55aea5-d298-4b6a-82b1-7d31c643740f",
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=927dc492-46dd-49cb-8a70-5277b105f59b",
                                                          "error":  "HTTPS downgrade denied"
                                                      }
                                                  ]
@@ -1574,7 +1574,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "bb90d545-e041-472a-9899-384a3aaca190",
+                                       "run_id":  "90beef5b-d542-472a-84f2-62b0458fc89f",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -1640,7 +1640,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "ad40e3c7-793f-4b60-8bca-dd803879bbf6",
+                                       "run_id":  "a614d03f-cc43-4a02-9cae-6210abe7f6a5",
                                        "status":  303,
                                        "outcome":  "blocked",
                                        "internal_api_reached":  false,
@@ -1691,7 +1691,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=ad40e3c7-793f-4b60-8bca-dd803879bbf6"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=a614d03f-cc43-4a02-9cae-6210abe7f6a5"
                                                                                 },
                                                                                 {
                                                                                     "event":  "policy_blocked",
@@ -1709,28 +1709,28 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=ad40e3c7-793f-4b60-8bca-dd803879bbf6",
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=a614d03f-cc43-4a02-9cae-6210abe7f6a5",
                                                          "error":  "HTTPS downgrade denied"
                                                      }
                                                  ]
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "6e918d8f-f2c3-4430-b184-70b452d544cc",
+                                             "run_id":  "ecc164c4-e338-492c-9541-fba243a19756",
                                              "result":  {
-                                                            "run_id":  "6e918d8f-f2c3-4430-b184-70b452d544cc",
+                                                            "run_id":  "ecc164c4-e338-492c-9541-fba243a19756",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "6e918d8f-f2c3-4430-b184-70b452d544cc",
+                                                                 "run_id":  "ecc164c4-e338-492c-9541-fba243a19756",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "8551EF5B2A7F88F57CE2CA05DC28CC33863A57D97D1BF85756127FE9E7282166"
+                     "raw_result_sha256":  "999411B97F0EC227E8CA05649AEB8D9A6B5315C084A45C517BAF276C3D2E9DD5"
                  },
                  {
                      "name":  "strict-blocked-full",
@@ -1747,7 +1747,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "78907aa7-bd89-4ae7-81b3-e7c3e96a50dc",
+                                       "run_id":  "ad7106e3-dfa5-498f-9999-336ddd9ddf8c",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -1813,7 +1813,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "6f690cca-34b9-4ea1-ab82-45319663a1ae",
+                                       "run_id":  "b0f397ba-8bd4-414e-8091-6f328b414242",
                                        "status":  303,
                                        "outcome":  "blocked",
                                        "internal_api_reached":  false,
@@ -1864,7 +1864,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=6f690cca-34b9-4ea1-ab82-45319663a1ae"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=b0f397ba-8bd4-414e-8091-6f328b414242"
                                                                                 },
                                                                                 {
                                                                                     "event":  "policy_blocked",
@@ -1882,7 +1882,7 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=6f690cca-34b9-4ea1-ab82-45319663a1ae",
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=b0f397ba-8bd4-414e-8091-6f328b414242",
                                                          "error":  "HTTPS downgrade denied"
                                                      }
                                                  ]
@@ -1890,7 +1890,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "f36be60b-6ad5-4846-9e54-552b56037a1b",
+                                       "run_id":  "829656d4-dc44-4a80-845a-036422ee5aaf",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -1956,7 +1956,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "9e05a44c-576f-4e7a-94e4-d99cfa5fff44",
+                                       "run_id":  "d840aa0c-d383-4c26-8175-17c39dc2bdd3",
                                        "status":  303,
                                        "outcome":  "blocked",
                                        "internal_api_reached":  false,
@@ -2007,7 +2007,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=9e05a44c-576f-4e7a-94e4-d99cfa5fff44"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=d840aa0c-d383-4c26-8175-17c39dc2bdd3"
                                                                                 },
                                                                                 {
                                                                                     "event":  "policy_blocked",
@@ -2025,28 +2025,28 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=9e05a44c-576f-4e7a-94e4-d99cfa5fff44",
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=d840aa0c-d383-4c26-8175-17c39dc2bdd3",
                                                          "error":  "HTTPS downgrade denied"
                                                      }
                                                  ]
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "c0b766c0-ff46-410e-91bc-0e4368dead17",
+                                             "run_id":  "2725c486-d0ba-4f9e-9ce0-5fedefde35b7",
                                              "result":  {
-                                                            "run_id":  "c0b766c0-ff46-410e-91bc-0e4368dead17",
+                                                            "run_id":  "2725c486-d0ba-4f9e-9ce0-5fedefde35b7",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "c0b766c0-ff46-410e-91bc-0e4368dead17",
+                                                                 "run_id":  "2725c486-d0ba-4f9e-9ce0-5fedefde35b7",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "67DA176018AD8766B782B499B05519A92AD8924B8FE0664F623EC2E72F6E300A"
+                     "raw_result_sha256":  "99A7267B6F246E2447D5184166D130A7D5564BD21831D4803C9D9E34B384C41A"
                  },
                  {
                      "name":  "baseline-return-mask",
@@ -2063,7 +2063,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "9af75f72-52ff-4227-a04a-e5ed1c7e99fb",
+                                       "run_id":  "429e24ca-2cd8-4f72-b120-8e7df24d77c7",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -2129,7 +2129,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "eaff1fbc-5fb8-45c3-9f8c-f9232713b478",
+                                       "run_id":  "9198bfe5-7df1-4bf2-bae8-dee90e847a85",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  true,
@@ -2180,7 +2180,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=eaff1fbc-5fb8-45c3-9f8c-f9232713b478"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=9198bfe5-7df1-4bf2-bae8-dee90e847a85"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -2194,11 +2194,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=eaff1fbc-5fb8-45c3-9f8c-f9232713b478"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=9198bfe5-7df1-4bf2-bae8-dee90e847a85"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=eaff1fbc-5fb8-45c3-9f8c-f9232713b478",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=9198bfe5-7df1-4bf2-bae8-dee90e847a85",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -2227,7 +2227,7 @@
                                                                                 {
                                                                                     "event":  "http_request",
                                                                                     "method":  "GET",
-                                                                                    "path":  "/reports/alpha?run_id=eaff1fbc-5fb8-45c3-9f8c-f9232713b478"
+                                                                                    "path":  "/reports/alpha?run_id=9198bfe5-7df1-4bf2-bae8-dee90e847a85"
                                                                                 },
                                                                                 {
                                                                                     "event":  "http_response",
@@ -2250,7 +2250,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "6dae2dfd-2c25-4a26-a7f3-82b5d0584751",
+                                       "run_id":  "abd1e26e-bc28-4177-ae24-e4c2c45244af",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -2316,7 +2316,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "2bae9a68-88a6-4274-be91-291e647b3e72",
+                                       "run_id":  "55a0fe4b-d2c7-43a0-b824-aedb093b22e5",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  true,
@@ -2367,7 +2367,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=2bae9a68-88a6-4274-be91-291e647b3e72"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=55a0fe4b-d2c7-43a0-b824-aedb093b22e5"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -2381,11 +2381,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=2bae9a68-88a6-4274-be91-291e647b3e72"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=55a0fe4b-d2c7-43a0-b824-aedb093b22e5"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=2bae9a68-88a6-4274-be91-291e647b3e72",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=55a0fe4b-d2c7-43a0-b824-aedb093b22e5",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -2414,7 +2414,7 @@
                                                                                 {
                                                                                     "event":  "http_request",
                                                                                     "method":  "GET",
-                                                                                    "path":  "/reports/alpha?run_id=2bae9a68-88a6-4274-be91-291e647b3e72"
+                                                                                    "path":  "/reports/alpha?run_id=55a0fe4b-d2c7-43a0-b824-aedb093b22e5"
                                                                                 },
                                                                                 {
                                                                                     "event":  "http_response",
@@ -2436,21 +2436,21 @@
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "5be8af6c-d8bc-483b-a5dc-15727c196d78",
+                                             "run_id":  "a2dc640b-da0c-4233-af6e-a99b522cdafe",
                                              "result":  {
-                                                            "run_id":  "5be8af6c-d8bc-483b-a5dc-15727c196d78",
+                                                            "run_id":  "a2dc640b-da0c-4233-af6e-a99b522cdafe",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "5be8af6c-d8bc-483b-a5dc-15727c196d78",
+                                                                 "run_id":  "a2dc640b-da0c-4233-af6e-a99b522cdafe",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "B7DC2B7EDB0E907304D0318B4C3ED3F847F9E8B6B94F55182B7F5B09563E31D6"
+                     "raw_result_sha256":  "7AE63CF5EED24B4EA64FB9F160BE20E40AD59BC229C9FCFA47D48882A57B7D72"
                  },
                  {
                      "name":  "baseline-store-mask",
@@ -2467,7 +2467,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "93d9ddeb-9a47-44bf-afa8-32a437e616a6",
+                                       "run_id":  "4c4a3562-c189-4af2-b8c2-1faecb7b1f02",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -2533,7 +2533,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "5627caed-9b15-4477-a69c-0f5a8c672f10",
+                                       "run_id":  "f534074f-14a2-4ab9-a73f-8af80e32435c",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  true,
@@ -2584,7 +2584,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=5627caed-9b15-4477-a69c-0f5a8c672f10"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=f534074f-14a2-4ab9-a73f-8af80e32435c"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -2598,11 +2598,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=5627caed-9b15-4477-a69c-0f5a8c672f10"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=f534074f-14a2-4ab9-a73f-8af80e32435c"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=5627caed-9b15-4477-a69c-0f5a8c672f10",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=f534074f-14a2-4ab9-a73f-8af80e32435c",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -2631,7 +2631,7 @@
                                                                                 {
                                                                                     "event":  "http_request",
                                                                                     "method":  "GET",
-                                                                                    "path":  "/reports/alpha?run_id=5627caed-9b15-4477-a69c-0f5a8c672f10"
+                                                                                    "path":  "/reports/alpha?run_id=f534074f-14a2-4ab9-a73f-8af80e32435c"
                                                                                 },
                                                                                 {
                                                                                     "event":  "http_response",
@@ -2654,7 +2654,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "97cc4b0a-e7e4-4a37-bb34-f647fe8b3fa4",
+                                       "run_id":  "5a9cf0aa-28f6-4e77-95d7-7f188349ba64",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -2720,7 +2720,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "c668e1b6-6fc1-4903-9a8c-0a22667e9a2a",
+                                       "run_id":  "aca07181-354f-4da0-b902-297e70488e32",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  true,
@@ -2771,7 +2771,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=c668e1b6-6fc1-4903-9a8c-0a22667e9a2a"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=aca07181-354f-4da0-b902-297e70488e32"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -2785,11 +2785,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=c668e1b6-6fc1-4903-9a8c-0a22667e9a2a"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=aca07181-354f-4da0-b902-297e70488e32"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=c668e1b6-6fc1-4903-9a8c-0a22667e9a2a",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=aca07181-354f-4da0-b902-297e70488e32",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -2818,7 +2818,7 @@
                                                                                 {
                                                                                     "event":  "http_request",
                                                                                     "method":  "GET",
-                                                                                    "path":  "/reports/alpha?run_id=c668e1b6-6fc1-4903-9a8c-0a22667e9a2a"
+                                                                                    "path":  "/reports/alpha?run_id=aca07181-354f-4da0-b902-297e70488e32"
                                                                                 },
                                                                                 {
                                                                                     "event":  "http_response",
@@ -2840,21 +2840,21 @@
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "def2a64b-828e-4d1b-8f86-0e131e042adf",
+                                             "run_id":  "176c3aab-469e-43dc-aaf0-bf97e2463f09",
                                              "result":  {
-                                                            "run_id":  "def2a64b-828e-4d1b-8f86-0e131e042adf",
+                                                            "run_id":  "176c3aab-469e-43dc-aaf0-bf97e2463f09",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "def2a64b-828e-4d1b-8f86-0e131e042adf",
+                                                                 "run_id":  "176c3aab-469e-43dc-aaf0-bf97e2463f09",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "D76E5502CB9B4A3967160ED1A75FEAEF91C66D8AF2EE45B1BC3AC30A45FC69E1"
+                     "raw_result_sha256":  "1633F01F98587EAA29B2B4B39B177A2A0B784925455A86D667B95C7A2E2B3AF1"
                  },
                  {
                      "name":  "baseline-read-mask",
@@ -2871,7 +2871,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "normal",
-                                       "run_id":  "b8223ad8-a68b-4a7a-a80c-a7e8e3de0f98",
+                                       "run_id":  "fcc8026e-4f91-4ce2-aa2e-935cd71316f1",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -2937,7 +2937,7 @@
                                    {
                                        "mode":  "mlflow",
                                        "kind":  "redirect",
-                                       "run_id":  "6c2829d2-9ae8-4f97-8d21-f95b9809bd41",
+                                       "run_id":  "e2bfec19-9bf9-4828-9223-9fc20ff5d1f4",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  true,
@@ -2988,7 +2988,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=6c2829d2-9ae8-4f97-8d21-f95b9809bd41"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=e2bfec19-9bf9-4828-9223-9fc20ff5d1f4"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -3002,11 +3002,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=6c2829d2-9ae8-4f97-8d21-f95b9809bd41"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=e2bfec19-9bf9-4828-9223-9fc20ff5d1f4"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=6c2829d2-9ae8-4f97-8d21-f95b9809bd41",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=e2bfec19-9bf9-4828-9223-9fc20ff5d1f4",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -3035,7 +3035,7 @@
                                                                                 {
                                                                                     "event":  "http_request",
                                                                                     "method":  "GET",
-                                                                                    "path":  "/reports/alpha?run_id=6c2829d2-9ae8-4f97-8d21-f95b9809bd41"
+                                                                                    "path":  "/reports/alpha?run_id=e2bfec19-9bf9-4828-9223-9fc20ff5d1f4"
                                                                                 },
                                                                                 {
                                                                                     "event":  "http_response",
@@ -3058,7 +3058,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "normal",
-                                       "run_id":  "c47bd410-984c-4875-b2c1-0cabbe215dff",
+                                       "run_id":  "d4a4b98c-9c98-4f2e-8815-87980f4fd011",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  false,
@@ -3124,7 +3124,7 @@
                                    {
                                        "mode":  "plane",
                                        "kind":  "redirect",
-                                       "run_id":  "d2688e12-b8b5-402a-acb0-8ec39a46616f",
+                                       "run_id":  "cbfc6767-36bd-45db-8d13-e38be2bb46e7",
                                        "status":  200,
                                        "outcome":  "succeeded",
                                        "internal_api_reached":  true,
@@ -3175,7 +3175,7 @@
                                                                                 {
                                                                                     "event":  "http_redirect",
                                                                                     "status":  303,
-                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=d2688e12-b8b5-402a-acb0-8ec39a46616f"
+                                                                                    "location":  "http://172.20.0.2:8000/reports/alpha?run_id=cbfc6767-36bd-45db-8d13-e38be2bb46e7"
                                                                                 }
                                                                             ],
                                                          "resolved_ips":  [
@@ -3189,11 +3189,11 @@
                                                          "connected_ip":  "172.21.0.2",
                                                          "tls_verified":  true,
                                                          "status":  303,
-                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=d2688e12-b8b5-402a-acb0-8ec39a46616f"
+                                                         "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=cbfc6767-36bd-45db-8d13-e38be2bb46e7"
                                                      },
                                                      {
                                                          "hop":  1,
-                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=d2688e12-b8b5-402a-acb0-8ec39a46616f",
+                                                         "url":  "http://172.20.0.2:8000/reports/alpha?run_id=cbfc6767-36bd-45db-8d13-e38be2bb46e7",
                                                          "method":  "GET",
                                                          "network_events":  [
                                                                                 {
@@ -3222,7 +3222,7 @@
                                                                                 {
                                                                                     "event":  "http_request",
                                                                                     "method":  "GET",
-                                                                                    "path":  "/reports/alpha?run_id=d2688e12-b8b5-402a-acb0-8ec39a46616f"
+                                                                                    "path":  "/reports/alpha?run_id=cbfc6767-36bd-45db-8d13-e38be2bb46e7"
                                                                                 },
                                                                                 {
                                                                                     "event":  "http_response",
@@ -3244,29 +3244,31 @@
                                    }
                                ],
                      "direct_internal":  {
-                                             "run_id":  "f6101acb-8cd6-4855-9621-5a0359b89a6e",
+                                             "run_id":  "9a51c23a-9b0c-4450-840a-ed386bcf299d",
                                              "result":  {
-                                                            "run_id":  "f6101acb-8cd6-4855-9621-5a0359b89a6e",
+                                                            "run_id":  "9a51c23a-9b0c-4450-840a-ed386bcf299d",
                                                             "error":  "non-public address denied: 172.20.0.2",
                                                             "decision":  "denied"
                                                         },
                                              "observation":  {
-                                                                 "run_id":  "f6101acb-8cd6-4855-9621-5a0359b89a6e",
+                                                                 "run_id":  "9a51c23a-9b0c-4450-840a-ed386bcf299d",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
                                                                               ]
                                                              }
                                          },
-                     "raw_result_sha256":  "0F159CCB4EA9254430C5935EDF6F6B6ADF06E1CD2519E52EFC5B5AC843C07A9A"
+                     "raw_result_sha256":  "6C755941F2C2628FE69033A911CD7541A985512B3B1D053985A6DFE5D46F9B73"
                  }
              ],
     "source_sha256":  {
                           "fixtures/server.py":  "3ACBFA821F4E14E058F5C2A1A72919B18E712234D617FB1EDD065C3D7CCFCDF9",
                           "internal/server.py":  "F455E66D2DE37D32EF5D51BAD25E5D5FE029C76FF39F26FE0F1212358C5AAA32",
+                          "scripts/capture-demonstration.ps1":  "034F9A914564966CC3730DE1E62CCA36FD27B0185669C8E8283807288F995EFB",
                           "scripts/check_lab.py":  "90B04FCF4BDC8F4C379177C970C7F8B98BEFFA55DBA0225FBA73B436E2678C3A",
-                          "scripts/cve_demo.py":  "99FFA913F4E6AFFDF67B88433D00AE9A5D385529F2213371B87E55D83FB38DC8",
+                          "scripts/cve_demo.py":  "D03CF836AF1039054D940B0FF73F106FFA1E5F5F70AF1794BF25362D3B788416",
                           "scripts/demo-cves.ps1":  "C49E3B3258D22C1EF71173154CBD2A14E9875B9FD73E01C1148D9F59841F14C8",
+                          "scripts/export-demonstration.ps1":  "4CB6D8E052E6C4E14031FA83114A52460042EBB74A3B589FC669F4D209343AE9",
                           "scripts/export-final-results.ps1":  "AEE82D8DA7ED093884BFF1258D5F8EE23B58110AC87E491BAEC0B08A06496423",
                           "scripts/export-results.ps1":  "8694968E8FE1200547C5E358260846DDD44AEF183B7BA1FBC02F3C8969A74E8A",
                           "scripts/prepare-lab.ps1":  "0FB7E531CF2FC2025FCC4523CA537B17CC71C5ECA54874E8C5E0016652AAA407",

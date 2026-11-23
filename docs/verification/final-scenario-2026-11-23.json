@@ -1,5 +1,5 @@
 {
-    "generated_at":  "2026-11-23T15:14:59.2278071+09:00",
+    "generated_at":  "2026-11-23T16:13:39.7523416+09:00",
     "environment":  "Windows Docker Desktop, Linux containers, Python 3.12-slim",
     "scope":  "synthetic lab only; application connection traces are not PCAP captures",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/demo-cves.ps1",
@@ -21,7 +21,7 @@
                                        "mlflow_auth":  "none"
                                    },
                       "mlflow":  {
-                                     "run_id":  "f9fe9456-c6bc-46c2-9c03-3d4a52c17b60",
+                                     "run_id":  "b427202c-7463-4ec2-a7ce-5d4e558b4fdb",
                                      "internal_api_reached":  true,
                                      "report_content_exposed":  true,
                                      "outcome":  "succeeded",
@@ -32,7 +32,7 @@
                                      "other_workspace_admin_denied":  false
                                  },
                       "plane":  {
-                                    "run_id":  "962bcf20-daaf-4e29-8fbf-76273e9691dd",
+                                    "run_id":  "e315809a-ce44-4155-8a2f-02b886c37335",
                                     "internal_api_reached":  true,
                                     "report_content_exposed":  true,
                                     "outcome":  "succeeded",
@@ -42,7 +42,7 @@
                                     "same_workspace_member_denied":  true,
                                     "other_workspace_denied":  true
                                 },
-                      "raw_result_sha256":  "318281072390BDF10EF39C59202A918C3E189905343B3D96FDD6B807DB5CE7AC"
+                      "raw_result_sha256":  "E9C31D14396C5AD114E4F3C8D329354779A11EB0B1EAF645484F5F7CFE589692"
                   },
                   {
                       "name":  "reject-open",
@@ -56,7 +56,7 @@
                                        "mlflow_auth":  "none"
                                    },
                       "mlflow":  {
-                                     "run_id":  "c8cd7a8f-09b8-4c35-b813-1af7447472ad",
+                                     "run_id":  "38db6d13-d3b8-4d3a-953a-b5be4b875e3c",
                                      "internal_api_reached":  false,
                                      "report_content_exposed":  false,
                                      "outcome":  "blocked",
@@ -67,7 +67,7 @@
                                      "other_workspace_admin_denied":  false
                                  },
                       "plane":  {
-                                    "run_id":  "c6952268-ae9a-4c25-a226-bc9736f298ed",
+                                    "run_id":  "dfe41ee6-d836-446b-af6f-0e8eea5eab40",
                                     "internal_api_reached":  false,
                                     "report_content_exposed":  false,
                                     "outcome":  "blocked",
@@ -77,7 +77,7 @@
                                     "same_workspace_member_denied":  true,
                                     "other_workspace_denied":  true
                                 },
-                      "raw_result_sha256":  "FF1B5A308D862688AB6F11DE030565B870DD56F96055DE5A56609BCBEB7380E4"
+                      "raw_result_sha256":  "77E755DAFAA819ABC0C0CE457FAA3B881A9F459C739FB03E972A8C17C958F04A"
                   },
                   {
                       "name":  "strict-open",
@@ -91,7 +91,7 @@
                                        "mlflow_auth":  "none"
                                    },
                       "mlflow":  {
-                                     "run_id":  "581c2b66-6fa3-47c9-917f-b394ff54a1b0",
+                                     "run_id":  "197f7ac6-2f3d-4ed9-8c30-d55e24535d07",
                                      "internal_api_reached":  false,
                                      "report_content_exposed":  false,
                                      "outcome":  "blocked",
@@ -102,7 +102,7 @@
                                      "other_workspace_admin_denied":  false
                                  },
                       "plane":  {
-                                    "run_id":  "b5589742-8dcd-4ec9-a7eb-516f79401a7d",
+                                    "run_id":  "24788d4a-6791-4fa8-b83c-15df90bf4aab",
                                     "internal_api_reached":  false,
                                     "report_content_exposed":  false,
                                     "outcome":  "blocked",
@@ -112,7 +112,7 @@
                                     "same_workspace_member_denied":  true,
                                     "other_workspace_denied":  true
                                 },
-                      "raw_result_sha256":  "43A03DA224589D38735DB9843EE6F6FE89892B3EF6CC9144423AC64F851E2D45"
+                      "raw_result_sha256":  "98EC3B4DB17CB6D8D93769B7C0DE0472BE0BF7895F5AC4BA27F21843604C3EB5"
                   },
                   {
                       "name":  "baseline-network-blocked",
@@ -126,7 +126,7 @@
                                        "mlflow_auth":  "none"
                                    },
                       "mlflow":  {
-                                     "run_id":  "39362886-2117-4009-8550-ecf45c02843d",
+                                     "run_id":  "9db8fcbe-c556-4ed2-a392-f4a6eafff6bf",
                                      "internal_api_reached":  false,
                                      "report_content_exposed":  false,
                                      "outcome":  "failed",
@@ -137,7 +137,7 @@
                                      "other_workspace_admin_denied":  false
                                  },
                       "plane":  {
-                                    "run_id":  "1bcccee6-eaf4-4fe0-8f8b-c8c9d7313f12",
+                                    "run_id":  "fc2536c1-e2e8-4d5c-98e7-96e4fc1ff58b",
                                     "internal_api_reached":  false,
                                     "report_content_exposed":  false,
                                     "outcome":  "failed",
@@ -147,7 +147,7 @@
                                     "same_workspace_member_denied":  true,
                                     "other_workspace_denied":  true
                                 },
-                      "raw_result_sha256":  "E77568BEB34858DD0C90054F849A5CE7810310CE166D71915EF83918AA19616B"
+                      "raw_result_sha256":  "282C088721B64220799F67155ACCC05CAF6D244B2A84FFC5EEB4CF2CE86CCB87"
                   },
                   {
                       "name":  "fixed-url-auth-mask",
@@ -161,7 +161,7 @@
                                        "mlflow_auth":  "required"
                                    },
                       "mlflow":  {
-                                     "run_id":  "6ef0424a-ddae-4e4f-a06c-579032141110",
+                                     "run_id":  "0122ac5b-325d-494c-a5b0-298a959798e8",
                                      "internal_api_reached":  false,
                                      "report_content_exposed":  false,
                                      "outcome":  "blocked",
@@ -172,7 +172,7 @@
                                      "other_workspace_admin_denied":  true
                                  },
                       "plane":  {
-                                    "run_id":  "88a4ec07-f61b-49e3-887c-4e8e5100c975",
+                                    "run_id":  "2c20f1f4-962f-4612-9bf8-e20158e928b2",
                                     "internal_api_reached":  false,
                                     "report_content_exposed":  false,
                                     "outcome":  "blocked",
@@ -182,7 +182,7 @@
                                     "same_workspace_member_denied":  true,
                                     "other_workspace_denied":  true
                                 },
-                      "raw_result_sha256":  "98787F100EC11379EF3D4B555F73502EDCED322563CFAAB99DAFA2058DD953EC"
+                      "raw_result_sha256":  "25EBBB590257BD4DCADBBBAAF8F04ED2A935F090DC5D971E17E7548F02AF420F"
                   },
                   {
                       "name":  "plane-log-filter",
@@ -196,7 +196,7 @@
                                        "mlflow_auth":  "required"
                                    },
                       "mlflow":  {
-                                     "run_id":  "eb8afd94-4570-457f-b23f-c7b3cd5cbf0e",
+                                     "run_id":  "14e4f275-4abf-4ee7-9491-943fe73c9383",
                                      "internal_api_reached":  false,
                                      "report_content_exposed":  false,
                                      "outcome":  "blocked",
@@ -207,7 +207,7 @@
                                      "other_workspace_admin_denied":  true
                                  },
                       "plane":  {
-                                    "run_id":  "47b1a671-3541-4a92-ba34-36c0d9153eef",
+                                    "run_id":  "43103063-7a1a-4464-8f24-4419ef91c191",
                                     "internal_api_reached":  true,
                                     "report_content_exposed":  false,
                                     "outcome":  "succeeded",
@@ -217,18 +217,18 @@
                                     "same_workspace_member_denied":  true,
                                     "other_workspace_denied":  true
                                 },
-                      "raw_result_sha256":  "5467424AD17B7F1000F1C79420071C1423E93EBDE48380EAC3785743B630D632"
+                      "raw_result_sha256":  "01626D06D3281E94093B9355E5046A9A3E47D2CEE5F1097DB39C0557E809674E"
                   }
               ],
     "dns_rebinding":  {
                           "mock_only":  true,
                           "evidence_kind":  "application_connection_trace_not_pcap",
                           "description":  "registration lookup resolves to allowed local receiver; delivery lookup changes to synthetic internal service",
-                          "origin":  "http://rebind.lab:42881",
+                          "origin":  "http://rebind.lab:59773",
                           "runs":  [
                                        {
                                            "policy":  "baseline",
-                                           "run_id":  "fb310378-c980-4855-a8c0-52b97e9c1b3d",
+                                           "run_id":  "83aed8a8-df33-4a52-9109-bf4db6227d80",
                                            "registration_resolved_ips":  [
                                                                              "127.0.0.1"
                                                                          ],
@@ -238,20 +238,20 @@
                                                                ],
                                            "delivery":  {
                                                             "status":  200,
-                                                            "body":  "{\"report_marker\": \"REPORT-fb310378-c980-4855-a8c0-52b97e9c1b3d\", \"run_id\": \"fb310378-c980-4855-a8c0-52b97e9c1b3d\", \"fictional\": true, \"customer\": \"alpha\", \"model_operations\": {\"active_models\": 3, \"last_model\": \"demand-demo-v1\"}, \"contract_summary\": {\"plan\": \"demo-enterprise\", \"annual_credits\": 12000}}",
+                                                            "body":  "{\"report_marker\": \"REPORT-83aed8a8-df33-4a52-9109-bf4db6227d80\", \"run_id\": \"83aed8a8-df33-4a52-9109-bf4db6227d80\", \"fictional\": true, \"customer\": \"alpha\", \"model_operations\": {\"active_models\": 3, \"last_model\": \"demand-demo-v1\"}, \"contract_summary\": {\"plan\": \"demo-enterprise\", \"annual_credits\": 12000}}",
                                                             "error":  null,
                                                             "outcome":  "succeeded",
                                                             "response_truncated":  false,
                                                             "trace":  [
                                                                           {
                                                                               "hop":  0,
-                                                                              "url":  "http://rebind.lab:42881/reports/alpha",
+                                                                              "url":  "http://rebind.lab:59773/reports/alpha",
                                                                               "method":  "POST",
                                                                               "network_events":  [
                                                                                                      {
                                                                                                          "event":  "dns_resolution",
                                                                                                          "host":  "rebind.lab",
-                                                                                                         "port":  42881,
+                                                                                                         "port":  59773,
                                                                                                          "addresses":  [
                                                                                                                            "127.0.0.2"
                                                                                                                        ],
@@ -260,12 +260,12 @@
                                                                                                      {
                                                                                                          "event":  "tcp_connect_attempt",
                                                                                                          "ip":  "127.0.0.2",
-                                                                                                         "port":  42881
+                                                                                                         "port":  59773
                                                                                                      },
                                                                                                      {
                                                                                                          "event":  "tcp_connected",
                                                                                                          "ip":  "127.0.0.2",
-                                                                                                         "port":  42881
+                                                                                                         "port":  59773
                                                                                                      },
                                                                                                      {
                                                                                                          "event":  "peer_confirmed",
@@ -294,17 +294,17 @@
                                                                           }
                                                                       ],
                                                             "network_event_count":  6,
-                                                            "latency_ms":  6.14
+                                                            "latency_ms":  14.89
                                                         },
                                            "internal_observation":  {
-                                                                        "run_id":  "fb310378-c980-4855-a8c0-52b97e9c1b3d",
+                                                                        "run_id":  "83aed8a8-df33-4a52-9109-bf4db6227d80",
                                                                         "internal_api_reached":  true,
                                                                         "requests":  [
                                                                                          [
-                                                                                             "fb310378-c980-4855-a8c0-52b97e9c1b3d",
+                                                                                             "83aed8a8-df33-4a52-9109-bf4db6227d80",
                                                                                              "POST",
                                                                                              "/reports/alpha",
-                                                                                             "2026-11-23 06:14:58",
+                                                                                             "2026-11-23 07:13:38",
                                                                                              "127.0.0.1"
                                                                                          ]
                                                                                      ]
@@ -314,7 +314,7 @@
                                        },
                                        {
                                            "policy":  "strict",
-                                           "run_id":  "c882bca1-09dd-495e-9a89-9b8c8c321c3c",
+                                           "run_id":  "6ac5ddd1-af7e-4e48-92ea-d36a8c317934",
                                            "registration_resolved_ips":  [
                                                                              "127.0.0.1"
                                                                          ],
@@ -331,7 +331,7 @@
                                                             "trace":  [
                                                                           {
                                                                               "hop":  0,
-                                                                              "url":  "http://rebind.lab:42881/reports/alpha",
+                                                                              "url":  "http://rebind.lab:59773/reports/alpha",
                                                                               "method":  "POST",
                                                                               "error":  "non-public address denied: 127.0.0.2",
                                                                               "decision":  "denied",
@@ -344,10 +344,10 @@
                                                                           }
                                                                       ],
                                                             "network_event_count":  1,
-                                                            "latency_ms":  0.06
+                                                            "latency_ms":  0.08
                                                         },
                                            "internal_observation":  {
-                                                                        "run_id":  "c882bca1-09dd-495e-9a89-9b8c8c321c3c",
+                                                                        "run_id":  "6ac5ddd1-af7e-4e48-92ea-d36a8c317934",
                                                                         "internal_api_reached":  false,
                                                                         "requests":  [
 
@@ -362,9 +362,11 @@
     "source_sha256":  {
                           "fixtures/server.py":  "3ACBFA821F4E14E058F5C2A1A72919B18E712234D617FB1EDD065C3D7CCFCDF9",
                           "internal/server.py":  "F455E66D2DE37D32EF5D51BAD25E5D5FE029C76FF39F26FE0F1212358C5AAA32",
+                          "scripts/capture-demonstration.ps1":  "034F9A914564966CC3730DE1E62CCA36FD27B0185669C8E8283807288F995EFB",
                           "scripts/check_lab.py":  "90B04FCF4BDC8F4C379177C970C7F8B98BEFFA55DBA0225FBA73B436E2678C3A",
-                          "scripts/cve_demo.py":  "99FFA913F4E6AFFDF67B88433D00AE9A5D385529F2213371B87E55D83FB38DC8",
+                          "scripts/cve_demo.py":  "D03CF836AF1039054D940B0FF73F106FFA1E5F5F70AF1794BF25362D3B788416",
                           "scripts/demo-cves.ps1":  "C49E3B3258D22C1EF71173154CBD2A14E9875B9FD73E01C1148D9F59841F14C8",
+                          "scripts/export-demonstration.ps1":  "4CB6D8E052E6C4E14031FA83114A52460042EBB74A3B589FC669F4D209343AE9",
                           "scripts/export-final-results.ps1":  "AEE82D8DA7ED093884BFF1258D5F8EE23B58110AC87E491BAEC0B08A06496423",
                           "scripts/export-results.ps1":  "8694968E8FE1200547C5E358260846DDD44AEF183B7BA1FBC02F3C8969A74E8A",
                           "scripts/prepare-lab.ps1":  "0FB7E531CF2FC2025FCC4523CA537B17CC71C5ECA54874E8C5E0016652AAA407",

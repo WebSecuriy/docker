@@ -65,7 +65,7 @@ def main():
         "plane": {},
     }
 
-    def call(url, method="GET", body=None, token=None, expected=200):
+    def call(url, method="GET", body=None, token=None, expected=200, include_status=False):
         headers = {"Content-Type": "application/json"}
         if token:
             headers["Authorization"] = "Bearer " + token
@@ -79,10 +79,16 @@ def main():
             payload = json.load(response)
             if response.status != expected:
                 raise AssertionError((url, response.status, expected, payload))
+            if include_status:
+                return {"status_code": response.status, "body": payload}
             return payload
 
     def observation(run_id):
         return call(args.observer + "/observations?run_id=" + run_id)
+
+    def receiver_observation(run_id):
+        """Capture the lab receiver's independent evidence for the same run."""
+        return call(args.receiver + "/observations?run_id=" + run_id)
 
     def wait_delivery(run_id, hook_id):
         deadline = time.monotonic() + 30
@@ -112,13 +118,14 @@ def main():
         mlflow_token = "lab-alice-token" if args.mlflow_auth == "required" else None
         if args.mlflow_auth == "required":
             results["mlflow"]["unauthenticated_create"] = call(
-                args.base + "/api/2.0/mlflow/webhooks", "POST", mlflow_body, expected=401)
+                args.base + "/api/2.0/mlflow/webhooks", "POST", mlflow_body,
+                expected=401, include_status=True)
             results["mlflow"]["alpha_member_create"] = call(
                 args.base + "/api/2.0/mlflow/webhooks", "POST", mlflow_body,
-                token="lab-viewer-token", expected=403)
+                token="lab-viewer-token", expected=403, include_status=True)
             results["mlflow"]["other_workspace_admin_create"] = call(
                 args.base + "/api/2.0/mlflow/webhooks", "POST", mlflow_body,
-                token="lab-bob-token", expected=403)
+                token="lab-bob-token", expected=403, include_status=True)
         direct_run = str(uuid.uuid4())
         direct = dict(mlflow_body, name="direct-internal-negative", url=args.internal, run_id=direct_run)
         results["mlflow"]["direct_internal_registration"] = call(
@@ -132,13 +139,17 @@ def main():
         test_body = {"webhook_id": hook_id, "event": {"entity": "REGISTERED_MODEL", "action": "CREATED"},
                      "run_id": mlflow_run}
         if args.mlflow_auth == "required":
-            results["mlflow"]["unauthenticated_test"] = call(test_path, "POST", test_body, expected=401)
+            results["mlflow"]["unauthenticated_test"] = call(
+                test_path, "POST", test_body, expected=401, include_status=True)
             results["mlflow"]["alpha_member_test"] = call(
-                test_path, "POST", test_body, token="lab-viewer-token", expected=403)
+                test_path, "POST", test_body, token="lab-viewer-token", expected=403,
+                include_status=True)
             results["mlflow"]["other_workspace_admin_test"] = call(
-                test_path, "POST", test_body, token="lab-bob-token", expected=403)
+                test_path, "POST", test_body, token="lab-bob-token", expected=403,
+                include_status=True)
         tested = call(test_path, "POST", test_body, token=mlflow_token)
         mlflow_observation = observation(mlflow_run)
+        mlflow_receiver_observation = receiver_observation(mlflow_run)
         mlflow_exposed = "REPORT-" + mlflow_run in (tested["result"]["response_body"] or "")
         assert mlflow_observation["internal_api_reached"] == args.expect_mlflow_reach, tested
         assert mlflow_exposed == args.expect_mlflow_exposure, tested
@@ -147,6 +158,7 @@ def main():
             "run_id": mlflow_run,
             "test_result": tested,
             "internal_observation": mlflow_observation,
+            "receiver_observation": mlflow_receiver_observation,
             "internal_api_reached": mlflow_observation["internal_api_reached"],
             "report_content_exposed": mlflow_exposed,
             "connection_trace": tested["result"].get("trace", []),
@@ -173,6 +185,7 @@ def main():
         }, token="lab-alice-token", expected=202)
         delivery = wait_delivery(plane_run, plane_hook)
         plane_observation = observation(plane_run)
+        plane_receiver_observation = receiver_observation(plane_run)
         logs_path = args.base + f"/api/cve/plane/workspaces/alpha/webhook-logs/{plane_hook}?run_id={plane_run}"
         logs = call(logs_path, token="lab-alice-token")["logs"]
         assert len(logs) == 1, logs
@@ -180,8 +193,10 @@ def main():
         plane_exposed = "REPORT-" + plane_run in plane_body
         assert plane_observation["internal_api_reached"] == args.expect_plane_reach, delivery
         assert plane_exposed == args.expect_plane_exposure, logs
-        results["plane"]["same_workspace_member_log_query"] = call(logs_path, token="lab-viewer-token", expected=403)
-        results["plane"]["other_workspace_log_query"] = call(logs_path, token="lab-bob-token", expected=403)
+        results["plane"]["same_workspace_member_log_query"] = call(
+            logs_path, token="lab-viewer-token", expected=403, include_status=True)
+        results["plane"]["other_workspace_log_query"] = call(
+            logs_path, token="lab-bob-token", expected=403, include_status=True)
         results["plane"].update({
             "registration": plane_created,
             "run_id": plane_run,
@@ -189,6 +204,7 @@ def main():
             "delivery_log": delivery,
             "webhook_logs": logs,
             "internal_observation": plane_observation,
+            "receiver_observation": plane_receiver_observation,
             "internal_api_reached": plane_observation["internal_api_reached"],
             "report_content_exposed": plane_exposed,
             "connection_trace": delivery["result"].get("trace", []),
