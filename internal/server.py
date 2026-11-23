@@ -7,10 +7,12 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 
-def record(db_path, run_id, method, path):
+def record(db_path, run_id, method, path, source_ip):
     with sqlite3.connect(db_path) as db:
-        db.execute("INSERT INTO observations(run_id,method,path) VALUES(?,?,?)", (run_id, method, path))
-    print(json.dumps(dict(service="internal", run_id=run_id, event="report_reached", method=method, path=path)), flush=True)
+        db.execute("INSERT INTO observations(run_id,method,path,source_ip) VALUES(?,?,?,?)",
+                   (run_id, method, path, source_ip))
+    print(json.dumps(dict(service="internal", run_id=run_id, event="report_reached", method=method,
+                          path=path, source_ip=source_ip)), flush=True)
 
 
 class InternalHandler(BaseHTTPRequestHandler):
@@ -26,7 +28,7 @@ class InternalHandler(BaseHTTPRequestHandler):
             try:
                 run_id = str(uuid.UUID(query.get("run_id", [""])[0]))
                 with sqlite3.connect(self.server.db_path) as db:
-                    rows = db.execute("SELECT run_id,method,path,created FROM observations WHERE run_id=?", (run_id,)).fetchall()
+                    rows = db.execute("SELECT run_id,method,path,created,source_ip FROM observations WHERE run_id=?", (run_id,)).fetchall()
                 status, body = 200, {"run_id": run_id, "internal_api_reached": bool(rows), "requests": rows}
             except ValueError:
                 status, body = 400, {"error": "run_id must be a UUID"}
@@ -36,7 +38,7 @@ class InternalHandler(BaseHTTPRequestHandler):
                 customer = parsed.path.removeprefix("/reports/")
                 if customer not in ("alpha", "beta"):
                     raise ValueError()
-                record(self.server.db_path, run_id, self.command, parsed.path)
+                record(self.server.db_path, run_id, self.command, parsed.path, self.client_address[0])
                 status, body = 200, {"report_marker": "REPORT-" + run_id, "run_id": run_id,
                                      "fictional": True, "customer": customer, "model_operations":
                                      {"active_models": 3, "last_model": "demand-demo-v1"},
@@ -69,7 +71,10 @@ class InternalHandler(BaseHTTPRequestHandler):
 def make_server(host="0.0.0.0", port=8000, db_path="data/internal.sqlite3"):
     Path(db_path).parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(db_path) as db:
-        db.execute("CREATE TABLE IF NOT EXISTS observations(run_id TEXT,method TEXT,path TEXT,created TEXT DEFAULT CURRENT_TIMESTAMP)")
+        db.execute("CREATE TABLE IF NOT EXISTS observations(run_id TEXT,method TEXT,path TEXT,created TEXT DEFAULT CURRENT_TIMESTAMP,source_ip TEXT)")
+        columns = {row[1] for row in db.execute("PRAGMA table_info(observations)")}
+        if "source_ip" not in columns:
+            db.execute("ALTER TABLE observations ADD COLUMN source_ip TEXT")
     server = ThreadingHTTPServer((host, port), InternalHandler)
     server.db_path = db_path
     return server

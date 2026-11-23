@@ -25,7 +25,14 @@ class Settings:
     # local synthetic CVE lab; they are not production compatibility switches.
     cve_demo_mode: str = "none"
     cve_demo_ack: str = ""
-    cve_plane_target: str | None = None
+    # The CVE profiles below are version-labelled educational behaviours, not
+    # product binaries.  Keeping them explicit lets the lab compare the
+    # vulnerable and fixed delivery paths without installing either product.
+    mlflow_version_profile: str = "v3.13.0-vulnerable"
+    mlflow_cve_auth_required: bool = False
+    plane_version_profile: str = "v1.3.1-vulnerable"
+    cve_plane_origin: str | None = None
+    plane_log_filter: str = "none"
 
     def __post_init__(self):
         if self.policy not in ("baseline", "reject", "strict"):
@@ -46,12 +53,18 @@ class Settings:
                 raise ValueError("exception requires origin and nonempty cidrs")
             for cidr in rule["cidrs"]:
                 ipaddress.ip_network(cidr)
-        if self.cve_demo_mode not in ("none", "mlflow-2026-64849", "plane-2026-30242", "all"):
-            raise ValueError("CVE_DEMO_MODE must be none, mlflow-2026-64849, plane-2026-30242 or all")
+        if self.cve_demo_mode not in ("none", "mlflow-2026-64849", "plane-2026-105636", "all"):
+            raise ValueError("CVE_DEMO_MODE must be none, mlflow-2026-64849, plane-2026-105636 or all")
         if self.cve_demo_mode != "none" and self.cve_demo_ack != "local-lab-only":
             raise ValueError("CVE demo requires CVE_DEMO_ACK=local-lab-only")
-        if self.plane_cve_demo and not self.cve_plane_target:
-            raise ValueError("Plane CVE demo requires CVE_DEMO_PLANE_TARGET")
+        if self.mlflow_version_profile not in ("v3.13.0-vulnerable", "v3.15.0-fixed"):
+            raise ValueError("MLFLOW_VERSION_PROFILE must be v3.13.0-vulnerable or v3.15.0-fixed")
+        if self.plane_version_profile not in ("v1.3.1-vulnerable", "v1.4.0-fixed"):
+            raise ValueError("PLANE_VERSION_PROFILE must be v1.3.1-vulnerable or v1.4.0-fixed")
+        if self.plane_log_filter not in ("none", "redact-sensitive", "metadata-only"):
+            raise ValueError("PLANE_LOG_FILTER must be none, redact-sensitive or metadata-only")
+        if self.plane_cve_demo and not self.cve_plane_origin:
+            raise ValueError("Plane CVE demo requires CVE_DEMO_PLANE_ORIGIN")
 
     @property
     def mlflow_cve_demo(self):
@@ -59,7 +72,7 @@ class Settings:
 
     @property
     def plane_cve_demo(self):
-        return self.cve_demo_mode in ("plane-2026-30242", "all")
+        return self.cve_demo_mode in ("plane-2026-105636", "all")
 
     @classmethod
     def from_env(cls):
@@ -83,7 +96,11 @@ class Settings:
             exceptions=exceptions,
             cve_demo_mode=os.getenv("CVE_DEMO_MODE", "none"),
             cve_demo_ack=os.getenv("CVE_DEMO_ACK", ""),
-            cve_plane_target=os.getenv("CVE_DEMO_PLANE_TARGET") or None,
+            mlflow_version_profile=os.getenv("MLFLOW_VERSION_PROFILE", "v3.13.0-vulnerable"),
+            mlflow_cve_auth_required=os.getenv("MLFLOW_CVE_AUTH_REQUIRED", "false").lower() == "true",
+            plane_version_profile=os.getenv("PLANE_VERSION_PROFILE", "v1.3.1-vulnerable"),
+            cve_plane_origin=os.getenv("CVE_DEMO_PLANE_ORIGIN") or None,
+            plane_log_filter=os.getenv("PLANE_LOG_FILTER", "none"),
         )
 
 
@@ -95,3 +112,28 @@ def body_view(body, policy, limit):
     if policy == "limit":
         return body.encode("utf-8")[:limit].decode("utf-8", errors="ignore")
     return body
+
+
+def filter_plane_log(body, policy):
+    """Apply a deliberately narrow, deterministic filter to synthetic logs.
+
+    This is a lab control for the *log exposure* part of the Plane scenario;
+    it is not a general data-loss-prevention engine.  It runs before the
+    generic store/read body policies, so a redacted value cannot be recovered
+    later through a different log endpoint.
+    """
+    if not body or policy == "none":
+        return body
+    if policy == "metadata-only":
+        return json.dumps({"filtered": True, "response_bytes": len(body.encode("utf-8"))}, ensure_ascii=False)
+    try:
+        payload = json.loads(body)
+    except (TypeError, ValueError):
+        return "[REDACTED-PLANE-LOG]"
+    if isinstance(payload, dict):
+        for key in ("report_marker", "contract_summary", "model_operations"):
+            if key in payload:
+                payload[key] = "[REDACTED]"
+        payload["log_filtered"] = True
+        return json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    return "[REDACTED-PLANE-LOG]"

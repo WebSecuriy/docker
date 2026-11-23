@@ -222,6 +222,11 @@ class LabTests(unittest.TestCase):
         result = transport.deliver(self.receiver_url + "/reports/alpha", b"{}", run_id)
         self.assertIn("REPORT-" + run_id, result["body"])
         self.assertEqual(result["trace"][0]["connected_ip"], "127.0.0.2")
+        events = result["trace"][0]["network_events"]
+        self.assertEqual(events[0]["event"], "dns_resolution")
+        self.assertEqual(events[0]["addresses"], ["127.0.0.2"])
+        self.assertIn("tcp_connected", [event["event"] for event in events])
+        self.assertGreater(result["network_event_count"], 0)
 
     def test_address_denials_mixed_dns_and_exception_scope(self):
         transport = Transport(self.settings())
@@ -277,7 +282,7 @@ class LabTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             Settings(cve_demo_mode="mlflow-2026-64849")
         with self.assertRaises(ValueError):
-            Settings(cve_demo_mode="plane-2026-30242", cve_demo_ack="local-lab-only")
+            Settings(cve_demo_mode="plane-2026-105636", cve_demo_ack="local-lab-only")
         with self.api() as (base, _):
             self.call(base, "/api/2.0/mlflow/webhooks", "POST", {
                 "name": "disabled", "url": "https://example.com/",
@@ -319,30 +324,48 @@ class LabTests(unittest.TestCase):
             self.assertNotIn("REPORT-" + run_id, tested["result"]["response_body"] or "")
             self.assertFalse(self.reached(run_id))
 
-    def test_plane_cve_profile_models_direct_private_registration_and_log_readback(self):
-        legacy = Transport(self.settings(), resolver=lambda *_args, **_kwargs: [
-            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("172.20.0.10", 80))])
-        self.assertEqual(legacy.validate_plane_v121_registration("http://internal.example/report"), ["172.20.0.10"])
-        loopback = Transport(self.settings(), resolver=lambda *_args, **_kwargs: [
-            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("127.0.0.1", 80))])
-        with self.assertRaises(PolicyError):
-            loopback.validate_plane_v121_registration("http://internal.example/report")
-
-        config = dict(cve_demo_mode="plane-2026-30242", cve_demo_ack="local-lab-only",
-                      cve_plane_target=self.report_url)
-        with self.api(policy="baseline", **config) as (base, app):
-            # Unit fixtures listen on loopback, while Docker's internal service
-            # resolves to a private bridge address.  Keep the delivery real and
-            # substitute only the registration-time synthetic DNS observation.
-            app.transport.validate_plane_v121_registration = lambda _url: ["172.20.0.10"]
-            registered = self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
-                "name": "direct-private", "url": self.report_url, "events": ["issue.updated"],
-                "run_id": str(uuid.uuid4())}, status=201)
-            self.assertEqual(registered["validator"], "plane_v1_2_1_loopback_only")
+    def test_mlflow_fixed_profile_requires_auth_and_blocks_redirect(self):
+        config = dict(cve_demo_mode="mlflow-2026-64849", cve_demo_ack="local-lab-only",
+                      mlflow_version_profile="v3.15.0-fixed", mlflow_cve_auth_required=True)
+        with self.api(policy="baseline", **config) as (base, _):
+            body = {"name": "redirect", "url": self.tls_url + "/redirect?status=302",
+                    "events": [{"entity": "REGISTERED_MODEL", "action": "CREATED"}],
+                    "run_id": str(uuid.uuid4())}
+            self.call(base, "/api/2.0/mlflow/webhooks", "POST", body, actor=None, status=401)
+            created = self.call(base, "/api/2.0/mlflow/webhooks", "POST", body, actor="alice")
             run_id = str(uuid.uuid4())
-            queued = self.call(base, "/api/workspaces/alpha/events", "POST", {
+            path = f"/api/2.0/mlflow/webhooks/{created['webhook']['webhook_id']}/test"
+            self.call(base, path, "POST", {"event": {"entity": "REGISTERED_MODEL", "action": "CREATED"},
+                                              "run_id": run_id}, actor=None, status=401)
+            self.call(base, path, "POST", {"event": {"entity": "REGISTERED_MODEL", "action": "CREATED"},
+                                              "run_id": run_id}, actor="viewer", status=403)
+            self.call(base, path, "POST", {"event": {"entity": "REGISTERED_MODEL", "action": "CREATED"},
+                                              "run_id": run_id}, actor="bob", status=403)
+            tested = self.call(base, path, "POST", {"event": {"entity": "REGISTERED_MODEL", "action": "CREATED"},
+                                                       "run_id": run_id}, actor="alice")
+            self.assertEqual(tested["version_profile"], "v3.15.0-fixed")
+            self.assertEqual(tested["result"]["outcome"], "blocked")
+            self.assertEqual(tested["result"]["effective_policy"], "strict")
+            self.assertGreater(tested["result"]["network_event_count"], 0)
+            self.assertNotIn("REPORT-" + run_id, tested["result"]["response_body"] or "")
+            self.assertFalse(self.reached(run_id))
+
+    def test_plane_cve_profile_models_redirect_log_readback_and_defenses(self):
+        origin = self.tls_url + "/redirect?status=302"
+        config = dict(cve_demo_mode="plane-2026-105636", cve_demo_ack="local-lab-only",
+                      cve_plane_origin=origin)
+        with self.api(policy="baseline", **config) as (base, _):
+            direct = self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
+                "name": "direct-negative", "url": self.report_url, "events": ["issue.updated"],
+                "run_id": str(uuid.uuid4())}, status=400)
+            self.assertEqual(direct["decision"], "denied")
+            registered = self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
+                "name": "redirect", "url": origin, "events": ["issue.updated"],
+                "run_id": str(uuid.uuid4())}, status=201)
+            self.assertEqual(registered["mock_profile"], "plane-cve-2026-105636")
+            run_id = str(uuid.uuid4())
+            self.call(base, "/api/workspaces/alpha/events", "POST", {
                 "event": "issue.updated", "run_id": run_id}, status=202)
-            self.assertEqual(len(queued["delivery_ids"]), 1)
             for _ in range(100):
                 rows = self.call(base, "/api/workspaces/alpha/deliveries?run_id=" + run_id)["deliveries"]
                 matching = next((row for row in rows if row["hook_id"] == registered["id"]), None)
@@ -352,12 +375,45 @@ class LabTests(unittest.TestCase):
             self.assertEqual(matching["state"], "succeeded")
             self.assertIn("REPORT-" + run_id, matching["result"]["body"])
             self.assertTrue(self.reached(run_id))
-            self.call(base, "/api/workspaces/alpha/deliveries?run_id=" + run_id, actor="bob", status=403)
-        with self.api(policy="strict", **config) as (base, _):
-            denied = self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
-                "name": "direct-private", "url": self.report_url, "events": ["issue.updated"],
-                "run_id": str(uuid.uuid4())}, status=400)
-            self.assertEqual(denied["decision"], "denied")
+            logs = self.call(base, f"/api/cve/plane/workspaces/alpha/webhook-logs/{registered['id']}?run_id={run_id}")
+            self.assertIn("REPORT-" + run_id, logs["logs"][0]["result"]["body"])
+            self.call(base, f"/api/cve/plane/workspaces/alpha/webhook-logs/{registered['id']}?run_id={run_id}",
+                      actor="viewer", status=403)
+            self.call(base, f"/api/cve/plane/workspaces/alpha/webhook-logs/{registered['id']}?run_id={run_id}",
+                      actor="bob", status=403)
+
+        with self.api(policy="baseline", plane_log_filter="redact-sensitive", **config) as (base, _):
+            registered = self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
+                "name": "filtered", "url": origin, "events": ["issue.updated"],
+                "run_id": str(uuid.uuid4())}, status=201)
+            run_id = str(uuid.uuid4())
+            self.call(base, "/api/workspaces/alpha/events", "POST", {
+                "event": "issue.updated", "run_id": run_id}, status=202)
+            for _ in range(100):
+                logs = self.call(base, f"/api/cve/plane/workspaces/alpha/webhook-logs/{registered['id']}?run_id={run_id}")["logs"]
+                if logs and logs[0]["state"] not in ("queued", "sending"):
+                    break
+                time.sleep(0.02)
+            self.assertTrue(self.reached(run_id))
+            self.assertNotIn("REPORT-" + run_id, logs[0]["result"]["body"] or "")
+            self.assertEqual(logs[0]["result"]["plane_log_filter"], "redact-sensitive")
+
+        with self.api(policy="baseline", plane_version_profile="v1.4.0-fixed", **config) as (base, _):
+            registered = self.call(base, "/api/cve/plane/workspaces/alpha/webhooks", "POST", {
+                "name": "fixed", "url": origin, "events": ["issue.updated"],
+                "run_id": str(uuid.uuid4())}, status=201)
+            run_id = str(uuid.uuid4())
+            self.call(base, "/api/workspaces/alpha/events", "POST", {
+                "event": "issue.updated", "run_id": run_id}, status=202)
+            for _ in range(100):
+                rows = self.call(base, "/api/workspaces/alpha/deliveries?run_id=" + run_id)["deliveries"]
+                matching = next((row for row in rows if row["hook_id"] == registered["id"]), None)
+                if matching and matching["state"] not in ("queued", "sending"):
+                    break
+                time.sleep(0.02)
+            self.assertEqual(matching["state"], "blocked")
+            self.assertEqual(matching["result"]["effective_policy"], "reject")
+            self.assertFalse(self.reached(run_id))
 
 
 if __name__ == "__main__":

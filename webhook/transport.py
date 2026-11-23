@@ -67,20 +67,6 @@ class Transport:
     def validate_registration(self, url):
         return self.resolve(url, True)[3]
 
-    def validate_plane_v121_registration(self, url):
-        """Reproduce only Plane v1.2.1's registration check for the lab.
-
-        The vulnerable serializer rejected loopback addresses but accepted other
-        non-public ranges.  The caller must additionally enforce the lab's
-        fixed synthetic target; this method must never be used by the regular
-        webhook-management API.
-        """
-        _parsed, _host, _port, addresses = self.resolve(url, False)
-        for address in addresses:
-            if ipaddress.ip_address(address).is_loopback:
-                raise PolicyError(f"loopback address denied by Plane v1.2.1 model: {address}")
-        return addresses
-
     def same_url(self, left, right):
         """Compare canonical scheme, host, port, path and query for lab allowlists."""
         left_parsed, left_host, left_port = self.parse(left)
@@ -93,6 +79,9 @@ class Transport:
         # Baseline deliberately performs fresh, unchecked DNS after registration.
         checked = self.settings.policy in ("strict", "reject")
         parsed, host, port, addresses = self.resolve(url, checked)
+        events = trace.setdefault("network_events", [])
+        events.append({"event": "dns_resolution", "host": host, "port": port,
+                       "addresses": addresses, "validated": checked})
         address = addresses[0]
         trace.update(url=url, resolved_ips=addresses, selected_ip=address,
                      decision="validated_and_pinned" if checked else "baseline_unchecked")
@@ -103,12 +92,14 @@ class Transport:
             trace["attempted_ips"] = []
             for index, address in enumerate(addresses):
                 trace["attempted_ips"].append(address)
+                events.append({"event": "tcp_connect_attempt", "ip": address, "port": port})
                 family = socket.AF_INET6 if ":" in address else socket.AF_INET
                 sock = socket.socket(family, socket.SOCK_STREAM)
                 sock.settimeout(self.settings.timeout)
                 try:
                     sock.connect((address, port))
                     trace["selected_ip"] = address
+                    events.append({"event": "tcp_connected", "ip": address, "port": port})
                     break
                 except OSError:
                     sock.close()
@@ -116,21 +107,25 @@ class Transport:
                         raise
             peer = sock.getpeername()[0]
             trace["connected_ip"] = peer
+            events.append({"event": "peer_confirmed", "ip": peer})
             if ipaddress.ip_address(peer) != ipaddress.ip_address(address):
                 raise PolicyError("connected peer differs from selected IP")
             if parsed.scheme == "https":
                 sock = self.context.wrap_socket(sock, server_hostname=host)
                 trace["tls_verified"] = True
+                events.append({"event": "tls_verified", "server_name": host})
             connection.sock = sock
             path = parsed.path or "/"
             if parsed.query:
                 path += "?" + parsed.query
             authority = f"[{host}]" if ":" in host else host
             headers = dict(headers, Host=f"{authority}:{port}")
+            events.append({"event": "http_request", "method": method, "path": path})
             connection.request(method, path, body=payload, headers=headers)
             response = connection.getresponse()
             raw = response.read(self.settings.max_response + 1)
             trace["status"] = response.status
+            events.append({"event": "http_response", "status": response.status})
             return response.status, response.getheader("Location"), raw[:self.settings.max_response], len(raw) > self.settings.max_response
         finally:
             connection.close()
@@ -146,12 +141,14 @@ class Transport:
                    "User-Agent": "YechukLab-Mock/1.0", "Connection": "close"}
         try:
             for hop in range(self.settings.max_redirects + 1):
-                trace = {"hop": hop, "url": url}
+                trace = {"hop": hop, "url": url, "method": method}
                 traces.append(trace)
                 status, location, raw, truncated = self.request(url, method, payload, headers, trace)
                 result.update(status=status, response_truncated=truncated)
                 if status in (301, 302, 303, 307, 308) and location:
                     trace["redirect"] = location
+                    trace["network_events"].append({"event": "http_redirect", "status": status,
+                                                    "location": location})
                     if self.settings.policy == "reject":
                         raise PolicyError("redirect denied")
                     if hop == self.settings.max_redirects:
@@ -173,5 +170,10 @@ class Transport:
             if traces:
                 traces[-1]["error"] = str(error)
                 traces[-1]["decision"] = "denied" if isinstance(error, PolicyError) else "connection_error"
-        result.update(trace=traces, latency_ms=round((time.monotonic() - started) * 1000, 2))
+                traces[-1].setdefault("network_events", []).append({
+                    "event": "policy_blocked" if isinstance(error, PolicyError) else "connection_error",
+                    "reason": str(error),
+                })
+        result.update(trace=traces, network_event_count=sum(len(trace.get("network_events", ())) for trace in traces),
+                      latency_ms=round((time.monotonic() - started) * 1000, 2))
         return result
