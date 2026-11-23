@@ -1,6 +1,6 @@
 # 검증 기록
 
-검증일: 2026-11-23 (Asia/Seoul)
+검증일: 2026-11-24 (Asia/Seoul)
 
 환경: Windows Docker Desktop, Linux 컨테이너, Python 3.12-slim
 범위: 수업용 합성 Internal API·수신 서버만 사용. 실제 MLflow/Plane 인스턴스는 설치하지 않음.
@@ -12,7 +12,7 @@ docker compose -f compose.yaml -f compose.lab.yaml --profile test run --rm --bui
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\demo-cves.ps1
 ```
 
-첫 명령은 HTTP/TLS/SQLite/권한/URL 검증을 포함한 **16개 테스트**를 통과했습니다. 두 번째 명령은 아래의 여섯 CVE 비교와 결정론적 DNS rebinding 비교를 완료했고, 원본 UUID별 결과는 무시되는 `artifacts/final-*.json`, 요약 결과는 [verification/final-scenario-2026-11-23.json](verification/final-scenario-2026-11-23.json)에 보관했습니다.
+첫 명령은 HTTP/TLS/SQLite/권한/URL 검증을 포함한 **16개 테스트**를 통과했습니다. 두 번째 명령은 아래의 여섯 CVE 비교와 결정론적 DNS rebinding 비교를 완료했고, 원본 UUID별 결과는 무시되는 `artifacts/final-*.json`, 요약 결과는 [verification/final-scenario-2026-11-24.json](verification/final-scenario-2026-11-24.json)에 보관했습니다.
 
 | 시나리오 | MLflow 내부 도달 | MLflow 본문 노출 | Plane 내부 도달 | Plane 로그 노출 | 결과 |
 |---|---:|---:|---:|---:|---|

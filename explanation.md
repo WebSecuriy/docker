@@ -1,6 +1,6 @@
 # 최종 CVE 모의·방어 실행 가이드
 
-> 작성일: 2026-11-23 · 범위: 격리된 수업용 합성 데이터와 로컬 Docker 실험만 사용합니다.
+> 작성일: 2026-11-24 · 범위: 격리된 수업용 합성 데이터와 로컬 Docker 실험만 사용합니다.
 >
 > 이 저장소는 MLflow나 Plane 제품을 설치·배포하지 않습니다. 아래의 버전 이름은 **취약점 흐름을 비교하기 위한 경량 모의 프로필**입니다.
 
@@ -74,7 +74,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\test-matrix.ps1 -S
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\export-results.ps1
 ```
 
-두 번째 명령은 여섯 결과를 `artifacts/final-*.json`에 만들고, 버전 관리되는 요약본을 [docs/verification/final-scenario-2026-11-23.json](docs/verification/final-scenario-2026-11-23.json)에 기록합니다.
+두 번째 명령은 여섯 결과를 `artifacts/final-*.json`에 만들고, 버전 관리되는 요약본을 [docs/verification/final-scenario-2026-11-24.json](docs/verification/final-scenario-2026-11-24.json)에 기록합니다.
 
 | 케이스 | MLflow 내부 도달 / 본문 노출 | Plane 내부 도달 / 로그 노출 | 비교 목적 |
 |---|---:|---:|---|

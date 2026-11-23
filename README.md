@@ -14,12 +14,12 @@
 | [docs/LAB.md](docs/LAB.md) | 일반 API, 설정, VM 이전, 상세 운영 제약 |
 | [docs/REFERENCES.md](docs/REFERENCES.md) | 실제 제품 참고 범위와 모의 구현의 경계 |
 | [docs/VERIFICATION.md](docs/VERIFICATION.md) | Docker 검증 결과와 해석 주의사항 |
-| [final-scenario JSON](docs/verification/final-scenario-2026-11-23.json) | CVE 비교 6개 케이스의 영구 요약 |
+| [final-scenario JSON](docs/verification/final-scenario-2026-11-24.json) | CVE 비교 6개 케이스의 영구 요약 |
 | [docker-matrix JSON](docs/verification/docker-matrix.json) | 일반 Webhook 정책·네트워크·본문 정책 회귀 결과 |
 
 ## 1. 현재 구현 상태
 
-2026-11-23 기준 Python 표준 라이브러리, SQLite, 단일 worker, Docker Compose로 구현·검증했습니다.
+2026-11-24 기준 Python 표준 라이브러리, SQLite, 단일 worker, Docker Compose로 구현·검증했습니다.
 
 | 항목 | 완료 상태 |
 |---|---|
@@ -171,7 +171,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\capture-demonstrat
 | `plane-log-filter` | Internal 도달은 유지 가능하지만 Plane 로그 표식 미노출, viewer/bob 403 |
 | DNS rebinding | baseline은 합성 재바인딩 대상 도달, strict는 차단 |
 
-세부 원본과 SHA-256은 [docs/verification/final-scenario-2026-11-23.json](docs/verification/final-scenario-2026-11-23.json), 일반 회귀 결과는 [docs/verification/docker-matrix.json](docs/verification/docker-matrix.json)에 있습니다.
+세부 원본과 SHA-256은 [docs/verification/final-scenario-2026-11-24.json](docs/verification/final-scenario-2026-11-24.json), 일반 회귀 결과는 [docs/verification/docker-matrix.json](docs/verification/docker-matrix.json)에 있습니다.
 
 ## 9. Internal·Kali 담당자 인계
 

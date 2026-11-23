@@ -1,4 +1,4 @@
-param([string]$Output = 'docs/verification/final-scenario-2026-11-23.json')
+param([string]$Output = 'docs/verification/final-scenario-2026-11-24.json')
 
 # Converts ignored, UUID-rich lab artifacts into the compact versioned record
 # used by the report. The connection data is application-level trace evidence,
@@ -27,9 +27,12 @@ foreach ($name in $names) {
             outcome = $data.mlflow.test_result.result.outcome
             effective_policy = $data.mlflow.test_result.result.effective_policy
             network_event_count = $data.mlflow.test_result.result.network_event_count
-            unauthenticated_denied = ($data.mlflow.unauthenticated_test.error -eq 'Bearer token required')
-            alpha_member_denied = ($data.mlflow.alpha_member_test.error -eq 'workspace permission denied')
-            other_workspace_admin_denied = ($data.mlflow.other_workspace_admin_test.error -eq 'workspace permission denied')
+            unauthenticated_denied = ($data.mlflow.unauthenticated_test.status_code -eq 401 -and
+                                      $data.mlflow.unauthenticated_test.body.error -eq 'Bearer token required')
+            alpha_member_denied = ($data.mlflow.alpha_member_test.status_code -eq 403 -and
+                                   $data.mlflow.alpha_member_test.body.error -eq 'workspace permission denied')
+            other_workspace_admin_denied = ($data.mlflow.other_workspace_admin_test.status_code -eq 403 -and
+                                             $data.mlflow.other_workspace_admin_test.body.error -eq 'workspace permission denied')
         }
         plane = [ordered]@{
             run_id = $data.plane.run_id
@@ -39,8 +42,10 @@ foreach ($name in $names) {
             effective_policy = $data.plane.delivery_log.result.effective_policy
             plane_log_filter = $data.plane.delivery_log.result.plane_log_filter
             network_event_count = $data.plane.delivery_log.result.network_event_count
-            same_workspace_member_denied = ($data.plane.same_workspace_member_log_query.error -eq 'workspace permission denied')
-            other_workspace_denied = ($data.plane.other_workspace_log_query.error -eq 'workspace permission denied')
+            same_workspace_member_denied = ($data.plane.same_workspace_member_log_query.status_code -eq 403 -and
+                                             $data.plane.same_workspace_member_log_query.body.error -eq 'workspace permission denied')
+            other_workspace_denied = ($data.plane.other_workspace_log_query.status_code -eq 403 -and
+                                      $data.plane.other_workspace_log_query.body.error -eq 'workspace permission denied')
         }
         raw_result_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $source).Hash
     }

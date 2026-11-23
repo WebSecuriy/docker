@@ -74,7 +74,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'export-final-results.ps1 failed' }
 
     Write-Output 'Final synthetic CVE demonstration passed.'
-    Write-Output 'Evidence: artifacts/final-*.json and docs/verification/final-scenario-2026-11-23.json'
+    Write-Output 'Evidence: artifacts/final-*.json and docs/verification/final-scenario-2026-11-24.json'
 }
 finally {
     foreach ($name in $environmentNames) {

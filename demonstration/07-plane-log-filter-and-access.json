@@ -2,14 +2,14 @@
     "_comment":  "JSON does not support comments; _comment and key_observations are human-readable annotations. Every report is synthetic lab data.",
     "step":  7,
     "title":  "Plane log defense: pre-storage filtering and workspace access control",
-    "captured_at":  "2026-11-24T02:01:13.9129595+09:00",
+    "captured_at":  "2026-11-24T02:17:50.3587070+09:00",
     "docker_command":  [
                            "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/demo-cves.ps1"
                        ],
     "source_artifacts":  [
                              {
                                  "path":  "artifacts/final-plane-log-filter.json",
-                                 "sha256":  "01626D06D3281E94093B9355E5046A9A3E47D2CEE5F1097DB39C0557E809674E"
+                                 "sha256":  "5CCA5320F9F58FC9A00F54E15BFF18387B6DC314999A38E5F31DEB04E9A9C8DB"
                              }
                          ],
     "expected":  "Plane can reach Internal, but redact-sensitive removes REPORT-\u003crun_id\u003e from logs and viewer/bob receive 403.",
@@ -19,11 +19,11 @@
                      "network":  "open",
                      "passed":  true,
                      "mlflow":  {
-                                    "run_id":  "14e4f275-4abf-4ee7-9491-943fe73c9383",
+                                    "run_id":  "d84f407b-3b5b-4030-b90c-f33277511f35",
                                     "internal_api_reached":  false,
                                     "report_content_exposed":  false,
                                     "internal_observation":  {
-                                                                 "run_id":  "14e4f275-4abf-4ee7-9491-943fe73c9383",
+                                                                 "run_id":  "d84f407b-3b5b-4030-b90c-f33277511f35",
                                                                  "internal_api_reached":  false,
                                                                  "requests":  [
 
@@ -32,10 +32,10 @@
                                     "receiver_observation":  {
                                                                  "requests":  [
                                                                                   [
-                                                                                      "14e4f275-4abf-4ee7-9491-943fe73c9383",
+                                                                                      "d84f407b-3b5b-4030-b90c-f33277511f35",
                                                                                       "/redirect",
                                                                                       "POST",
-                                                                                      "{\"run_id\": \"14e4f275-4abf-4ee7-9491-943fe73c9383\", \"event\": \"model.registered\", \"workspace_id\": \"__cve_mlflow_2026_64849\", \"webhook_id\": \"10c8aa9f-d65e-4d3b-9771-dcf41f6ddce2\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
+                                                                                      "{\"run_id\": \"d84f407b-3b5b-4030-b90c-f33277511f35\", \"event\": \"model.registered\", \"workspace_id\": \"__cve_mlflow_2026_64849\", \"webhook_id\": \"62d1a78b-1a89-41d5-91bf-277dcaa64bdd\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
                                                                                   ]
                                                                               ]
                                                              },
@@ -92,7 +92,7 @@
                                                                                               {
                                                                                                   "event":  "http_redirect",
                                                                                                   "status":  302,
-                                                                                                  "location":  "http://172.20.0.2:8000/reports/alpha?run_id=14e4f275-4abf-4ee7-9491-943fe73c9383"
+                                                                                                  "location":  "http://172.20.0.2:8000/reports/alpha?run_id=d84f407b-3b5b-4030-b90c-f33277511f35"
                                                                                               },
                                                                                               {
                                                                                                   "event":  "policy_blocked",
@@ -110,7 +110,7 @@
                                                                        "connected_ip":  "172.21.0.2",
                                                                        "tls_verified":  true,
                                                                        "status":  302,
-                                                                       "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=14e4f275-4abf-4ee7-9491-943fe73c9383",
+                                                                       "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=d84f407b-3b5b-4030-b90c-f33277511f35",
                                                                        "error":  "HTTPS downgrade denied"
                                                                    }
                                                                ]
@@ -118,24 +118,24 @@
                                     "authorization":  {
                                                           "unauthenticated":  {
                                                                                   "expected_status_code":  401,
-                                                                                  "observed_status_code":  null,
-                                                                                  "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                                  "observed_status_code":  401,
+                                                                                  "status_assertion":  "recorded-in-artifact",
                                                                                   "response":  {
                                                                                                    "error":  "Bearer token required"
                                                                                                }
                                                                               },
                                                           "alpha_member":  {
                                                                                "expected_status_code":  403,
-                                                                               "observed_status_code":  null,
-                                                                               "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                               "observed_status_code":  403,
+                                                                               "status_assertion":  "recorded-in-artifact",
                                                                                "response":  {
                                                                                                 "error":  "workspace permission denied"
                                                                                             }
                                                                            },
                                                           "other_workspace_admin":  {
                                                                                         "expected_status_code":  403,
-                                                                                        "observed_status_code":  null,
-                                                                                        "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                                        "observed_status_code":  403,
+                                                                                        "status_assertion":  "recorded-in-artifact",
                                                                                         "response":  {
                                                                                                          "error":  "workspace permission denied"
                                                                                                      }
@@ -186,7 +186,7 @@
                                                                                         {
                                                                                             "event":  "http_redirect",
                                                                                             "status":  302,
-                                                                                            "location":  "http://172.20.0.2:8000/reports/alpha?run_id=14e4f275-4abf-4ee7-9491-943fe73c9383"
+                                                                                            "location":  "http://172.20.0.2:8000/reports/alpha?run_id=d84f407b-3b5b-4030-b90c-f33277511f35"
                                                                                         },
                                                                                         {
                                                                                             "event":  "policy_blocked",
@@ -204,24 +204,24 @@
                                                                  "connected_ip":  "172.21.0.2",
                                                                  "tls_verified":  true,
                                                                  "status":  302,
-                                                                 "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=14e4f275-4abf-4ee7-9491-943fe73c9383",
+                                                                 "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=d84f407b-3b5b-4030-b90c-f33277511f35",
                                                                  "error":  "HTTPS downgrade denied"
                                                              }
                                                          ]
                                 },
                      "plane":  {
-                                   "run_id":  "43103063-7a1a-4464-8f24-4419ef91c191",
+                                   "run_id":  "5a796569-bd8c-4de8-aac0-a9a50497d072",
                                    "internal_api_reached":  true,
                                    "report_content_exposed":  false,
                                    "internal_observation":  {
-                                                                "run_id":  "43103063-7a1a-4464-8f24-4419ef91c191",
+                                                                "run_id":  "5a796569-bd8c-4de8-aac0-a9a50497d072",
                                                                 "internal_api_reached":  true,
                                                                 "requests":  [
                                                                                  [
-                                                                                     "43103063-7a1a-4464-8f24-4419ef91c191",
+                                                                                     "5a796569-bd8c-4de8-aac0-a9a50497d072",
                                                                                      "GET",
                                                                                      "/reports/alpha",
-                                                                                     "2026-11-23 07:13:34",
+                                                                                     "2026-11-23 17:15:40",
                                                                                      "172.20.0.3"
                                                                                  ]
                                                                              ]
@@ -229,16 +229,16 @@
                                    "receiver_observation":  {
                                                                 "requests":  [
                                                                                  [
-                                                                                     "43103063-7a1a-4464-8f24-4419ef91c191",
+                                                                                     "5a796569-bd8c-4de8-aac0-a9a50497d072",
                                                                                      "/redirect",
                                                                                      "POST",
-                                                                                     "{\"run_id\": \"43103063-7a1a-4464-8f24-4419ef91c191\", \"event\": \"issue.updated\", \"workspace_id\": \"alpha\", \"webhook_id\": \"5bd5a828-6d88-4302-a854-7b561942fdf4\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
+                                                                                     "{\"run_id\": \"5a796569-bd8c-4de8-aac0-a9a50497d072\", \"event\": \"issue.updated\", \"workspace_id\": \"alpha\", \"webhook_id\": \"6868a55a-3c7e-42ca-8c87-92e7ebfd8f75\", \"data\": {\"fictional\": true, \"company\": \"예측랩\", \"model\": \"demand-demo-v1\", \"issue\": \"DEMO-1\", \"status\": \"updated\"}}"
                                                                                  ]
                                                                              ]
                                                             },
                                    "delivery_result":  {
                                                            "status":  200,
-                                                           "body":  "{\"report_marker\":\"[REDACTED]\",\"run_id\":\"43103063-7a1a-4464-8f24-4419ef91c191\",\"fictional\":true,\"customer\":\"alpha\",\"model_operations\":\"[REDACTED]\",\"contract_summary\":\"[REDACTED]\",\"log_filtered\":true}",
+                                                           "body":  "{\"report_marker\":\"[REDACTED]\",\"run_id\":\"5a796569-bd8c-4de8-aac0-a9a50497d072\",\"fictional\":true,\"customer\":\"alpha\",\"model_operations\":\"[REDACTED]\",\"contract_summary\":\"[REDACTED]\",\"log_filtered\":true}",
                                                            "error":  null,
                                                            "outcome":  "succeeded",
                                                            "response_truncated":  false,
@@ -287,7 +287,7 @@
                                                                                                     {
                                                                                                         "event":  "http_redirect",
                                                                                                         "status":  302,
-                                                                                                        "location":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                                                        "location":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                                                                     }
                                                                                                 ],
                                                                              "resolved_ips":  [
@@ -301,11 +301,11 @@
                                                                              "connected_ip":  "172.21.0.2",
                                                                              "tls_verified":  true,
                                                                              "status":  302,
-                                                                             "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                             "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                                          },
                                                                          {
                                                                              "hop":  1,
-                                                                             "url":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191",
+                                                                             "url":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072",
                                                                              "method":  "GET",
                                                                              "network_events":  [
                                                                                                     {
@@ -334,7 +334,7 @@
                                                                                                     {
                                                                                                         "event":  "http_request",
                                                                                                         "method":  "GET",
-                                                                                                        "path":  "/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                                                        "path":  "/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                                                                     },
                                                                                                     {
                                                                                                         "event":  "http_response",
@@ -354,7 +354,7 @@
                                                                          }
                                                                      ],
                                                            "network_event_count":  14,
-                                                           "latency_ms":  25.71,
+                                                           "latency_ms":  32.05,
                                                            "body_storage":  "full",
                                                            "effective_policy":  "baseline",
                                                            "plane_log_filter":  "redact-sensitive",
@@ -362,17 +362,17 @@
                                                        },
                                    "webhook_logs":  [
                                                         {
-                                                            "id":  "a6fe47fe-efd8-435e-9823-65e7f0670986",
+                                                            "id":  "931b7b44-05b5-4248-a78a-15c9dc03355d",
                                                             "workspace":  "alpha",
-                                                            "run_id":  "43103063-7a1a-4464-8f24-4419ef91c191",
-                                                            "hook_id":  "5bd5a828-6d88-4302-a854-7b561942fdf4",
+                                                            "run_id":  "5a796569-bd8c-4de8-aac0-a9a50497d072",
+                                                            "hook_id":  "6868a55a-3c7e-42ca-8c87-92e7ebfd8f75",
                                                             "mode":  "plane",
                                                             "url":  "https://receiver:8443/redirect?status=302",
                                                             "policy":  "baseline",
                                                             "state":  "succeeded",
                                                             "result":  {
                                                                            "status":  200,
-                                                                           "body":  "{\"report_marker\":\"[REDACTED]\",\"run_id\":\"43103063-7a1a-4464-8f24-4419ef91c191\",\"fictional\":true,\"customer\":\"alpha\",\"model_operations\":\"[REDACTED]\",\"contract_summary\":\"[REDACTED]\",\"log_filtered\":true}",
+                                                                           "body":  "{\"report_marker\":\"[REDACTED]\",\"run_id\":\"5a796569-bd8c-4de8-aac0-a9a50497d072\",\"fictional\":true,\"customer\":\"alpha\",\"model_operations\":\"[REDACTED]\",\"contract_summary\":\"[REDACTED]\",\"log_filtered\":true}",
                                                                            "error":  null,
                                                                            "outcome":  "succeeded",
                                                                            "response_truncated":  false,
@@ -421,7 +421,7 @@
                                                                                                                     {
                                                                                                                         "event":  "http_redirect",
                                                                                                                         "status":  302,
-                                                                                                                        "location":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                                                                        "location":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                                                                                     }
                                                                                                                 ],
                                                                                              "resolved_ips":  [
@@ -435,11 +435,11 @@
                                                                                              "connected_ip":  "172.21.0.2",
                                                                                              "tls_verified":  true,
                                                                                              "status":  302,
-                                                                                             "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                                             "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                                                          },
                                                                                          {
                                                                                              "hop":  1,
-                                                                                             "url":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191",
+                                                                                             "url":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072",
                                                                                              "method":  "GET",
                                                                                              "network_events":  [
                                                                                                                     {
@@ -468,7 +468,7 @@
                                                                                                                     {
                                                                                                                         "event":  "http_request",
                                                                                                                         "method":  "GET",
-                                                                                                                        "path":  "/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                                                                        "path":  "/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                                                                                     },
                                                                                                                     {
                                                                                                                         "event":  "http_response",
@@ -488,28 +488,28 @@
                                                                                          }
                                                                                      ],
                                                                            "network_event_count":  14,
-                                                                           "latency_ms":  25.71,
+                                                                           "latency_ms":  32.05,
                                                                            "body_storage":  "full",
                                                                            "effective_policy":  "baseline",
                                                                            "plane_log_filter":  "redact-sensitive",
                                                                            "body_read":  "full"
                                                                        },
-                                                            "created":  "2026-11-23 07:13:34"
+                                                            "created":  "2026-11-23 17:15:40"
                                                         }
                                                     ],
                                    "authorization":  {
                                                          "alpha_member":  {
                                                                               "expected_status_code":  403,
-                                                                              "observed_status_code":  null,
-                                                                              "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                              "observed_status_code":  403,
+                                                                              "status_assertion":  "recorded-in-artifact",
                                                                               "response":  {
                                                                                                "error":  "workspace permission denied"
                                                                                            }
                                                                           },
                                                          "other_workspace_admin":  {
                                                                                        "expected_status_code":  403,
-                                                                                       "observed_status_code":  null,
-                                                                                       "status_assertion":  "asserted-by-pre-status-capture-script",
+                                                                                       "observed_status_code":  403,
+                                                                                       "status_assertion":  "recorded-in-artifact",
                                                                                        "response":  {
                                                                                                         "error":  "workspace permission denied"
                                                                                                     }
@@ -560,7 +560,7 @@
                                                                                        {
                                                                                            "event":  "http_redirect",
                                                                                            "status":  302,
-                                                                                           "location":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                                           "location":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                                                        }
                                                                                    ],
                                                                 "resolved_ips":  [
@@ -574,11 +574,11 @@
                                                                 "connected_ip":  "172.21.0.2",
                                                                 "tls_verified":  true,
                                                                 "status":  302,
-                                                                "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                "redirect":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                             },
                                                             {
                                                                 "hop":  1,
-                                                                "url":  "http://172.20.0.2:8000/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191",
+                                                                "url":  "http://172.20.0.2:8000/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072",
                                                                 "method":  "GET",
                                                                 "network_events":  [
                                                                                        {
@@ -607,7 +607,7 @@
                                                                                        {
                                                                                            "event":  "http_request",
                                                                                            "method":  "GET",
-                                                                                           "path":  "/reports/alpha?run_id=43103063-7a1a-4464-8f24-4419ef91c191"
+                                                                                           "path":  "/reports/alpha?run_id=5a796569-bd8c-4de8-aac0-a9a50497d072"
                                                                                        },
                                                                                        {
                                                                                            "event":  "http_response",

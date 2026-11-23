@@ -33,7 +33,10 @@ function Write-Json([string]$Name, $Document) {
 }
 
 function Invoke-ContainerJson([string]$Service, [string]$Code) {
-    $output = & docker compose -f compose.yaml -f compose.lab.yaml exec -T $Service python -c $Code
+    # Feed the Python snippet through stdin. Passing it as `python -c <text>`
+    # makes Windows PowerShell's native argument quoting remove the JSON
+    # string quotes before the command reaches the Linux container.
+    $output = $Code | & docker compose -f compose.yaml -f compose.lab.yaml exec -T $Service python -
     if ($LASTEXITCODE -ne 0) { throw "Could not capture live JSON from service: $Service" }
     return ($output -join "`n") | ConvertFrom-Json
 }
