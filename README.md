@@ -12,6 +12,7 @@
 | [indications.md](indications.md) | Internal·Kali 담당자의 API 계약, TLS/방화벽 조건, 최종 시연 순서 |
 | [demonstration/](demonstration/README.md) | Docker에서 실제 생성한 1~8단계 주석 포함 JSON 증거 |
 | [docs/LAB.md](docs/LAB.md) | 일반 API, 설정, VM 이전, 상세 운영 제약 |
+| [docs/VM-DEMO-GUIDE.md](docs/VM-DEMO-GUIDE.md) | VM 3대(webhook/internal/kali) 설정·배포·레이어별 시연 절차 |
 | [docs/REFERENCES.md](docs/REFERENCES.md) | 실제 제품 참고 범위와 모의 구현의 경계 |
 | [docs/VERIFICATION.md](docs/VERIFICATION.md) | Docker 검증 결과와 해석 주의사항 |
 | [final-scenario JSON](docs/verification/final-scenario-2026-11-24.json) | CVE 비교 6개 케이스의 영구 요약 |
